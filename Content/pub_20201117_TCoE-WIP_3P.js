@@ -4489,62 +4489,62 @@ CreatureList["eldritch cannon"] = {
 	}
 };
 CreatureList["steel defender"] = {
-	name : "Steel Defender",
-	source : [["TCoE", 19]],
-	size : 3,
-	type : "Construct",
-	subtype : "",
-	alignment : "Neutral",
-	ac : 15,
-	hp : 7,
-	hd : [],
-	speed : "40 ft",
-	scores : [14, 12, 14, 4, 10, 6],
-	saves : ["", 3, 4, "", "", ""],
-	skills : {
-		"athletics" : 4,
-		"perception" : 4
+	name: "Steel Defender",
+	source: [["TCoE", 19]],
+	size: 3,
+	type: "Construct",
+	subtype: "",
+	alignment: "Neutral",
+	ac: 15,
+	hp: 7,
+	hd: [3, 8],
+	speed: "40 ft",
+	scores: [14, 12, 14, 4, 10, 6],
+	saves: ["", 3, 4, "", "", ""],
+	skills: {
+		"athletics": 4,
+		"perception": 4
 	},
-	damage_immunities : "poison",
-	condition_immunities : "charmed, exhaustion, poisoned",
-	passivePerception : 14,
-	senses : "Darkvision 60 ft",
-	languages : "understands the languages of its creator but can't speak",
-	challengeRating : "1",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Force-Empowered Rend",
-		ability : 1,
-		damage : [1, 8, "piercing"],
-		range : "Melee (5 ft)",
-		modifiers : ["", "Prof-2", ""]
+	damage_immunities: "poison",
+	condition_immunities: "charmed, exhaustion, poisoned",
+	passivePerception: 14,
+	senses: "Darkvision 60 ft",
+	languages: "understands the languages of its creator but can't speak",
+	challengeRating: "1",
+	proficiencyBonus: 2,
+	attacksAction: 1,
+	attacks: [{
+		name: "Force-Empowered Rend",
+		ability: 0,
+		damage: [1, 8, "piercing"],
+		range: "Melee (5 ft)",
+		modifiers: ["oInt", "Prof", ""]
 	}, {
-		name : "Deflect Attack (reaction)",
-		ability : 0,
-		damage : [1, 4, "force"],
-		range : "Melee (5 ft)",
-		modifiers : ["-Prof", "oInt", ""],
-		description : "After using the reaction, the attacker takes this damage, no attack roll required"
+		name: "Deflect Attack (reaction)",
+		ability: 0,
+		damage: [1, 4, "force"],
+		range: "Melee (5 ft)",
+		modifiers: ["-Prof", "oInt", ""],
+		description: "After using the reaction, the attacker takes this damage, no attack roll required"
 	}],
-	features : [{
-		name : "Creator",
-		description : "The steel defender obeys the commands of its creator and shares its proficiency bonus. It takes its turn immediately after its creator, on the same initiative count. It can move and take reactions on its own, but only takes the Dodge action on its turn unless its creator takes a bonus action to command to do otherwise, in which case it can only take the Repair, Dash, Force-Empowered Rend, Disengage, Help, Hide, or Search action."
+	features: [{
+		name: "Creator",
+		description: "The steel defender obeys the commands of its creator and shares its proficiency bonus. It takes its turn immediately after its creator, on the same initiative count. It can move and take reactions on its own, but only takes the Dodge action on its turn unless its creator takes a bonus action to command to do otherwise, in which case it can only take the Repair, Dash, Force-Empowered Rend, Disengage, Help, Hide, or Search action."
 	}, {
-		name : "Vigilant",
-		description : "The " + (typePF ? "" : "steel ") + "defender can't be surprised."
+		name: "Vigilant",
+		description: "The " + (typePF ? "" : "steel ") + "defender can't be surprised."
 	}],
-	actions : [{
-		name : "Healing",
-		description : "The steel defender regains 2d6 HP whenever the Mending spell is cast on it. Its HP total is equal to its creator's artificer level times five + its creator's Intelligence modifier + its Constitution modifier. Within an hour of its death, while within 5 ft, its creator can take an action to use smith's tools and expend a spell slot to have it return to full HP after 1 minute."
+	actions: [{
+		name: "Healing",
+		description: "The steel defender regains 2d6 HP whenever the Mending spell is cast on it. Its HP total is equal to its creator's artificer level times five + its creator's Intelligence modifier + its Constitution modifier. Within an hour of its death, while within 5 ft, its creator can take an action to use smith's tools and expend a spell slot to have it return to full HP after 1 minute."
 	}, {
-		name : "Repair (3/Day)",
-		description : "As an action, the " + (typePF ? "" : "magical mechanisms inside the ") + "steel defender restore" + (typePF ? "s" : "") + " 2d8 + its proficiency bonus in HP to itself or to one construct or object within 5 ft of it."
+		name: "Repair (3/Day)",
+		description: "As an action, the " + (typePF ? "" : "magical mechanisms inside the ") + "steel defender restore" + (typePF ? "s" : "") + " 2d8 + its proficiency bonus in HP to itself or to one construct or object within 5 ft of it."
 	}, {
-		name : "Deflect Attack (reaction)",
-		description : "As a reaction, the steel defender imposes disadvantage on the attack roll of one creature it can see that is within 5 ft of it, provided the attack roll is against a creature other than the steel defender. If its creator is a 15th level artificer (battle smith), this also deals 1d4 + its creator's Int modifier in force damage to the attacker."
+		name: "Deflect Attack (reaction)",
+		description: "As a reaction, the steel defender imposes disadvantage on the attack roll of one creature it can see that is within 5 ft of it, provided the attack roll is against a creature other than the steel defender. If its creator is a 15th level artificer (battle smith), this also deals 1d4 + its creator's Int modifier in force damage to the attacker."
 	}],
-	eval : function(prefix) {
+	eval: function (prefix) {
 		// set type in the top right
 		Value(prefix + 'Comp.Type', "Construct");
 		// auto calculate HP
@@ -4557,8 +4557,8 @@ CreatureList["steel defender"] = {
 		ProfFld.setAction("Calculate", "event.value = Number(How('Proficiency Bonus'));");
 		ProfFld.readonly = true;
 		ProfFld.calcOrderIndex = tDoc.getField(prefix + "Comp.Use.Attack.1.To Hit").calcOrderIndex - 1;
-		// set perception to proficiency + 2 instead of expertise
-		AddSkillProf("Perception", true, false, false, 2, prefix);
+		// auto calculate hit die
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel);");
 		// add bonus action to first page
 		processActions(true, "Steel Defender", [["bonus action", " (command)"], ["action", " (restore)"]], "Steel Defender");
 		// set extra abilities from artificer level
@@ -4575,7 +4575,7 @@ CreatureList["steel defender"] = {
 			Value(prefix + "Comp.Use.Attack.2.Weapon Selection", "");
 		}
 	},
-	removeeval : function(prefix) {
+	removeeval: function (prefix) {
 		if (prefix) {
 			// reset type in top right
 			Value(prefix + 'Comp.Type', "Companion");
@@ -4587,6 +4587,7 @@ CreatureList["steel defender"] = {
 			var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
 			ProfFld.setAction("Calculate", "1");
 			ProfFld.readonly = false;
+			tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "1");
 		}
 		// remove action
 		if (!ClassList.artificer || ClassList.artificer.artificerCompFunc.find("steel defender").length < (prefix ? 2 : 1)) processActions(false, "Steel Defender", [["bonus action", " (command)"], ["action", " (restore)"]], "Steel Defender");
