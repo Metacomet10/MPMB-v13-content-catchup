@@ -1704,119 +1704,136 @@ AddSubClass("paladin", "oath of the watchers", {
 		}
 	}
 });
-AddSubClass("ranger", "fey wanderer", { 
-		regExpSearch : /^(?=.*fey)(?=.*wanderer).*$/i,
-		subname : "Fey Wanderer",
-		source : ["TCoE", 58],
-		fullname : "Fey Wanderer",
-		features : {
-			"subclassfeature3.1" : {
-				name : "Dreadful Strikes",
-				source : ["TCoE", 58],
-				minlevel : 3,
-				description : "\n   " + "When I hit a creature with a weapon, once per turn I can deal extra psychic damage to" + "\n   " + "the target.",
-				additional : ["", "", "1d4", "1d4", "1d4", "1d4", "1d4", "1d4", "1d4", "1d4", "1d6", "1d6", "1d6", "1d6", "1d6", "1d6", "1d6", "1d6", "1d6", "1d6"],
-			},
-			"subclassfeature3.2" : {
-				name : "Fey Wanderer Magic",
-				source : ["TCoE", 58],
-				minlevel : 3,
-				description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "These count as ranger spells," + "\n   " + "but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power, use the \"Choose Feature\" button" + "\n   " + "above for this.",
-				spellcastingExtra : ["charm person", "misty step", "dispel magic", "dimension door", "mislead"],
-				spellcastingExtraApplyNonconform : true,
-				choices : ["Illusory Butterflies", "Seasonal Flowers", "Herb or Spice Scent", "Dancing Shadow", "Horns or Antlers", "Seasonal Hair and Skin"],
-				"illusory butterflies" : {
-					name : "Fey Wanderer Magic",
-					description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "\n   " + "These count as ranger spells, but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power: illusory butterflies flutter" + "\n   " + "around me while I take a short or long rest..",
+AddSubClass("ranger", "fey wanderer", {
+	regExpSearch : /^(?=.*fey)(?=.*wanderer).*$/i,
+	subname : "Fey Wanderer",
+	source : ["T", 59],
+	fullname : "Fey Wanderer",
+	features : {
+		"subclassfeature3" : {
+			name : "Dreadful Strikes",
+			source : ["T", 59],
+			minlevel : 3,
+			description : desc(["Once per turn, I can deal extra psychic damage to a creature I hit with a weapon attack"]),
+			additional : levels.map(function (n) {
+				if (n < 3) return "";
+				return "+" + (n < 11 ? "1d4 psychic damage" : "1d6 psychic damage");
+			}),
+			calcChanges : {
+							atkAdd : [
+								function (fields, v) {
+									if (classes.known.ranger && classes.known.ranger.level > 2 && !v.isSpell) {
+										fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.ranger.level < 11 ? "1d4 psychic damage" : "1d6 psychic damage");
+									}
+								},
+								"Once per turn, I can have one of my weapon attacks that hit do extra psychic damage."
+							]
+						}
+		},
+		"subclassfeature3.1" : {
+			name : "Fey Wanderer Magic",
+			source : ["T", 59],
+			minlevel : 3,
+			description : desc([
+				"I add a spell to my known spells at level 3, 5, 9, 13, and 17",
+				"These count as ranger spells, but do not count against the number of spells I can know"
+			]),
+			spellcastingExtra : ["charm person", "misty step", "dispel magic", "dimension door", "mislead"],
+			spellcastingExtraApplyNonconform : true
+		},
+		"subclassfeature3.2" : {
+			name : "Otherworldly Glamour",
+			source : ["T", 59],
+			minlevel : 3,
+			description : desc([
+				"I add my Wisdom modifier (minimum of +1) to any Charisma check I make",
+				"I also gain proficiency my choice of Deception, Performance, or Persuasion"
+			]),
+			extraname : "Otherwordly Glamour",
+			extrachoices : ["Deception Proficiency", "Performance Proficiency", "Persuasion Proficiency"],
+			extraTimes : 1,
+				"deception proficiency" : {
+					name : "Deception Proficiency", description : "",
+					source : [["SRD", 13], ["P", 54]],
+					prereqeval : function(v) { return v.skillProfs.indexOf("Deception") !== 0; },
+					skills : ["Deception"]
 				},
-				"seasonal flowers" : {
-					name : "Fey Wanderer Magic",
-					description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "\n   " + "These count as ranger spells, but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power: fresh, seasonal flowers" + "\n   " + "sprout from my hair each dawn..",
+				"performance proficiency" : {
+					name : "Performance Proficiency", description : "",
+					source : [["SRD", 13], ["P", 54]],
+					prereqeval : function(v) { return v.skillProfs.indexOf("Performance") !== 0; },
+					skills : ["Performance"]
 				},
-				"herb or spice scent" : {
-					name : "Fey Wanderer Magic",
-					description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "\n   " + "These count as ranger spells, but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power: I faintly smell of cinnamon," + "\n   " + "lavender, nutmeg, or another comforting herb or spice.",
+				"persuasion proficiency" : {
+					name : "Persuasion Proficiency", description : "",
+					source : [["SRD", 13], ["P", 54]],
+					prereqeval : function(v) { return v.skillProfs.indexOf("Persuasion") !== 0; },
+					skills : ["Persuasion"]
 				},
-				"dancing shadow" : {
-					name : "Fey Wanderer Magic",
-					description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "\n   " + "These count as ranger spells, but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power: my shadow dances while no one" + "\n   " + "is looking directly at it.",
-				},
-				"horns or antlers" : {
-					name : "Fey Wanderer Magic",
-					description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "\n   " + "These count as ranger spells, but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power: horns or antlers sprout" + "\n   " + "from my head.",
-				},
-				"seasonal hair and skin" : {
-					name : "Fey Wanderer Magic",
-					description : "\n   " + "I add a spell to my known spells at level 3, 5, 9, 13, and 17" + "\n   " + "These count as ranger spells, but do not count against the number of spells I can know" + "\n   " + "I have a blessing from a fey ally or a place of fey power: my skin and hair change" + "\n   " + "color to match the season at each dawn.",
-				},
-			},
-			"subclassfeature3.3" : {
-				name : "Otherworldly Glamour",
-				source : ["TCoE", 59],
-				minlevel : 3,
-				description : "\n   " + "My fey qualities let me add my wisdom modifier (min. +1) to any charisma check." + "\n   " + "I also gain proficiency in Deception, Performance, or Persuasion.",
-				skillstxt : "Choose Deception, Performance, or Persuasion.",
-				addMod : [
-                    			{type : "skill", field : ["Persuasion"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
-                   			{type : "skill", field : ["Deception"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
-                    			{type : "skill", field : ["Performance"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
-                    			{type : "skill", field : ["Intimidation"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},            
-                			],
-				},
-			"subclassfeature7" : {
-				name : "Beguiling Twist",
-				source : ["TCoE", 59],
-				minlevel : 7,
-				description : ["\n   " + "My connection to the fey guards my mind, I have advantage against being charmed or" + "\n   " + "frightened. When I or a creature I can see within 120 feet succeeds on a save" + "\n   " + "against being charmed or frightened, I can use my reaction to force a different creature I" + "\n   " + "can see within 120 feet to make a Wisdom save against my spell DC. Upon failure I can" + "\n   " + "charm or frightened them for 1 minute. The creature can repeat the save each turn to end the effect."],
-				savetxt : { adv_vs : ["charmed", "frightened"] },
-				action : [["reaction", ""]],
-				},
-			"subclassfeature11" : {
-				minlevel : 11,
+			addMod :[
+				{type : "skill", field : ["Persuasion"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
+				{type : "skill", field : ["Deception"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
+				{type : "skill", field : ["Performance"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
+				{type : "skill", field : ["Intimidation"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"}          
+			],
+		},
+		"subclassfeature7" : {
+			name : "Beguiling Twist",
+			source : ["T", 59],
+			minlevel : 7,
+			description : desc([
+				"I have advantage on saves against being charmed or frightened",
+				"When me or a creature within 120 ft passes a save vs charm / frighten I can use my reaction",
+				"When I do this, I target another creature within 120 ft and force it to make a Wisdom save",
+				"The save is against my spell save DC, and if it fail it's charmed or frightened (my choice)",
+				"This lasts a minute, or until it repeats the save at the end of its turn and succeed"
+			]),
+			savetxt : { adv_vs : ["charmed", "frightened"] },
+			action : [["reaction", ""]],
+		},
+		"subclassfeature11" : {
+			minlevel : 11,
+			name : "Fey Reinforcements",
+			source : ["T", 59],
+			description : desc([
+				"I learn Summon Fey, can cast it once a long rest for free, and without material components",
+				"When I cast the spell, whether with or without using a spell slot, I can choose to change it",
+				"When I do, its duration changes to 1 minute, but it no-longer requires concentration"
+			]),
+			action : [["action", "Fey Reinforcements"]],
+			usages : 1,
+			recovery : "long rest",
+			spellcastingBonus : {
 				name : "Fey Reinforcements",
-				source : ["TCoE", 59],
-				description : "\n   " + "I learn and can cast \"Summon Fey\" without a material component, and I can modify it" + "\n   " + "to not require concentration by reducing the duration to 1 minute." + "\n   " + "I can also cast it without using a spell slot once per long rest.",
-				extraname : "Fey Wanderer 11",
-				"fey reinforcements" : {
-					name : "Fey Reinforcements",
-					source : [["TCoE", 59]],
-					description : desc([
-						"I can cast \"Summon Fey\" without using a spell slot once per long rest."]),
-					action : [["action", "bonus action"]],
-					usages : 1,
-					recovery : "long rest",
-					altResource : "SS 3+"
-				},
-				autoSelectExtrachoices : [{
-					extrachoice : "fey reinforcements",
-					minlevel : 11
-				}]
+				spellcastingAbility : 5,
+				spells : ["summon fey"],
+				selection : ["summon fey"]
 			},
-			"subclassfeature15" : {
-				name : "Misty Wanderer",
-				source : ["TCoE", 59],
-				minlevel : 15,
-				description : "\n   " + "I can cast \"Misty Step\" without using a spell slot a number of times equal to my Wisdom modifier" + "\n   " + "per long rest." + "\n   " +  "When casting \"Misty Step\" I can bring take willing creature I can see within 5 feet of me" + "\n   " + "to anywhere within 5 feet of my destination.",
-				extraname : "Fey Wanderer 15",
-				"misty wanderer" : {
-					name : "Misty Wanderer",
-					source : [["TCoE", 59]],
-					description : desc([ 
-						"I can cast \"Misty Step\" without using a spell slot a number of times equal to my Wisdom modifier per long rest."]),
-					action : [["bonus action", ""]],
-					usages : "Wisdom modifier per ",
-					usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-					recovery : "long rest",
-					altResource : "SS 2+"
-				},
-				autoSelectExtrachoices : [{
-					extrachoice : "misty wanderer",
-					minlevel : 15
-				}]
+			spellChanges : {
+				"summon fey" : {
+					components : "V,S",
+					compMaterial : "Using Fey Reinforcements, I can cast Summon Fey without requiring material components.",
+					description : "Summon choice of Fey Spirit; obeys commands after my turn; dissapears at 0 hp",
+					descriptionFull : "You call forth a fey spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fey Spirit stat block. When you cast the spell, choose a mood: Fuming, Mirthful, or Tricksy. The creature resembles a fey creature of your choice marked by the chosen mood, which determines one of the traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends." + "\n   " + "The creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger." + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+					changes : "Using Fey Reinforcements, I can cast Summon Fey without requiring material components.",
+				}
 			},
 		},
+		"subclassfeature15" : {
+			name : "Misty Wanderer",
+			source : ["T", 59],
+			minlevel : 15,
+			description : desc([
+				"I can cast Misty Step Wis mod times per long rest without using a spell slot",
+				"Also, whenever I cast Misty Step I can choose to bring a willing creature within 5 ft with me"
+			]),
+			action : [["bonus action", ""]],
+			usages : "Wisdom modifier per ",
+			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
+			recovery : "long rest",
+		},
 	}
-);
+});
 AddSubClass("ranger", "swarmkeeper", {
 	regExpSearch : /swarmkeeper/i,
 	subname : "Swarmkeeper",
