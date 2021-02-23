@@ -6458,6 +6458,7 @@ SpellsList["green-flame blade-tcoe"] = {
 SpellsList["intellect fortress"] = {
 	name : "Intellect Fortress",
 	classes : ["artificer", "bard", "sorcerer", "warlock", "wizard"],
+	source : ["T", 107],
 	level : 3,
 	school : "Abjur",
 	time : "1 a",
