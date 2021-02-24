@@ -4517,7 +4517,7 @@ CreatureList["steel defender"] = {
 	attacks : [{
 		name : "Force-Empowered Rend",
 		ability : 0,
-		damage : [1, 8, "piercing"],
+		damage : [1, 8, "force"],
 		range : "Melee (5 ft)",
 		modifiers : ["oInt", "Prof", ""]
 	}, {
