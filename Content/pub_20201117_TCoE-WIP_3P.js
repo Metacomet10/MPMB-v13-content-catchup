@@ -4321,7 +4321,7 @@ CreatureList["homunculus servant"] = {
 	alignment : "Neutral",
 	ac : 13,
 	hp : 1,
-	hd : [],
+	hd : [2,4],
 	speed : "20 ft, fly 30 ft",
 	scores : [4, 15, 12, 10, 10, 7],
 	saves : ["", 4, "", "", "", ""],
@@ -4339,10 +4339,10 @@ CreatureList["homunculus servant"] = {
 	attacksAction : 1,
 	attacks : [{
 		name : "Force Strike",
-		ability : 2,
+		ability : 0,
 		damage : [1, 4, "force"],
 		range : "30 ft",
-		modifiers : ["", "Prof-2", ""]
+		modifiers : ["oInt", "Prof", ""]
 	}],
 	features : [{
 		name : "Creator",
@@ -4372,8 +4372,8 @@ CreatureList["homunculus servant"] = {
 		ProfFld.setAction("Calculate", "event.value = Number(How('Proficiency Bonus'));");
 		ProfFld.readonly = true;
 		ProfFld.calcOrderIndex = tDoc.getField(prefix + "Comp.Use.Attack.1.To Hit").calcOrderIndex - 1;
-		// set perception to proficiency + 2 instead of expertise
-		AddSkillProf("Perception", true, false, false, 2, prefix);
+		// auto calculate hit die
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel);");
 		// add bonus action to first page
 		processActions(true, "Homunculus Servant", [["bonus action", " (command)"]], "Homunculus Servant");
 	},
@@ -4381,7 +4381,7 @@ CreatureList["homunculus servant"] = {
 		if (prefix) {
 			// reset type in top right
 			Value(prefix + 'Comp.Type', "Companion");
-			// reset HP and proficiency bonus calculation
+			// reset HP, HD and proficiency bonus calculation
 			var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
 			HPmaxFld.setAction("Calculate", "1");
 			HPmaxFld.readonly = false;
@@ -4389,6 +4389,7 @@ CreatureList["homunculus servant"] = {
 			var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
 			ProfFld.setAction("Calculate", "1");
 			ProfFld.readonly = false;
+			tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "1");
 		}
 		// remove action
 		if (!ClassList.artificer || ClassList.artificer.artificerCompFunc.find("homunculus servant").length < (prefix ? 2 : 1)) processActions(false, "Homunculus Servant", [["bonus action", " (command)"]], "Homunculus Servant");
@@ -4514,7 +4515,7 @@ CreatureList["steel defender"] = {
 	alignment : "Neutral",
 	ac : 15,
 	hp : 7,
-	hd : [],
+	hd : [3, 8],
 	speed : "40 ft",
 	scores : [14, 12, 14, 4, 10, 6],
 	saves : ["", 3, 4, "", "", ""],
@@ -4532,10 +4533,10 @@ CreatureList["steel defender"] = {
 	attacksAction : 1,
 	attacks : [{
 		name : "Force-Empowered Rend",
-		ability : 1,
-		damage : [1, 8, "piercing"],
+		ability : 0,
+		damage : [1, 8, "force"],
 		range : "Melee (5 ft)",
-		modifiers : ["", "Prof-2", ""]
+		modifiers : ["oInt", "Prof", ""]
 	}, {
 		name : "Deflect Attack (reaction)",
 		ability : 0,
@@ -4574,8 +4575,8 @@ CreatureList["steel defender"] = {
 		ProfFld.setAction("Calculate", "event.value = Number(How('Proficiency Bonus'));");
 		ProfFld.readonly = true;
 		ProfFld.calcOrderIndex = tDoc.getField(prefix + "Comp.Use.Attack.1.To Hit").calcOrderIndex - 1;
-		// set perception to proficiency + 2 instead of expertise
-		AddSkillProf("Perception", true, false, false, 2, prefix);
+		// auto calculate hit die
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel);");
 		// add bonus action to first page
 		processActions(true, "Steel Defender", [["bonus action", " (command)"], ["action", " (restore)"]], "Steel Defender");
 		// set extra abilities from artificer level
@@ -4596,7 +4597,7 @@ CreatureList["steel defender"] = {
 		if (prefix) {
 			// reset type in top right
 			Value(prefix + 'Comp.Type', "Companion");
-			// reset HP and proficiency bonus calculation
+			// reset HP, HD and proficiency bonus calculation
 			var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
 			HPmaxFld.setAction("Calculate", "1");
 			HPmaxFld.readonly = false;
@@ -4604,6 +4605,7 @@ CreatureList["steel defender"] = {
 			var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
 			ProfFld.setAction("Calculate", "1");
 			ProfFld.readonly = false;
+			tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "1");
 		}
 		// remove action
 		if (!ClassList.artificer || ClassList.artificer.artificerCompFunc.find("steel defender").length < (prefix ? 2 : 1)) processActions(false, "Steel Defender", [["bonus action", " (command)"], ["action", " (restore)"]], "Steel Defender");
