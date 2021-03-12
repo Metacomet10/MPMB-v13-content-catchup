@@ -43,3 +43,40 @@ RaceList["fairy"] = {
 	},
 	trait : "Fairy (+2 to one ability score of my choice, and +1 to a different score of my choice)\nType: I am Fey.\nFairy Flight: I have a magical fly speed equal to my walking speed and can hover. \nFairy Magic: I know the druidcraft and faerie fire spells, and can cast the latter without using a spell slot once per long rest, as well as using any slots I have. \nFey Passage: I can squeeze through a space as narrow as 1 inch wide.",
 };
+
+RaceList["rabbitfolk"] = {
+	regExpSearch : /rabbitfolk/i,
+	name : "Rabbitfolk",
+	sortname : "Rabbitfolk",
+	source : ["UA:FF", 2],
+	plural : "Rabbitfolk",
+	size : 3,
+	speed : {
+		walk : { spd : 30, enc : 20 },
+			},
+	skills : ["Perception"],
+	addMod : { type : "skill", field : "Init", mod : "prof" , text : "I can add my proficency modifer to initiative rolls." },
+	languageProfs : [1, "Common"],
+	scorestxt : "Rabbitfolk (+2 to one ability score of my choice, and +1 to a different score of my choice)",
+	features : {
+		"lucky footwork" : {
+			name : "Lucky Footwork",
+			action : ["reaction", ""],
+		},
+	},
+	trait : "Rabbitfolk (+2 to one ability score of my choice, and +1 to a different score of my choice)\n  Size: I am Small or Medium (my choice)\nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when i walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
+};
+
+AddRacialVariant("rabbitfolk", "medium", {
+	regExpSearch : /rabbitfolk medium/i,
+	name : "Rabbitfolk (medium)",
+	source : ["UA:GL", 2],
+	size : 3,
+});
+
+AddRacialVariant("rabbitfolk", "small", {
+	regExpSearch : /rabbitfolk small/i,
+	name : "Rabbitfolk (small)",
+	source : ["UA:GL", 2],
+	size : 4,
+	});
