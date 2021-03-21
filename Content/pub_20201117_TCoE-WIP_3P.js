@@ -6013,7 +6013,7 @@ FeatsList["gunner"] = {
 	calcChanges: {
 		atkAdd: [
 			function (fields, v) {
-				if (isRangedWeapon && ((/firearm/i).test(theWea.type) || (/firearm/i).test(theWea.list)) && fields.Proficiency) {
+				if (v.isRangedWeapon && ((/firearm/i).test(v.theWea.type) || (/firearm/i).test(v.theWea.list)) && fields.Proficiency) {
 					fields.Description = fields.Description.replace(/(,? ?loading|loading,? ?)/i, '');
 				};
 			},
