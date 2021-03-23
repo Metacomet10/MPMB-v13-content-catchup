@@ -22,7 +22,7 @@ RaceList["fairy"] = {
 		fly : { spd : "walk", enc : "walk" }
 			},
 	languageProfs : [1, "Common"],
-	scorestxt : "Fairy (+2 to one ability score of my choice, and +1 to a different score of my choice)",
+	scorestxt : "Fairy (+2/+1 to or +1/+1/+1 to ability scores of my choice)",
 	features : {
 		"fairy magic (druidcraft)" : {
 			name : "Fairy Magic (druidcraft)",
@@ -41,7 +41,7 @@ RaceList["fairy"] = {
 			},
 		},
 	},
-	trait : "Fairy (+2 to one ability score of my choice, and +1 to a different score of my choice)\nType: I am Fey.\nFairy Flight: I have a magical fly speed equal to my walking speed and can hover. \nFairy Magic: I know the druidcraft and faerie fire spells, and can cast the latter without using a spell slot once per long rest, as well as using any slots I have. \nFey Passage: I can squeeze through a space as narrow as 1 inch wide.",
+	trait : "Fairy (+2/+1 to or +1/+1/+1 to ability scores of my choice)\nType: I am Fey.\nFairy Flight: I have a magical fly speed equal to my walking speed and can hover. \nFairy Magic: I know the druidcraft and faerie fire spells, and can cast the latter without using a spell slot once per long rest, as well as using any slots I have. \nFey Passage: I can squeeze through a space as narrow as 1 inch wide.",
 };
 
 RaceList["feywild hobgoblin"] = {
@@ -59,7 +59,7 @@ RaceList["feywild hobgoblin"] = {
 	savetxt : {
 		adv_vs : ["charmed"]
 	},
-	scorestxt : "Feywild Hobgoblin (+2 to one ability score of my choice, and +1 to a different score of my choice)",
+	scorestxt : "Feywild Hobgoblin (+2/+1 to or +1/+1/+1 to ability scores of my choice)",
 	features : {
 		"fortune from the many" : {
 			name : "Fortune from the Many",
@@ -75,7 +75,7 @@ RaceList["feywild hobgoblin"] = {
 			recovery: "long rest",
 		}
 	},
-	trait : "Hobgoblin (+2 to one ability score of my choice, and +1 to a different score of my choice)\nFey Gift: I can take the help action as a bonus action a number of times equal to my proficency bonus per long rest. When I take the Help action, I can produce additional effects. \nFortune from the Many: When I miss an attack roll or fail an ability check or a saving throw, I can gain a bonus to the roll equal to the number of allies I can see within 30 feet (max +5). I can do this a number of times equal to my proficiency bonus per long rest."
+	trait : "Hobgoblin (+2/+1 to or +1/+1/+1 to ability scores of my choice)\nFey Gift: I can take the help action as a bonus action a number of times equal to my proficency bonus per long rest. When I take the Help action, I can produce additional effects. \nFortune from the Many: When I miss an attack roll or fail an ability check or a saving throw, I can gain a bonus to the roll equal to the number of allies I can see within 30 feet (max +5). I can do this a number of times equal to my proficiency bonus per long rest."
 };
 
 RaceList["owlfolk"] = {
@@ -92,7 +92,7 @@ RaceList["owlfolk"] = {
 	skills : ["Stealth"],
 	languageProfs : [1, "Common"],
 		vision : [["Darkvision", 60]],
-	scorestxt : "Owlfolk (+2 to one ability score of my choice, and +1 to a different score of my choice)",
+	scorestxt : "Owlfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice)",
 	features : {
 		"nimble flight" : {
 			name : "Nimble Flight",
@@ -107,7 +107,7 @@ RaceList["owlfolk"] = {
 			},
 		},
 	},
-	trait : "Owlfolk (+2 to one ability score of my choice, and +1 to a different score of my choice) \n Size: I am Small or Medium (my choice)\nWhen I fall, I can make a DC 10 dex save to stop falling  \nI can cast the Detect Magic spell as a ritual, as well as with any spell slots I may have",
+	trait : "Owlfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice) \n Size: I am Small or Medium (my choice)\nWhen I fall, I can make a DC 10 dex save to stop falling  \nI can cast the Detect Magic spell as a ritual, as well as with any spell slots I may have",
 };
 
 AddRacialVariant("owlfolk", "medium", {
@@ -115,7 +115,7 @@ AddRacialVariant("owlfolk", "medium", {
 	name : "Owlfolk (medium)",
 	source : ["UA:GL", 2],
 	size : 3,
-	trait : "Owlfolk (+2 to one ability score of my choice, and +1 to a different score of my choice) \n Size: I am Medium \nWhen I fall, I can make a DC 10 dex save to stop falling  \nI can cast the Detect Magic spell as a ritual, as well as with any spell slots I may have",
+	trait : "Owlfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice) \n Size: I am Medium \nWhen I fall, I can make a DC 10 dex save to stop falling  \nI can cast the Detect Magic spell as a ritual, as well as with any spell slots I may have",
 });
 
 AddRacialVariant("owlfolk", "small", {
@@ -123,7 +123,7 @@ AddRacialVariant("owlfolk", "small", {
 	name : "Owlfolk (small)",
 	source : ["UA:GL", 2],
 	size : 4,
-	trait : "Owlfolk (+2 to one ability score of my choice, and +1 to a different score of my choice) \n Size: I am Small \nWhen I fall, I can make a DC 10 dex save to stop falling  \nI can cast the Detect Magic spell as a ritual, as well as with any spell slots I may have",
+	trait : "Owlfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice) \n Size: I am Small \nWhen I fall, I can make a DC 10 dex save to stop falling  \nI can cast the Detect Magic spell as a ritual, as well as with any spell slots I may have",
 });
 
 RaceList["rabbitfolk"] = {
@@ -139,14 +139,14 @@ RaceList["rabbitfolk"] = {
 	skills : ["Perception"],
 	addMod : { type : "skill", field : "Init", mod : "prof" , text : "I can add my proficency modifer to initiative rolls." },
 	languageProfs : [1, "Common"],
-	scorestxt : "Rabbitfolk (+2 to one ability score of my choice, and +1 to a different score of my choice)",
+	scorestxt : "Rabbitfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice)",
 	features : {
 		"lucky footwork" : {
 			name : "Lucky Footwork",
 			action : ["reaction", ""],
 		},
 	},
-	trait : "Rabbitfolk (+2 to one ability score of my choice, and +1 to a different score of my choice)\n  Size: I am Small or Medium (my choice)\nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when I walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
+	trait : "Rabbitfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice)\n  Size: I am Small or Medium (my choice)\nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when I walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
 };
 
 AddRacialVariant("rabbitfolk", "medium", {
@@ -154,7 +154,7 @@ AddRacialVariant("rabbitfolk", "medium", {
 	name : "Rabbitfolk (medium)",
 	source : ["UA:GL", 2],
 	size : 3,
-	trait : "Rabbitfolk (+2 to one ability score of my choice, and +1 to a different score of my choice) \nSize: I am Medium \nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when I walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
+	trait : "Rabbitfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice) \nSize: I am Medium \nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when I walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
 });
 
 AddRacialVariant("rabbitfolk", "small", {
@@ -162,5 +162,5 @@ AddRacialVariant("rabbitfolk", "small", {
 	name : "Rabbitfolk (small)",
 	source : ["UA:GL", 2],
 	size : 4,
-	trait : "Rabbitfolk (+2 to one ability score of my choice, and +1 to a different score of my choice) \nSize: I am Small \nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when I walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
+	trait : "Rabbitfolk (+2/+1 to or +1/+1/+1 to ability scores of my choice) \nSize: I am Small \nWhen I fail a dexterity saving throw, I can use my reaction to add a D4 to the result, potentially making it a success. \nOnce during each of my turns when I walk at least 5 feet, I can hop an extra D12 feet without costing any movement ",
 	});
