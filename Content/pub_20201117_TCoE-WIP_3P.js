@@ -5855,8 +5855,8 @@ AddFeatureChoice(ClassList.warlock.features["eldritch invocations"], true, "Undy
 	},
 	spellcastingBonus : {
 		name : "Undying Servitude",
-		spells : ["sending"],
-		selection : ["sending"],
+		spells : ["animate dead"],
+		selection : ["animate dead"],
 		firstCol : "oncelr"
 	},
 
