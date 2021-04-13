@@ -2701,8 +2701,9 @@ AddSubClass("wizard", "bladesinging", {
 	}
 });
 AddSubClass("wizard","order of scribes", {
-	regExpSearch : /^(?=.*wizard)(?=.*order)(?=.*scribes).*$/i,
+	regExpSearch : /(scribe|scrivener)/i,
 	subname : "Order of Scribes",
+	fullname : "Scrivener",
 	source : ["T",77],
 	features : {
 		"subclassfeature2" : {
@@ -2710,116 +2711,115 @@ AddSubClass("wizard","order of scribes", {
 			source : ["T",77],
 			minlevel : 2,
 			description : desc([
-				"As a bonus action, I can magically create a Tiny quill. It disappears if I ",
-				"create another one or I die.  It has the following properties:",
-				"\u25C6 It doesn't require ink; produces ink in color of my choice",
-				"\u25C6 If used for spell transcribing, 2 minutes per spell level",
-				"\u25C6 As a bonus action, I can erase any text I've written with the quill",
-				"  as long as it's within 5 ft",
+				"As a bonus action, I can magically create a Tiny quill with the following properties:",
+				"\u2022 It doesn't require ink; when writing, produces ink of any color",
+				"\u2022 Time to transcribe spells is 2 minutes per spell level",
+				"\u2022 As a bonus action, I can erase its writing; must be within 5 ft"
 			]),
-			action : [["bonus action","create quill"],["bonus action","erase text"]]
+			action : [["bonus action"," (create/erase)"]]
 		},
 		"subclassfeature2.1" : {
 			name : "Awakened Spellbook",
 			source :["T",77],
 			minlevel : 2,
 			description : desc ([
-				"I have awakened an arcane sentience within my spellbook.",
-				"While I am holding the book, it grants me the followings benefits",
-				"\u25C6 I can use the book as a spellcasting focus for my wizard spells",
-				"\u25C6 When I cast a wizard spell with a spell slot, I can temp. replace its",
-				"  damage type with another type of a spell in my spellbook of the same",
-				"  level as the slot used to cast this spell",
-				"\u25C6 When I cast a wizard spell as a ritual, I can use the spell's normal",
-				"  casting time, rather than adding 10 minutes to it.  Once I use this benefit",
-				"  I can't use it again until I take a long rest.",
-				"Can replace the book over a short rest by using my Wizardly Quill to write arcane",
-				"sigils in a blank book or a spellbook to which I am attuned. All spells vanish from",
-				"previous book if it exists somewhere."
+				"My spellbook gains sentience, granting the following benefits while held:",
+				"\u2022 I can use the book as a spellcasting focus for my wizard spells",
+				"\u2022 I can change the damage type of wizard spells I cast that use spell slots",
+				"    The type must be from a spell in my spellbook with the same level as the spell slot",
+				"    This effect only applies to a single instance of casting the spell",
+				"\u2022 Once per long rest, I can ritual cast a wizard spell using its normal casting time",
+				"I can replace the spellbook over a short rest; transferring spells and sentience",
+				"\u2022 I do so by writing arcane sigils in a mundane spellbook/attuned magical spellbook",
+				"\u2022 Spells vanish from the previous awakened spellbook, if it exists"
 			]),
-			usages : 1,
-			recovery : "long rest"
+			extraLimitedFeatures : [{
+				name : "Awakened Spellbook (cast ritual)",
+				usages : 1,
+				recovery : "long rest"
+			}]
+		},
+		"subclassfeature6" : {
+			name : "Manifest Mind",
+			source : ["T",78],
+			minlevel : 6,
+			description : desc([
+				"As a bonus action, I can cause the mind of my spellbook to manifest as a Tiny object",
+				"I can do this once per long rest, or by expending a spell slot (SS 1+) to manifest it again",
+			]),
+			additional : "See 3rd Page Notes",
+			toNotesPage : [{
+				name : "Manifest Mind",
+				source : ["T",78],
+				popupName : "Manifest Mind",
+				page3notes : true,
+				note : desc ([
+					"As a bonus action, I can cause the mind of my spellbook to manifest as a Tiny object",
+					"It appears hovering in an unoccupied space within 60ft",
+					"While manifested, the spectral mind has the following properties:",
+					"\u2022 It's intangible and doesn't occupy its space; can pass though creatures, but not objects",
+					"\u2022 It sheds dim light in a 10 ft radius",
+					"\u2022 It appears as my choice of: ghostly tome, cascade of text, or a scholar from my past",
+					"\u2022 It can see and hear, and it has darkvision with a range of 60 ft",
+					"\u2022 It can telepathically share with you what it sees and hears, no action required",
+					"\u2022 I can cast a spell a wizard spell from its space, using its senses",
+					"\u2022 As a bonus action, I can cause it to hover 30 ft to a seen, unoccupied space",
+					"The mind stops manifesting if:",
+					"\u2022 It is more than 300 ft away from me; someone casts dispel magic on it",
+					"\u2022 If the Awakened Spellbook is destroyed; I die",
+					"\u2022 I dismiss it as a bonus action"
+				])
+			}],
+			action : [["bonus action"," (conjure/move/dismiss)"]],
+			extraLimitedFeatures : [{
+				name : "Manifest Mind",
+				usages : 1,
+				recovery : "long rest",
+				altResource : "SS 1+"
+			},{
+				name : "Manifest Mind: Cast Spell",
+				usages : "Prof. Bonus per ",
+				recovery : "long rest",
+				usagescalc : "event.value = What('Proficiency Bonus');",
+			}]
 		},
 		"subclassfeature10" : {
 			name : "Master Scrivener",
 			source : ["T",79],
 			minlevel : 10,
 			description : desc([
-				"Whenever I finish a long rest, I can create a magic scroll by touching my Wizardly",
-				"Quill to a blank piece of paper or parchment and causing one spell from my Awakened",
-				"Spellbook to be copied onto the scroll.  The spellbook must be within 5 ft to do this.",
-				"Chosen spell must be 1st or 2nd level and have a casting time of 1 action.  Once in the",
-				"scroll, the spell's power is enhanced counting as 1 level higher than normal.  I can",
-				"cast this spell as an action by reading the scroll.  No one else can read it and it",
-				"vanishes when I cast it or finish my next long rest.",
-				"When I craft spell scrolls, gold and time are halved when using my Wizardly Quill."
+				"After a long rest, I can create one spell scroll; See 3rd Page Notes",
+				"Using my Wizardly Quill, the gold and time spent to craft spell scrolls is halved"
 			]),
-			usages : 1,
-			recovery : "long rest",
-			action : ["action","cast Scrivener scroll"]
-	},
-	"subclassfeature6" : {
-		name : "Manifest Mind",
-		source : ["T",78],
-		minlevel : 6,
-		description : desc([
-			"As a bonus action, I can cause my Awakened Spellbook to manifest. See \"Notes\" page",
-			"Once conjured, I can't do so again until I finish a long rest or expend a spell",
-			"slot of any level."
-		]),
-		toNotesPage : [{
-			name : "Manifest Mind",
-			source : ["T",78],
-			popupName : "Manifest Mind",
-			page3notes : false,
-			note : desc (["As a bonus action with my Awakened Spellbook on my person, I can cause the mind to",
-			"manifest as a Tiny spectral object, hovering in an unoccupied space of my choice within",
-			"60 ft. It is intangible and doesn't occupy its space, and it sheds dim light in a 10 ft radius.",
-			"It looks like a ghostly tome, a cascade of text, or a scholar from the past \(my choice.\).",
-			"\(See Companion Page for statistics for this construct.\)",
-			"While manifested, it can hear and see and has darkvision with a range of 60 ft.  It can",
-			"share what it sees and hears with me (no action required).",
-			"Whenever I cast a wizard spell on my turn, I can cast it as if I were in the spectral mind's",
-			"space, using its senses.  I can do this a number of times per day equal to my proficiency",
-			"bonus, and I regain all uses when I finish a long rest.",
-			"As a bonus action, I can cause it to hover up to 30 ft to an unoccupied space that I or it",
-			"can see. It can pass through creatures but not objects.  It stops manifesting if it is ever",
-			"more than 300 ft away from me, if it drops to 0 hit points, if I die, or if I dismiss it as",
-			"a bonus action."
+			action : ["action", " (cast scroll)"],
+			toNotesPage : [{
+			name : "Master Scrivener",
+			source : ["T",79],
+			popupName : "Master Scrivener",
+			page3notes : true,
+			note : desc ([
+				"After a long rest, I can create one spell scroll; spell is from my Awakened Spellbook",
+				"To do so, I touch my Wizardly Quill to paper/parchment; spellbook must be within 5 ft",
+				"The spell must be of 1st or 2nd level and have a casting time of 1 action",
+				"Once in the scroll, the spell's level increases by 1 and is unintelligle to anyone else",
+				"The spell vanishes from the scroll when it is cast or after my next long rest"
 			])
-		}],
-/*		eval : function() {
-			var companionFunctions = ClassList.artificer ? ClassList.artificer.artificerCompFunc : ClassList.wizard.artificer.CompFunc;
-			companionFunctions.add("Manifest Mind");
-			ClassList.wizard.wizardCompFunc.update(10, What('Int mod'),What('AC'),What('Str mod'),What('Dex mod'),What('Con mod'),What('Wis mod'),What('Cha mod'));
+		}]
 		},
-		removeeval : function() {
-			var companionFunctions = ClassList.artificer ? ClassList.artificer.artificerCompFunc : ClassList.wizard.artificerCompFunc;
-			companionFunctions.remove("Manifest Mind");
-		},
-*/
-		action : [["bonus action",""],["bonus action","Hover spellbook 30ft"],["bonus action","dismiss Manifestation"]],
-		//usages : "Prof. Bonus per ",
-		//usagescalc : "event.value = What('Proficiency Bonus');",
-		recovery : "long rest"
-		
-	},
-	"subclassfeature14" : {
-		name : "One with the Word",
-		source : ["T",79],
-		minlevel : 14,
-		description : desc([
-			"While Awakened Spellbook is on my person, advantage on Intelligence (Arcana) checks.",
-			"If I take damage while Awakened Spellbook is manifested, I can use reaction to dismiss",
-			"the manifected book to prevent all damage. Roll 3d6 and temporarily lose combined",
-			"spells of that level in Awakened spellbook. If not enough spells, I drop to 0 hp.",
-			"I must finish 1d6 long rests to regain lost spells (cannot cast them from scrolls"
-		]),
-		action : ["reaction","dismiss/prevent dmg"],
-		//usages : "Prof. Bonus per ",
-		//usagescalc : "event.value = What('Proficiency Bonus');",
-		usages : "1x per 1d6 ",
-		recovery : "long rest"
+		"subclassfeature14" : {
+			name : "One with the Word",
+			source : ["T",79],
+			minlevel : 14,
+			description : desc([
+				"I have advantage on Arcana checks while my Awakened Spellbook is on my person",
+				"If damaged while my spellbook is manifested, I can use a reaction to dismiss it",
+				"If I do, I prevent all of the damage taken",
+				"I temporarily lose spells with a combined level of 3d6 from my Awakened Spellbook",
+				"If I do not have enough spells to cover the number rolled, I drop to 0 HP",
+				"The spells vanish from the spellbook, reappearing after 1d6 long rests",
+				"Spells lost this way cannot be cast, even if found on a scroll or another spellbook"
+			]),
+			action : ["reaction"," (when damaged)"]
 		}
 	}
 });
