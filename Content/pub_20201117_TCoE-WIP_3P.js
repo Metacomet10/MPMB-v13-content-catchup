@@ -6666,6 +6666,7 @@ SpellsList["tasha's caustic brew"] = {
     components : "V,S,M",
     compMaterial : "A bit of rotten food",
 	duration : "Conc, 1 min",
+	save : "Dex",
     description : "Crea in line save or 2d4+2d4/SL Acid dmg at start of turn; action remove from self or adjacent crea",
 	descriptionFull : "A stream of acid emanates from you in a line 30 feet long and 5 feet wide in a direction you choose. Each creature in the line must succeed on a Dexterity saving throw or be covered in acid for the spell's duration or until a creature uses its action to scrape or wash the acid off itself or another creature. A creature covered in the acid takes 2d4 acid damage at start of each of its turns."  + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 2d4 for each slot level above 1st."
 };
@@ -6680,6 +6681,7 @@ SpellsList["tasha's mind whip"] = {
 	range : "90 ft",
     components : "V",
 	duration : "1 rnd",
+	save : "Int",
     description : "1+1/SL save or 3d6 Psychic dmg, save halves; loses reaction; can only move, action, or bns next turn",
 	descriptionFull : "You psychically lash out at one creature you can see within range. The target must make an Intelligence saving throw. On a failed save, the target takes 3d6 psychic damage, and it can't take a reaction until the end of its next turn. Moreover, on its next turn, it must choose whether it gets a move, an action, or a bonus action; it gets only one of the three. On a successful save, the target takes half as much damage and suffers none of the spell's other effects."  + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd. The creatures must be within 30 feet of each other when you target them."
 };
