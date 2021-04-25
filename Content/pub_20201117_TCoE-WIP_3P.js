@@ -2027,7 +2027,7 @@ AddSubClass( // this is the function you will be calling to add the variant
 
 		subname : "Soulknife", //required; the name of the subclass
 
-		source : ["T", 63], //required; the source and the page number. "HB" stands for homebrew. See the "Complete SourceList" for an overview of sources that are already defined. Or define a new source using the "Homebrew Syntax - SourceList.js". // This can be an array of arrays to indicate the things appears in multiple sources. For example, if something appears on page 7 of the Elemental Evil Player's Companion and on page 115 of the Sword Coast Adventure Guide, use the following: [["E", 7], ["S", 3415]]
+		source : ["T", 63], //required; the source and the page number. "HB" stands for homebrew. See the "Complete SourceList" for an overview of sources that are already defined. Or define a new source using the "Homebrew Syntax - SourceList.js". // This can be an array of arrays to indicate the things appears in multiple sources. For example, if something appears on page 7 of the Elemental Evil Player's Companion and on page 115 of the Sword Coast Adventure Guide, use the following: [["E", 7], ["S", 115]]
 
 		// after defining the above three, you don't need to define anything more, but you can. Defining more stuff will overwrite the entries as they are given in the ClassList. So if you do not need something to be different than the basics of the class (for example, you subclass uses the same spellcasting ability), then you don't need to define it again.
 		// For the syntax of how to define more stuff, look at the ClassList (see "Homebrew Syntax - ClassList.js"). You can define all the same stuff in the same way. The below are a couple of examples:
@@ -2047,7 +2047,7 @@ AddSubClass( // this is the function you will be calling to add the variant
                 description : desc([ 
                                         "I have twice my proficiency bonus of Psionic Energy dice that start as d6's.They fuel",
                                         "various psionic powers, and I can't use a power that needs a psionic die if I don't",
-                                        "have any left. The die goes up as you gain levels: at 5th (d8), 341th (d10), 347th (d12).",
+                                        "have any left. The die goes up as you gain levels: at 5th (d8), 11th (d10), 17th (d12).",
                                         "Psi-Bolstered Knack. If I fail an ability check using a skill or tool that I'm",
                                         "proficient with, roll one Psionic Energy die and add the number to the check.",
                                         "You expend the die only if the roll succeeds.",
