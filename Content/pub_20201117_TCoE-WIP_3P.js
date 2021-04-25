@@ -111,9 +111,9 @@ AddSubClass("barbarian", "path of the beast", {
 				"When I enter my rage, I can transform, revealing the bestial power within me.",
 				" Until the rage ends, I manifest a natural weapon. It counts as a simple melee weapon for me, and I add my Strength modifier to the attack and damage rolls when I attack with it, as normal.",
 				" I choose the weapon's form each time I rage:",
-				"Bite. My mouth transforms, which deals ld8 piercing damage on a hit. Once on each of my turns when I damage a creature with this bite, I regain a number of hit points equal to my proficiency bonus, provided I have less than half my hit points when I am hit.", 
-				"Claws. My hands transform into claws which deal ld6 slashing damage, which I can use as weapons if they are empty. Once on each of my turns when I attack with a claw using the Attack action, I can make one additional claw attack as part of the same action.",
-				"Tail. I grow a tail, which deals ld8 piercing damage on a hit and has the reach property. If a creature I can see within 10 feet of me hits me with an attack roll, I can use my reaction to swipe your tail and roll a d8, applying a bonus to your AC equal to the number rolled, potentially causing the attack to miss."
+				"Bite. My mouth transforms, which deals 1d8 piercing damage on a hit. Once on each of my turns when I damage a creature with this bite, I regain a number of hit points equal to my proficiency bonus, provided I have less than half my hit points when I am hit.", 
+				"Claws. My hands transform into claws which deal 1d6 slashing damage, which I can use as weapons if they are empty. Once on each of my turns when I attack with a claw using the Attack action, I can make one additional claw attack as part of the same action.",
+				"Tail. I grow a tail, which deals 1d8 piercing damage on a hit and has the reach property. If a creature I can see within 10 feet of me hits me with an attack roll, I can use my reaction to swipe your tail and roll a d8, applying a bonus to your AC equal to the number rolled, potentially causing the attack to miss."
 				]
 			}]
 		},
@@ -198,12 +198,12 @@ AddSubClass("barbarian", "path of wild magic", {
 					"d8\tEFFECT",
 					" 1\tShadowy tendrils lash around me. Each creature of my choice that I can see within 30 feet of me must succeed on a Constitution saving throw or take 1dl2 necrotic damage. I also gain 1d12 temporary hit points.",
 					" 2\tI teleport up to 30 feet to an unoccupied space I can see. Until my rage ends, I can use this effect again on each of my turns as a bonus action.",
-					" 3\tAn intangible spirit, which looks like a flumph or a pixie (my choice), appears within 5 feet of one creature of my choice that I can see within 30 feet of me. At the end of the current turn, the spirit explodes, and each creature within 5 feet of it must succeed on a Dexterity saving throw or take ld6 force damage. Until my rage ends, I can use this effect again, summoning another spirit, on each of my turns as a bonus action.",
+					" 3\tAn intangible spirit, which looks like a flumph or a pixie (my choice), appears within 5 feet of one creature of my choice that I can see within 30 feet of me. At the end of the current turn, the spirit explodes, and each creature within 5 feet of it must succeed on a Dexterity saving throw or take 1d6 force damage. Until my rage ends, I can use this effect again, summoning another spirit, on each of my turns as a bonus action.",
 					" 4\tMagic infuses one weapon of my choice that I am holding. Until my rage ends, the weapon's damage type changes to force, and it gains the light and thrown properties, with a normal range of 20 feet and a long range of 60 feet. If the weapon leaves my hand, the weapon reappears in my hand at the end of the current turn.",
-					" 5\tWhenever a creature hits me with an attack roll before my rage ends, that creature takes ld6 force damage, as magic lashes out in retribution.",
+					" 5\tWhenever a creature hits me with an attack roll before my rage ends, that creature takes 1d6 force damage, as magic lashes out in retribution.",
 					" 6\tUntil my rage ends, I am surrounded by multicolored, protective lights; I gain a +l bonus to AC, and while within 10 feet of me, my allies gain the same bonus.",
 					" 7\tFlowers and vines temporarily grow around me; until my rage ends, the ground within 15 feet of me is difficult terrain for my enemies.",
-					" 8\tA bolt of light shoots from my chest. Another creature of my choice that I can see within 30 feet of me rust succeed on a Constitution Saving throw or take ld6 radiant damage and be blinded until the start of my next turn. Until my rage ends, I can use this effect again on each of my turns as a bonus action."
+					" 8\tA bolt of light shoots from my chest. Another creature of my choice that I can see within 30 feet of me rust succeed on a Constitution Saving throw or take 1d6 radiant damage and be blinded until the start of my next turn. Until my rage ends, I can use this effect again on each of my turns as a bonus action."
 				]
 			}]
 		},
@@ -2983,7 +2983,7 @@ ClassList.artificer = {
 					"This armor has 6 charges. The wearer can expend the armor's charges in the following ways:",
                     "When the wearer makes a Strength check or a Strength saving throw, it can expend 1 charge to add a bonus to the roll equal to its Intelli­gence modifier.",
                     "If the creature would be knocked prone, it can use its reaction to expend 1 charge to avoid being knocked prone",
-                    "The armor regains ld6 expended charges daily at dawn."
+                    "The armor regains 1d6 expended charges daily at dawn."
 				]),
 				additional : "suit of armor; requires attunement",
 				eval : function (lvl, chc) { AddMagicItem("Armor of Magical Strength"); },
@@ -3115,7 +3115,7 @@ ClassList.artificer = {
 				name : "Mind Sharpener",
 				source : [["T", 22]],
 				description : desc([
-					"This suit of armor or set of robes has 4 charges, regaining ld4 expended charges daily at dawn",
+					"This suit of armor or set of robes has 4 charges, regaining 1d4 expended charges daily at dawn",
                     "When the wearer fails a concentration check on a spell, it can expend 1 charge to succeed instead."
 				]),
 				additional : "suit of armor or robes",
@@ -4186,7 +4186,7 @@ MagicItemsList["radiant weapon"] = {
 	source : [["T", 22]],
 	type : "weapon (any)",
 	description : "This item adds a +1 on its to hit and damage, has 4 charges, and regains 1d4 at dawn. As a bonus action, I can have it start/stop shedding light, bright in 30 ft, dim in another 30 ft. As a reaction if hit by an attack, I can use 1 charge to blind the attacker until the end of its next turn unless it makes a Con save (my spell DC).",
-	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it. While holding it, the wielder can take a bonus action to cause it to shed bright light in a 30-foot radius and dim light for an additional 30 feet. The wielder can extinguish the light as a bonus action.\n   The weapon has 4 charges. As a reaction immediately after being hit by an attack, the wielder can expend 1 charge and cause the attacker to be blinded until the end of the attacker's next turn, unless the attacker suc­ceeds on a Constitution saving throw against your spell save DC. The weapon regains ld4 expended charges daily at dawn. ",
+	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it. While holding it, the wielder can take a bonus action to cause it to shed bright light in a 30-foot radius and dim light for an additional 30 feet. The wielder can extinguish the light as a bonus action.\n   The weapon has 4 charges. As a reaction immediately after being hit by an attack, the wielder can expend 1 charge and cause the attacker to be blinded until the end of the attacker's next turn, unless the attacker suc­ceeds on a Constitution saving throw against your spell save DC. The weapon regains 1d4 expended charges daily at dawn. ",
 	attunement : true,
 	usages : 4,
 	recovery : "dawn",
@@ -4256,7 +4256,7 @@ MagicItemsList["repulsion shield"] = {
 	source : [["T", 23]],
 	type : "shield",
 	description : "I gain an additional +1 bonus to Armor Class while wielding this shield. The shield has 4 charges and regains 1d4 expended charges daily at dawn. As a reaction immediately after being hit by a melee attack, I can expend 1 charge to push the attacker up to 15 ft away.",
-	descriptionFull : "A creature gains a + 1 bonus to Armor Class while wield­ing this shield.\n   The shield has 4 charges. While holding it, the wielder can use a reaction immediately after being hit by a me­lee attack to expend 1 of the shield's charges and push the attacker up to 15 feet away. The shield regains ld4 expended charges daily at dawn. ",
+	descriptionFull : "A creature gains a + 1 bonus to Armor Class while wield­ing this shield.\n   The shield has 4 charges. While holding it, the wielder can use a reaction immediately after being hit by a me­lee attack to expend 1 of the shield's charges and push the attacker up to 15 feet away. The shield regains 1d4 expended charges daily at dawn. ",
 	weight : 6,
 	attunement : true,
 	usages : 4,
