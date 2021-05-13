@@ -827,6 +827,96 @@ MagicItemsList["cauldron of plenty"] = {
 	recovery : "dawn"
 };
 
+MagicItemsList["chwinga charms"] = {
+	name : "Chwinga Charms",
+	source : ["IDRotF"],
+	type : "wondrous item",
+	rarity : "rare",
+	descriptionFull : "This tiny object looks like a snowflake. Different types of chwinga charms exist, each with a different effect.",
+	allowDuplicates : true,
+	choices : ["Animal Conjuring", "Biting Cold", "Bounty", "Cold Resistance", "Heroism", "Snowball Strike", "The Ice Troll", "The Snow Walker", "The Traveler's Haven", "Vitality"],
+	"animal conjuring" : {
+		description : "This tiny object looks like a snowflake. As an action, I can cast the Conjure Animals spell (3rd-level version). The charm disappears after 3 uses.",
+		usages : 3,
+		recovery : "never",
+		spellFirstColTitle : "Ch",
+		spellcastingBonus : [{
+		name : "1 charge",
+		spells : ["conjure animals"],
+		selection : ["conjure animals"],
+		firstCol : "1",
+		}],
+		action : [["action", ""]]
+	},
+	"biting cold" : {
+		description : "This tiny object looks like a snowflake. As a bonus action, I can can expend 1 of the charm's charges to wreathe my weapon attacks with biting cold for 1 minute. Until this effect ends, I deal an extra 1d6 cold damage when I hit with a melee or ranged weapon attack. The charm disappears after 3 uses.",
+		usages : 3,
+		recovery : "never",
+		action : [["bonus action", ""]]
+	},
+	"bounty" : {
+		description : "This tiny object looks like a snowflake. As an action, I can can expend 1 of the charm's charges to cast the Create Food And Water spell, requiring no components. The charm disappears after 3 uses.",
+		usages : 3,
+		recovery : "never",
+		spellFirstColTitle : "Ch",
+		spellcastingBonus : [{
+		name : "1 charge",
+		spells : ["create food and water"],
+		selection : ["create food and water"],
+		firstCol : "1",
+		}],
+		action : [["action", ""]]
+	},
+	"cold resistance" : {
+		description : "This tiny object looks like a snowflake. As an action, I can can expend the charm to give myself resistance to cold damage for 24 hours.",
+		usages : 1,
+		recovery : "never",
+		action : [["action", ""]]
+	},
+	"heroism" : {
+		description : "This tiny object looks like a snowflake. As an action, I can can expend the charm to give myself the benefit of a Potion of Heroism. I gain 10 temporary hit points that last for 1 hour and am under the effect of the Bless spell (no concentration required).",
+		usages : 1,
+		recovery : "never",
+		action : [["action", ""]]
+	},
+	"snowball strike" : {
+		description : "As a bonus action, I can can expend 1 of the charm's charges to create a magical snowball in my hand and throw it. The snowball is a magic ranged weapon , has a 20/60 range, deals 1d4 cold damage, and scores a critical hit on a roll of 19 or 20. On a critical hit, the target is blinded until the end of its next turn",
+		usages : 5,
+		recovery : "never",
+		action : [["bonus action", ""]]
+	},
+	"the ice troll" : {
+		description : "This tiny object looks like a snowflake. As a reaction when I take cold damage, I can expend the charm to reduce the damage to 0. I regain a number of hit points equal to half the cold damage I would have taken.",
+		usages : 1,
+		recovery : "never",
+		action : [["reaction", ""]]
+	},
+	"the snow walker" : {
+		description : "As an action, I can expend 1 of the charm's charges to gain these 24 hour benefits: I can see 60 ft through areas heavily obscured by snow, I am immune to the effects of extreme cold (described in DMG), and I and my allies within 15 feet of me ignore snow/ice difficult terrain. The charm disappears after 3 uses.",
+		usages : 3,
+		recovery : "never",
+		action : [["action", ""]]
+	},
+	"the traveler's haven" : {
+		description : "This tiny object looks like a snowflake. As an action, I can expend 1 of the charm's charges to cast the Leomund's Tiny Hut spell, no components required. The charm disappears after 3 uses.",
+		usages : 3,
+		recovery : "never",
+		spellFirstColTitle : "Ch",
+		spellcastingBonus : [{
+		name : "1 charge",
+		spells : ["leomund's tiny hut"],
+		selection : ["leomund's tiny hut"],
+		firstCol : "1",
+		}],
+	},
+	"vitality" : {
+		description : "As an action, I can can expend the charm to give myself the benefit of a Potion of Vitality. I remove any exhaustion I am suffering and am cured of any disease or poison affecting me. For the next 24 hours, I regain the maximum number of hit points for any Hit Die I spend.",
+		usages : 1,
+		recovery : "never",
+		action : [["action", ""]]
+	}
+};
+
 var hookOfFishersDelightDescription = [
 	"This tiny silver fishhook has a little gold feather attached to it. For it to function, the feathered hook must be tied to the end of a fishing line and immersed in enough water to fill at least a 10-foot cube. At the end of each uninterrupted hour of immersion, roll a d6. On a 6, a floppy, 6-inch-long magical fish appears on the end of the hook. The color and properties of the conjured fish are determined by rolling on the Hook of Fisher's Delight table. Once the hook conjures a fish, it can't do so again until the next dawn.",
 	">>d20\tFish color\t\tResult<<",

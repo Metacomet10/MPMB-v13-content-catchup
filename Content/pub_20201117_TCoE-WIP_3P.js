@@ -18,6 +18,7 @@ SourceList.T = {
 	name : "Tasha's Cauldron of Everything", 
 	abbreviation : "TCoE",
 	group : "Primary Sources",
+	url : "https://dnd.wizards.com/products/tabletop-games/rpg-products/tashas-cauldron-everything",
 	date : "2020/11/17",
 };
 
@@ -102,7 +103,13 @@ AddSubClass("barbarian", "path of the beast", {
 			name : "Form of the Beast",
 			source : ["T", 24],
 			minlevel : 3,
-			description : "\n   Whenever I enter my rage, I can transform using an option from the Form of the Beast table (see Notes page)",
+			description : desc([
+				"When I enter my rage, I can transform to gain a bite, tail, or claws attack for that rage",
+				"The bite attack allows me to regain my prof bonus in HP on a hit once on my turn, providing",
+				"I am at less than half my maximum hit points when I bite",
+				"The claws attack allows me to make one extra attack when I use it in my Attack action",
+				"The tail attack allows me to use my reaction to add a d8 to AC versus that attack"
+			]),
 			toNotesPage : [{
 				name : "Form of the Beast Table",
 				source : ["T", 24],
@@ -114,8 +121,48 @@ AddSubClass("barbarian", "path of the beast", {
 				"Bite. My mouth transforms, which deals 1d8 piercing damage on a hit. Once on each of my turns when I damage a creature with this bite, I regain a number of hit points equal to my proficiency bonus, provided I have less than half my hit points when I am hit.", 
 				"Claws. My hands transform into claws which deal 1d6 slashing damage, which I can use as weapons if they are empty. Once on each of my turns when I attack with a claw using the Attack action, I can make one additional claw attack as part of the same action.",
 				"Tail. I grow a tail, which deals 1d8 piercing damage on a hit and has the reach property. If a creature I can see within 10 feet of me hits me with an attack roll, I can use my reaction to swipe your tail and roll a d8, applying a bonus to your AC equal to the number rolled, potentially causing the attack to miss."
-				]
-			}]
+				],
+			}],
+			weaponOptions : [{
+				regExpSearch : /^(?=.*(bestial|beast))(?=.*bite).*$/i,
+				name : "Bestial Bite",
+				source : [["T", 24]],
+				ability : 1,
+				type : "Simple",
+				damage : [1, 8, "piercing"],
+				range : "Melee",
+				description : "Only in rage; (1/my turn) if less than half max hp, regain prof bonus in HP",
+				abilitytodamage : true,
+				bestialNaturalWeapon : true
+			}, {
+				regExpSearch : /^(?=.*(bestial|beast))(?=.*claws?).*$/i,
+				name : "Bestial Claws",
+				source : [["T", 24]],
+				ability : 1,
+				type : "Simple",
+				damage : [1, 6, "slashing"],
+				range : "Melee",
+				description : "Only in rage; Extra attack as part of Attack action",
+				abilitytodamage : true,
+				bestialNaturalWeapon : true
+			}, {
+				regExpSearch : /^(?=.*(bestial|beast))(?=.*tail).*$/i,
+				name : "Bestial Tail",
+				source : [["T", 24]],
+				ability : 1,
+				type : "Simple",
+				damage : [1, 8, "piercing"],
+				range : "Melee",
+				description : "Only in rage; Reach",
+				abilitytodamage : true,
+				bestialNaturalWeapon : true,
+
+			}],
+			weaponsAdd : ["Bestial Bite", "Bestial Claws", "Bestial Tail"],
+			additional : levels.map(function(n) {
+				return n < 6 ? "" : "chosen weapon counts as magical";
+			}),
+			action : [["reaction", "Beastial Tail (d8 to AC)"]],
 		},
 		"subclassfeature6" : {
 			name : "Beastial Soul",
@@ -161,7 +208,7 @@ AddSubClass("barbarian", "path of the beast", {
 			usagescalc : "event.value = What('Proficiency Bonus')",
 			recovery: "long rest",
 		},
-	}
+	},
 });
 AddSubClass("barbarian", "path of wild magic", {
 	regExpSearch : /^(?=.*\bwild\b)(?=.*\bmagic\b).*$/i,
@@ -417,7 +464,7 @@ AddSubClass("cleric", "order domain-tcoe", {
 				"If failed, it is charmed by me until the end of my next turn or it takes any damage",
 				"Also, I can choose to have a charmed target drop what its holding when it fails its save"
 			]),
-			action : ["action", ""]
+			action : [["action", ""]]
 		},
 		"subclassfeature6" : {
 			name : "Embodiment of the Law",
@@ -455,7 +502,7 @@ AddSubClass("cleric", "order domain-tcoe", {
 				atkAdd : [
 					function (fields, v) {
 						if (classes.known.cleric && classes.known.cleric.level > 7 && !v.isSpell) {
-							fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.cleric.level < 14 ? 1 : 2) + 'd8 psychic damage';
+							fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.cleric.level < 14 ? 1 : 2) + 'd8 psychic damage' + (classes.known.cleric.level < 17 ? '' : ' \u0026 again if hit by ally before my next turn');
 						}
 					},
 					"Once per turn, I can have one of my weapon attacks that hit do extra psychic damage."
@@ -712,7 +759,7 @@ AddSubClass("druid", "circle of spores-tcoe", {
 			additional : levels.map(function (n) {
 				return n < 2 ? "" : Math.floor(n*4) + " temp HP; Halo of Spores: 2d" + (n < 6 ? 4 : n < 10 ? 6 : n < 14 ? 8 : 10);
 			}),
-			action : ["action", ""],
+			action : [["action", ""]],
 			calcChanges : {
 				atkAdd : [
 					function (fields, v) {
