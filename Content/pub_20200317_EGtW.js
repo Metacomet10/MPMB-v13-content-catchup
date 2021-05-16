@@ -1036,6 +1036,7 @@ SpellsList["temporal shunt"] = {
 };
 SpellsList["gravity fissure"] = { 	
 	name : "Gravity Fissure", 	
+	classes : ["wizard"], 	
 	source : ["W", 187], 		
 	level : 6, 	
 	school : "Evoc", 	
