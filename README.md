@@ -22,6 +22,7 @@ Please join the mpmb Discord to help out, or if you have questions: https://disc
 * Explorer's Guide to Wildemount (`pub_20200317_EGtW.js`)
 * Mythic Odysseys of Theros (`pub_20200616_MOT.js`)
 * Tasha's Cauldron of Everything (`pub_20201117_TCoE-WIP_3P.js`)
+* Van Richten's Guide to Ravenloft (`pub_20210518_VRGtR.js`)
 
 ### Adventure Books
 * Icewind Dale: Rime of the Frostmaiden (`pub_20200915_IDRotF.js`)
@@ -34,6 +35,8 @@ Please join the mpmb Discord to help out, or if you have questions: https://disc
 * Subclasses: Part 4 (`ua_20200805_Subclasses-Part-4.js`)
 * Subclasses: Part 5 (`ua_20201026_Subclasses-Part-5.js`)
 * Gothic Lineages (`ua_20210126_Gothic-Lineages.js`)
+* Folk of the Feywild (`ua_20210311_FeyFolk.js`)
+* Draconic Options (`ua_20210414_Draconic-Options.js`)
 
 ## Contributing
 
