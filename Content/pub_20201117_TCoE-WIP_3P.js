@@ -309,7 +309,7 @@ AddSubClass("bard", "college of creation", {
 				"\u2022 Ability Check: Roll the die twice and choose which result to use"
 			])
 		},
-		"subclassfeature3" : {
+		"subclassfeature3.1" : {
 			name : "Performance of Creation",
 			source : [["T", 26]],
 			minlevel : 3,
