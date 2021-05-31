@@ -70,2807 +70,7 @@ AddRacialVariant("custom lineage", "medium skill proficiency", {
 		"Variable Trait: I gain proficiency in a skill of my choice"
 	])
 });
-AddRacialVariant("custom lineage", "small darkvision", {
-	regExpSearch : /small darkvision/i,
-	source : ["T", 8],
-	size : 4,
-	vision : [["Darkvision", 60]],
-	trait : "Custom Lineage (+2 to one ability score of my choice)" + desc([
-		"Size: My size is Small",
-		"Feat: I gain one feat of my choice for which I qualify",
-		"Variable Trait: I gain darkvision with a range of 60 ft"
-	])
-});
-AddRacialVariant("custom lineage", "small skill proficiency", {
-	regExpSearch : /small skill proficiency/i,
-	source : ["T", 8],
-	size : 4,
-	skillstxt : "Choose any one skill",
-	trait : "Custom Lineage (+2 to one ability score of my choice)" + desc([
-		"Size: My size is Small",
-		"Feat: I gain one feat of my choice for which I qualify",
-		"Variable Trait: I gain proficiency in a skill of my choice"
-	])
-});
 
-// Add Subclasses
-AddSubClass("barbarian", "path of the beast", {
-	regExpSearch : /^(?=.*\bbarbarian\b)(?=.*\bpath\b)(?=.*\bbeast\b).*$/i,
-	subname : "Path of the Beast",
-	source : ["T", 24],
-	features : {
-		"subclassfeature3" : {
-			name : "Form of the Beast",
-			source : ["T", 24],
-			minlevel : 3,
-			description : desc([
-				"When I enter my rage, I can transform to gain a bite, tail, or claws attack for that rage",
-				"The bite attack allows me to regain my prof bonus in HP on a hit once on my turn, providing",
-				"I am at less than half my maximum hit points when I bite",
-				"The claws attack allows me to make one extra attack when I use it in my Attack action",
-				"The tail attack allows me to use my reaction to add a d8 to AC versus that attack"
-			]),
-			toNotesPage : [{
-				name : "Form of the Beast Table",
-				source : ["T", 24],
-				popupName : "Form of the Beast",
-				note : [
-				"When I enter my rage, I can transform, revealing the bestial power within me.",
-				" Until the rage ends, I manifest a natural weapon. It counts as a simple melee weapon for me, and I add my Strength modifier to the attack and damage rolls when I attack with it, as normal.",
-				" I choose the weapon's form each time I rage:",
-				"Bite. My mouth transforms, which deals 1d8 piercing damage on a hit. Once on each of my turns when I damage a creature with this bite, I regain a number of hit points equal to my proficiency bonus, provided I have less than half my hit points when I am hit.", 
-				"Claws. My hands transform into claws which deal 1d6 slashing damage, which I can use as weapons if they are empty. Once on each of my turns when I attack with a claw using the Attack action, I can make one additional claw attack as part of the same action.",
-				"Tail. I grow a tail, which deals 1d8 piercing damage on a hit and has the reach property. If a creature I can see within 10 feet of me hits me with an attack roll, I can use my reaction to swipe your tail and roll a d8, applying a bonus to your AC equal to the number rolled, potentially causing the attack to miss."
-				],
-			}],
-			weaponOptions : [{
-				regExpSearch : /^(?=.*(bestial|beast))(?=.*bite).*$/i,
-				name : "Bestial Bite",
-				source : [["T", 24]],
-				ability : 1,
-				type : "Simple",
-				damage : [1, 8, "piercing"],
-				range : "Melee",
-				description : "Only in rage; (1/my turn) if less than half max hp, regain prof bonus in HP",
-				abilitytodamage : true,
-				bestialNaturalWeapon : true
-			}, {
-				regExpSearch : /^(?=.*(bestial|beast))(?=.*claws?).*$/i,
-				name : "Bestial Claws",
-				source : [["T", 24]],
-				ability : 1,
-				type : "Simple",
-				damage : [1, 6, "slashing"],
-				range : "Melee",
-				description : "Only in rage; Extra attack as part of Attack action",
-				abilitytodamage : true,
-				bestialNaturalWeapon : true
-			}, {
-				regExpSearch : /^(?=.*(bestial|beast))(?=.*tail).*$/i,
-				name : "Bestial Tail",
-				source : [["T", 24]],
-				ability : 1,
-				type : "Simple",
-				damage : [1, 8, "piercing"],
-				range : "Melee",
-				description : "Only in rage; Reach",
-				abilitytodamage : true,
-				bestialNaturalWeapon : true,
-
-			}],
-			weaponsAdd : ["Bestial Bite", "Bestial Claws", "Bestial Tail"],
-			additional : levels.map(function(n) {
-				return n < 6 ? "" : "chosen weapon counts as magical";
-			}),
-			action : [["reaction", "Beastial Tail (d8 to AC)"]],
-		},
-		"subclassfeature6" : {
-			name : "Beastial Soul",
-			source : ["T", 25],
-			minlevel : 6,
-			description : desc([
-				"The natural weapons of my Form of the Beast to count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.",
-				"I can also alter my form to help adapt to my surroundings. When finishing a short or long rest, I may choose one of the following benefits until my next short or long rest:",
-				" - Swimming: Gain swimming speed equal to walking speed, and can breathe underwater.",
-				" - Climbing: Gain climbing speed equal to walking speed, and can climb difficult surfaces without need to make an ability check.",
-				" - Jumping: Once per turn, when I jump, I can make a Strength(Athletics) check to extend the distance equal to the check's total."
-			]),
-			usages: 1,
-			recovery: "short rest",
-			action : [["action", ""]]
-		},
-		"subclassfeature10" : {
-			name : "Infectious Fury",
-			source : ["T", 25],
-			minlevel : 10,
-			description : desc([
-				"When I hit a creature with my natural weapons while raging, the target must succeed on a Wisdom saving throw (DC equal to 8 + my Constitution mod + Proficiency bonus) or suffer one of the following effects of my choice:",
-				" - The target must use its reaction to make a melee attack against another creature of your choice that you can see.",
-				" - The target takes 2d 1 2 psychic damage.",
-				"I can use this feature a number of times equal to my Proficiency bonus, and regain all expended uses when I finish a long rest."
-			]),
-			usages: "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus')",
-			recovery: "long rest",
-		},
-		"subclassfeature14" : {
-			name : "Call of the Hunt",
-			source : ["T", 25],
-			minlevel : 14,
-			description : desc([
-				"Whenever I rage, I can choose a number of other willing creatures I can see within 30 feet of me equal to your Constitution modifier (minimum of one creature).",
-				"I gain 5 temporary hit points for each creature that accepts this feature.",
-				"Until the rage ends, the chosen creatures can each use the following benefit once on each of their turns:",
-				"when the creature hits a target with an attack roll and deals damage to it, the creature can roll a d6 and gain a bonus to the damage equal to the number rolled.",
-				"I can use this feature a number of times equal to my Proficiency bonus, and regain all expended uses when I finish a long rest."
-			]),
-			usages: "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus')",
-			recovery: "long rest",
-		},
-	},
-});
-AddSubClass("barbarian", "path of wild magic", {
-	regExpSearch : /^(?=.*\bwild\b)(?=.*\bmagic\b).*$/i,
-	subname : "Path of Wild Magic",
-	source : ["T", 25],
-	abilitySave : 3,
-	features : {
-		"subclassfeature3" : {
-			name : "Magic Awareness",
-			source : ["T", 25],
-			minlevel : 3,
-			description : desc([
-				"As an action, until the end of my next turn, I know any spell or magic item within 60 ft",
-				"I learn the school and location of the magic I detect", 
-				"I can't sense the magic if it is behind total cover"
-			]),
-			usages: "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus')",
-			recovery: "long rest",
-			action : [["action", ""]]
-		},
-		"subclassfeature3.1" : {
-			name : "Wild Surge",
-			source : ["T", 25],
-			minlevel : 3,
-			description : "\n   Whenever I enter my rage, I roll on the Wild Magic table (see Notes page)",
-			toNotesPage : [{
-				name : "Wild Magic Table",
-				source : ["T", 26],
-				popupName : "Wild Magic Table",
-				note : [
-					"Magic erupts from me while I rage. Whenever I enter my rage, I have to roll on the table below to see what happens.",
-					"If the effect calls for a saving throw, the DC is equal to 8 + my proficiency bonus + my Constitution modifier.\n",
-					"d8\tEFFECT",
-					" 1\tShadowy tendrils lash around me. Each creature of my choice that I can see within 30 feet of me must succeed on a Constitution saving throw or take 1dl2 necrotic damage. I also gain 1d12 temporary hit points.",
-					" 2\tI teleport up to 30 feet to an unoccupied space I can see. Until my rage ends, I can use this effect again on each of my turns as a bonus action.",
-					" 3\tAn intangible spirit, which looks like a flumph or a pixie (my choice), appears within 5 feet of one creature of my choice that I can see within 30 feet of me. At the end of the current turn, the spirit explodes, and each creature within 5 feet of it must succeed on a Dexterity saving throw or take 1d6 force damage. Until my rage ends, I can use this effect again, summoning another spirit, on each of my turns as a bonus action.",
-					" 4\tMagic infuses one weapon of my choice that I am holding. Until my rage ends, the weapon's damage type changes to force, and it gains the light and thrown properties, with a normal range of 20 feet and a long range of 60 feet. If the weapon leaves my hand, the weapon reappears in my hand at the end of the current turn.",
-					" 5\tWhenever a creature hits me with an attack roll before my rage ends, that creature takes 1d6 force damage, as magic lashes out in retribution.",
-					" 6\tUntil my rage ends, I am surrounded by multicolored, protective lights; I gain a +l bonus to AC, and while within 10 feet of me, my allies gain the same bonus.",
-					" 7\tFlowers and vines temporarily grow around me; until my rage ends, the ground within 15 feet of me is difficult terrain for my enemies.",
-					" 8\tA bolt of light shoots from my chest. Another creature of my choice that I can see within 30 feet of me rust succeed on a Constitution Saving throw or take 1d6 radiant damage and be blinded until the start of my next turn. Until my rage ends, I can use this effect again on each of my turns as a bonus action."
-				]
-			}]
-		},
-		"subclassfeature6" : {
-			name : "Bolstering Magic",
-			source : ["T", 26],
-			minlevel : 6,
-			description : desc([
-				"As an action, I can touch a creature or myself and confer one of the following benefits:",
-				" - For 10 minutes, they can add 1d3 to any attack roll or ability check",
-				" - Roll 1d3. They regain an expended spell slot of a level equal to or lower than the roll",
-				"A creature that receives the second benefit can't receive it again until after a long rest"
-			]),
-			usages: "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus')",
-			recovery: "long rest",			
-			action : [["action", ""]]
-		},
-		"subclassfeature10" : {
-			name : "Unstable Backlash",
-			source : ["T", 26],
-			minlevel : 10,
-			description : desc([
-				"After taking damage or failing a saving throw while raging, I can change my wild surge",
-				"I reroll my effect on the Wild Magic table and immediately produce the results rolled",
-				"This replaces the current wild surge effect with a new one"
-			]),
-			action : [["reaction", " (in Rage after taking damage or failing save)"]]
-		},
-		"subclassfeature14" : {
-			name : "Controlled Surge",
-			source : ["T", 26],
-			minlevel : 14,
-			description : desc([
-				"Whenever I roll for my wild surge, I can roll the die twice and choose which result to use",
-				"If I roll the same on both dice, I can choose any effect on the Wild Magic table"
-			])
-		}
-	}
-});
-AddSubClass("bard", "college of creation", {
-	regExpSearch : /^(?=.*(college|bard|minstrel|troubadour|jongleur))(?=.*creation).*$/i,
-	subname : "College of Creation",
-	source : [["T", 26]],
-	features : {
-		"subclassfeature3" : {
-			name : "Mote of Potential",
-			source : [["T", 26]],
-			minlevel : 3,
-			description : desc([
-				"I can also grant a mote of potential to whomever I give a bardic inspiration die",
-				"This tiny, invulnerable object orbits in 5 ft; It enhances the use of the inspiration die:",
-				"\u2022 Attack Roll: others within 5 ft must make a Con save",
-				"  If failed, they take the die roll in thunder damage; This uses my spell save DC",
-				"\u2022 Saving Throw: Grants temp HP equal to the roll + my Cha mod",
-				"\u2022 Ability Check: Roll the die twice and choose which result to use"
-			])
-		},
-		"subclassfeature3" : {
-			name : "Performance of Creation",
-			source : [["T", 26]],
-			minlevel : 3,
-			description : desc([
-				"As an action, I can create one nonmagical, medium or smaller item of my choice in an unoccupied space within 10'",
-				"The item must appear on a surface or in a liquid that can support it",
-				"The gp value of the item can't be more than 20 times my bard level",
-				"It disappears after a number of hours equal to my proficiency bonus",
-				"I can only make one item per long rest unless I expend a spell slot of 2nd level or higher",
-				"I can only have one item created by this feature at a time, if I make another the first one will vanish",
-				"The size of the item created increases by level: 6th (Large) and 14th (Huge)"
-			])
-		},
-		"subclassfeature6" : {
-			name : "Animating Performance",
-			source : [["T", 1]],
-			minlevel : 6,
-			description : desc([
-				"As an action, I can animate a Large or smaller nonmagical item I can see within 30 ft",
-				"It lasts for 1 hour or until it has 0 HP; I control it and it acts on my initiative, after me",
-				"Unless I use a bonus action to command it, it only takes the Dodge action on its turn",
-				"When I use bardic inspiration, I can command the item as part of the same bonus action",
-				"I can't have multiple at once; Select \"Dancing Item\" on a companion page for its stats",
-				"I can do this once per long rest, or by expending a 3rd-level or higher spell slot (SS 3+)"
-			]),
-			action : [["action", ""]],
-			usages : 1,
-			recovery : "long rest",
-			altResource : "SS 3+",
-			eval : function (lvl, chc) {
-				var useFunct = ClassList.artificer ? ClassList.artificer.artificerCompFunc : ClassList.bard.artificerCompFunc;
-				useFunct.add("Dancing Item");
-			},
-			removeeval : function (lvl, chc) {
-				var useFunct = ClassList.artificer ? ClassList.artificer.artificerCompFunc : ClassList.bard.artificerCompFunc;
-				useFunct.remove("dancing item");
-				if (CreatureList["dancing item-ua"]) CreatureList["dancing item-ua"].removeeval();
-			}
-		},
-		"subclassfeature14" : {
-			name : "Creative Crescendo",
-			source : [["T", 26]],
-			minlevel : 14,
-			description : desc([
-				"I can create more than one item with Performance of Creation equal to my Cha modifier",
-				"If I create an item that would exceed that number, I choose which of the previously created items disappears",
-				"Only one of these items can be of the maximum size you can create; the rest must be Small or Tiny",
-				"I am no longer limited by gp value when creating items with Performance of Creation"
-			]),
-			action : [["action", ""]],
-			usages : 1,
-			recovery : "long rest",
-			altResource : "SS 5+",
-			additional : levels.map(function (n) {
-				return n < 14 ? "" : n * 20 + " gp";
-			})
-		}
-	}
-});
-AddSubClass("bard", "college of eloquence", {
-	regExpSearch : /^(?=.*(college|bard|minstrel|troubadour|jongleur))(?=.*eloquence).*$/i,
-	subname : "College of Eloquence",
-	source : ["T", 54],
-	features : {
-		"subclassfeature3" : {
-			name : "Silver Tongue",
-			source : ["T", 30],
-			minlevel : 3,
-			description : desc([
-				"When I make a Persuasion or Deception check, I can treat a roll of 9 or lower as a 10"
-			])
-		},
-		"subclassfeature3.1" : {
-			name : "Unsettling Words",
-			source : ["T", 30],
-			minlevel : 3,
-			description : desc([
-				"As a bonus action I can choose one creature I can see within 60 feet",
-				"They subtract my inspiration die from their first saving throw before my next turn"
-			]),
-			additional : "1 bardic inspiration die",
-			action : [["bonus action", ""]]
-		},
-		"subclassfeature6" : {
-			name : "Unfailing Inspiration",
-			source : ["T", 30],
-			minlevel : 6,
-			description : desc([
-				"When a creature adds my inspiration die to a roll and fails, they keep the die"
-			])
-		},
-		"subclassfeature6.1" : {
-			name : "Universal Speech",
-			source : ["T", 30],
-			minlevel : 6,
-			description : desc([
-				"As an action I can choose up to my Charisma mod (min 1) creatures within 60 feet",
-				"Those creatures magically understand any language I speak for an hour",
-				"I can expend a spell slot of any level to use this feature again"
-			]),
-			recovery : "long rest",
-			usages : 1,
-			action : [["action", ""]],
-      altresource : "SS 1+"
-		},
-		"subclassfeature14" : {
-			name : "Infectious Inspiration",
-			source : ["T", 30],
-			minlevel : 14,
-			description : desc([
-				"As a reaction when a creature uses my inspiration die and succeeds, I can inspire another",
-				"I give a creature within 60 ft that can hear me an inspiration die without expending any",
-				"I can use this reaction a number of times per long rest equal to my Cha mod (min 1)"
-			]),
-			action : [["reaction", ""]],
-			usages : "Charisma mod per ",
-			usagescalc : "event.value = Math.max(1, What('Cha Mod'));",
-			recovery : "long rest"
-		}
-	}
-});
-AddSubClass("cleric", "order domain-tcoe", {
-	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*order).*$/i,
-	subname : "Order Domain",
-	source : ["T", 31],
-	spellcastingExtra : ["command", "heroism", "hold person", "zone of truth", "mass healing word", "slow", "compulsion", "locate creature", "commune", "dominate person"],
-	features : {
-		"subclassfeature1" : {
-			name : "Bonus Proficiency",
-			source : ["T", 32],
-			minlevel : 1,
-			description : "\n   " + "I gain proficiency with heavy armor, and either the Intimidation or Persuasion skill",
-			armorProfs : [false, false, true, false],
-			skillstxt : "Choose one from Intimidation or Persuasion"
-		},
-		"subclassfeature1.1" : {
-			name : "Voice of Authority",
-			source : ["T", 32],
-			minlevel : 1,
-			description : desc([
-				"Whenever I use a spell slot to cast a spell on an ally, it can use its reaction to attack",
-				"The ally makes one weapon attack against a target of my choice that I can see",
-				"If the spell targets multiple allies, I can choose which one can make the attack"
-			])
-		},
-		"subclassfeature2" : {
-			name : "Channel Divinity: Order's Demand",
-			source : ["T", 32],
-			minlevel : 2,
-			description : desc([
-				"As an action, all chosen targets in 30 ft that can see or hear me must make a Wis save",
-				"If failed, it is charmed by me until the end of my next turn or it takes any damage",
-				"Also, I can choose to have a charmed target drop what its holding when it fails its save"
-			]),
-			action : [["action", ""]]
-		},
-		"subclassfeature6" : {
-			name : "Embodiment of the Law",
-			source : ["T", 32],
-			minlevel : 6,
-			description : desc([
-				"When I cast an enchantment spell using a spell slot, I can reduce its casting time",
-				"If the spell normally has a casting time of an action, I can now cast it as a bonus action"
-			]),
-			usages : "Wisdom modifier per ",
-			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-			recovery : "long rest",
-			calcChanges : {
-				spellAdd : [
-					function (spellKey, spellObj, spName) {
-						if (CurrentSpells[spName].refType == "class" && spellObj.school == "Ench" && spellObj.time == "1 a") {
-							spellObj.time = "1a/bns"
-							return true;
-						};
-					},
-					"When I cast an enchantment spell using a spell slot that normally requires 1 action to cast, I can reduce its casting time to a bonus action."
-				]
-			}
-		},
-		"subclassfeature8" : {
-			name : "Divine Strike",
-			source : ["T", 32],
-			minlevel : 8,
-			description : "\n   " + "Once per turn, when I hit a creature with a weapon attack, I can do extra damage",
-			additional : levels.map(function (n) {
-				if (n < 8) return "";
-				return "+" + (n < 14 ? 1 : 2) + "d8 psychic damage";
-			}),
-			calcChanges : {
-				atkAdd : [
-					function (fields, v) {
-						if (classes.known.cleric && classes.known.cleric.level > 7 && !v.isSpell) {
-							fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.cleric.level < 14 ? 1 : 2) + 'd8 psychic damage' + (classes.known.cleric.level < 17 ? '' : ' \u0026 again if hit by ally before my next turn');
-						}
-					},
-					"Once per turn, I can have one of my weapon attacks that hit do extra psychic damage."
-				]
-			}
-		},
-		"subclassfeature17" : {
-			name : "Order's Wrath",
-			source : ["T", 32],
-			minlevel : 17,
-			description : desc([
-				"If I deal my Divine Strike damage to a creature, it is cursed until my next turn starts",
-				"The next time it is hit by a weapon attack from my allies, it takes +2d8 psychic damage"
-			])
-		}
-	}
-});
-AddSubClass("cleric", "peace domain", {
-	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*peace).*$/i,
-	subname : "Peace Domain",
-	source : ["T", 32],
-	spellcastingExtra : ["heroism", "sanctuary", "aid", "warding bond", "beacon of hope", "sending", "aura of purity", "Otiluke's resilient sphere", "greater restoration", "Rary's telepathic bond"],
-	features : {
-		"subclassfeature1" : {
-			name : "Implement of Peace",
-			source : ["T", 33],
-			minlevel : 1,
-			description : "\n   " + "I gain proficiency Insight, Performance, or Persuasion skill",
-			skillstxt : "Choose one from Insight or Performance or Persuasion"
-		},
-		"subclassfeature1.1" : {
-			name : "Emboldening Bond",
-			source : ["T", 33],
-			minlevel : 1,
-			description : desc([
-				"As an ation, I choose a number of willing creatures (can include myself) within",
-				"30 feet of me equal to proficiency bonus, For 10 minutes or until I use the",
-				"feature again, once per turn, targets within 30 ft of each other can gain",
-				"bonus to attack roll, ability check, or saving throw equal to 1d4.",
-				"Can use a number of times per long rest equal to my proficiency bonus."
-			]),
-			//additional : levels.map(function(n) {
-			//	return n < 5 ? "2" : n < 9 ? "3" : n < 13 ? "4" : n < 17 ? "5" : "6";
-			//}),
-			action : ["action", "Emboldening Bond"],
-			usages : "Prof. Bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus');",
-			recovery : "long rest"
-		},
-		"subclassfeature2" : {
-			name : "Channel Divinity: Balm of Peace",
-			source : ["T", 33],
-			minlevel : 2,
-			description : desc([
-				"As an action, I can move up to my speed without provoking attcks of opportunity",
-				"and when I move within 5 ft of another creature during this action, I can restore",
-				"a number of hit points to it equal to 2d6 + my Wisdom modifier (min. 1 hit point).",
-				"A creature can only benefit once when using this action."
-			]),
-			action : ["action", ""]
-		},
-		"subclassfeature6" : {
-			name : "Protective Bond",
-			source : ["T", 33],
-			minlevel : 6,
-			description : desc([
-				"When a creature affected by Emboldening Bond is attacked, a second bonded creature",
-				"within 30 ft of the 1st creature can use reaction: teleport to unoccupied space",
-				"within 5 ft of the 1st creature and take all the damage instead."
-			]),
-			action : ["reaction", "Protective Bond"]
-		},
-		"subclassfeature8" : {
-			name : "Potent Spellcasting",
-			source : ["P", 60],
-			minlevel : 8,
-			description : "\n   " + "I can add my Wisdom modifier to the damage I deal with my cleric cantrips",
-			calcChanges : {
-				atkCalc : [
-					function (fields, v, output) {
-						if (classes.known.cleric && classes.known.cleric.level > 7 && v.thisWeapon[3] && v.thisWeapon[4].indexOf('cleric') !== -1 && SpellsList[v.thisWeapon[3]].level === 0) {
-							output.extraDmg += What('Wis Mod');
-						};
-					},
-					"My cleric cantrips get my Wisdom modifier added to their damage."
-				],
-				spellAdd : [
-					function (spellKey, spellObj, spName) {
-						if (spName.indexOf("cleric") == -1 || !What("Wis Mod") || Number(What("Wis Mod")) <= 0 || spellObj.psionic || spellObj.level !== 0) return;
-						if (spellKey == "shillelagh") {
-							spellObj.description = spellObj.description.replace("1d8", "1d8+" + What("Wis Mod"));
-							return true;
-						}
-						return genericSpellDmgEdit(spellKey, spellObj, "\\w+\\.?", "Wis", true);
-					},
-					"My cleric cantrips get my Wisdom modifier added to their damage."
-				]
-			}
-		},
-		"subclassfeature17" : {
-			name : "Expansive Bond",
-			source : ["T", 33],
-			minlevel : 17,
-			description : desc([
-				"Emboldening Bond and Protective Bond work when bonded creatures are within 60 ft",
-				"of each other. Also, when a creature uses Protective Bond to take damage for another",
-				"bonded creature, it has resistance to that damage."
-			])
-		}
-	}
-});
-AddSubClass("cleric", "twilight domain", {
-	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*(twilight|transition)).*$/i,
-	subname : "Twilight Domain",
-	source : ["T", 1],
-	spellcastingExtra : ["faerie fire", "sleep", "moonbeam", "see invisibility", "aura of vitality", "leomund's tiny hut", "aura of life", "greater invisibility", "circle of power", "mislead"],
-	features : {
-		"subclassfeature1" : {
-			name : "Bonus Proficiencies",
-			source : ["T", 1],
-			minlevel : 1,
-			description : desc([
-				"I gain proficiency with martial weapons and heavy armor"
-			]),
-			armorProfs : [false, false, true, false],
-			weaponProfs : [false, true]
-		},
-		"subclassfeature1.1" : {
-			name : "Eyes of Night",
-			source : ["T", 1],
-			minlevel : 1,
-			description : desc([
-				"I gain darkvision out to 300 ft and can magically share it with willing creatures",
-				"As an action, I can choose up to my Wis" + (typePF ? "dom" : "") + " mod (min 1) creatures I can see within 10 ft",
-				"The chosen creatures then gain this darkvision for 1 hour",
-				"If I have no more uses of this feature, I can expend a spell slot to use it again"
-			]),
-			vision : [["Darkvision", 300]],
-			additional : "extend to others",
-			usages : 1,
-			recovery : "long rest",
-			action : [["action", ""]]
-		},
-		"subclassfeature1.2" : {
-			name : "Vigilant Blessing",
-			source : ["T", 1],
-			minlevel : 1,
-			description : desc([
-				"As an action, I can grant myself or a creature I touch adv. on the next initiative roll",
-				"This benefit ends immediately after the roll or when I use this feature again"
-			]),
-			action : [["action", ""]]
-		},
-		"subclassfeature2" : {
-			name : "Channel Divinity: Twilight Sanctuary",
-			source : ["T", 1],
-			minlevel : 2,
-			description : desc([
-				"As an action, I can use my holy symbol to create a 30-ft radius sphere around myself",
-				"It moves with me, is filled with dim light, and lasts for 1 min or until I'm incapacitated",
-				"When a creature, including me, ends its turn inside the sphere, I can grant it a benefit:",
-				" \u2022 I grant it temporary hit points equal to 1d6 + my cleric level",
-				" \u2022 I end one effect on it causing it to be charmed or frightened"
-			]),
-			action : [["action", ""]]
-		},
-		"subclassfeature6" : {
-			name : "Steps of Night",
-			source : ["T", 1],
-			minlevel : 6,
-			description : desc([
-				"As a bonus action, when in dim light/darkness, I can magically grant myself flight",
-				"I gain flying speed equal to my walking speed for 1 minute"
-			]),
-			additional : levels.map(function(n) {
-				return n < 5 ? "2" : n < 9 ? "3" : n < 13 ? "4" : n < 17 ? "5" : "6";
-			}),
-			recovery : "long rest",
-			action : [["bonus action", " (in dim light/darkness)"]]
-		},
-		"subclassfeature8" : {
-			name : "Divine Strike",
-			source : ["T", 1],
-			minlevel : 8,
-			description : desc([
-				"Once per turn, when I hit a creature with a weapon attack, I can do extra damage"
-			]),
-			additional : levels.map(function (n) {
-				if (n < 8) return "";
-				return "+" + (n < 14 ? 1 : 2) + "d8 radiant damage";
-			}),
-			calcChanges : {
-				atkAdd : [
-					function (fields, v) {
-						if (classes.known.cleric && classes.known.cleric.level > 7 && !v.isSpell) {
-							fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.cleric.level < 14 ? 1 : 2) + 'd8 radiant damage';
-						}
-					},
-					"Once per turn, I can have one of my weapon attacks that hit do extra radiant damage."
-				]
-			}
-		},
-		"subclassfeature17" : {
-			name : "Twilight Shroud",
-			source : ["T", 2],
-			minlevel : 17,
-			description : desc([
-				"Me and my allies have half cover while in the sphere created by my Twilight Sanctuary"
-			])
-		}
-	}
-});
-AddSubClass("druid", "circle of spores-tcoe", {
-	regExpSearch : /^(?=.*(druid|shaman))(?=.*spores).*$/i,
-	subname : "Circle of Spores",
-	source : ["T", 36],
-	features : {
-		"subclassfeature2" : {
-			name : "Circle Spells",
-			source : ["T", 36],
-			minlevel : 2,
-			description : desc([
-				"I learn the Chill Touch cantrip and gain the ability to cast certain spells",
-				"These are always prepared, but don't count against the number of spells I can prepare"
-			]),
-			spellcastingBonus : {
-				name : "Circle Spells",
-				spells : ["chill touch"],
-				selection : ["chill touch"]
-			},
-			spellcastingExtra : ["blindness/deafness", "gentle repose", "animate dead", "gaseous form", "blight", "confusion", "cloudkill", "contagion"]
-		},
-		"subclassfeature2.1" : {
-			name : "Halo of Spores",
-			source : ["T", 36],
-			minlevel : 2,
- 			description : desc([
-				"As a reaction when someone I can see in 10 ft starts its turn or moves, I can have it save",
-				"It must succeed on a Constitution save or take necrotic damage from my cloud of spores"
-			]),
-			additional : levels.map(function (n) { return n < 2 ? "" : 'Con save or 1d' + (n < 6 ? 4 : n < 10 ? 6 : n < 14 ? 8 : 10) + " necrotic damage"; }),
-			action : ["reaction", ""]
-		},
-		"subclassfeature2.2" : {
-			name : "Symbiotic Entity",
-			source : ["T", 37],
-			minlevel : 2,
-			description : desc([
-				"As an action, I expend a Wild Shape use to boost my spores instead of transforming",
-				"I gain 4 temporary hit points per druid level and my Halo of Spores damage increases",
-				"Also, my melee weapon attacks do +1d6 necrotic damage with every hit",
-				"This lasts for 10 min, until these temporary HP run out, or until I use Wild Shape again"
-			]),
-			additional : levels.map(function (n) {
-				return n < 2 ? "" : Math.floor(n*4) + " temp HP; Halo of Spores: 2d" + (n < 6 ? 4 : n < 10 ? 6 : n < 14 ? 8 : 10);
-			}),
-			action : [["action", ""]],
-			calcChanges : {
-				atkAdd : [
-					function (fields, v) {
-						if (((v.isMeleeWeapon && !v.isNaturalWeapon) || v.baseWeaponName == "unarmed strike") && (/\b(spore|symbiotic)\b/i).test(v.WeaponText)) {
-							fields.Description += (fields.Description ? '; ' : '') + '+1d6 necrotic damage';
-						};
-					},
-					"If I include the word 'Spore' or 'Symbiotic' in a melee weapon's name, it gets treated as a weapon that is infused by my Symbiotic Entity feature, adding +1d6 necrotic damage in the description."
-				]
-			}
-		},
-		"subclassfeature6" : {
-			name : "Fungal Infestation",
-			source : ["T", 37],
-			minlevel : 6,
-			description : desc([
-				"As a reaction when a Small/Medium beast/humanoid dies in 10 ft, I can animate it",
-				"It rises as a zombie with 1 HP that follows my mental commands and dies after 1 hour",
-				"It can only take the attack action for one melee attack; It takes its turns after mine"
-			]),
-			usages : "Wisdom modifier per ",
-			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-			recovery : "long rest",
-			action : ["reaction", ""]
-		},
-		"subclassfeature10" : {
-			name : "Spreading Spores",
-			source : ["T", 37],
-			minlevel : 10,
-			description : " [only while Symbiotic Entity is active]" + desc([
-				"As a bonus action, I create a 10-ft cube of fungal spores within 30 ft, lasting for 1 min",
-				"Any creature moving into or starting its turn in it must save against my Halo of Spores",
-				"The cube ends if I use this feature again; While it persists, I can't use my Halo of Spores"
-			]),
-			action : ["bonus action", " (start/end)"]
-		},
-		"subclassfeature14" : {
-			name : "Fungal Body",
-			source : ["T", 38],
-			minlevel : 14,
-			description : desc([
-				"I'm immune to being blinded, deafened, frightened, poisoned, and critical hits"
-			]),
-			savetxt : { immune : ["blinded", "deafened", "frightened", "poisoned", "critical hits (unless incapacitated)"] }
-		}
-	}
-});
-AddSubClass("druid", "circle of stars", {
-	regExpSearch : /^(?=.*(druid|shaman))(?=.*circle)(?=.*stars).*$/i,
-	subname : "Circle of Stars",
-	source : [["T", 3]],
-	features : {
-		"subclassfeature2" : {
-			name : "Star Map",
-			source : [["T", 3]],
-			minlevel : 2,
-			description : desc([
-				"I've created a star map, a Tiny object which I can use as my spellcasting focus",
-				"If I lose it, I can preform a 1-hour (over a rest) ceremony during a rest to create a replacement",
-				"I can use it to cast Guidance or Guiding Bolt, even unprepared, without using a spell slot"
-			]),
-			spellcastingBonus : {
-				name : "Star Map",
-				spells : ["guiding bolt", "guidance"],
-				selection : ["guiding bolt", "augury"],
-				firstCol : "Sp",
-				times: 2
-			},
-			usages : "Proficiency Bonus per ",
-			usagescalc :  "event.value = Number(What('Proficiency Bonus'));",
-			recovery : "long rest",
-
-			extraLimitedFeatures : [{
-				name : "Guiding Bolt",
-				usages : "Proficiency Bonus per ",
-				recovery : "long rest",
-				usagescalc : "event.value = Number(What('Proficiency Bonus'));"
-			}],
-		},
-		"subclassfeature2.1" : {
-			name : "Starry Form",
-			source : [["T", 3]],
-			minlevel : 2,
-			description : desc([
-				"As an action, I can expend a use of wild shape to take on a starry form for 10 minutes",
-				"In that form I shed bright light in a 10-ft radius and dim light for an extra 10-ft radius",
-				"It ends if I choose to end it, am incapacitated, die, or use it again.",
-				"When I do so, I choose one constellation below to grant me benefits in my starry form:",
-				"\u2022 Chalice: When I use a spell slot to cast a healing spell, I also heal a creature in 30 ft",
-				"  This can be myself or the original target; I restore 1d8 + my wisdom mod in HP",
-				"\u2022 Archer: As a bonus action, I can make a ranged spell attack to hurl a luminous arrow",
-				"  This has a range of 60 ft and deals radiant damage equal to 1d8 + my Wisdom mod",
-				"\u2022 Dragon: I can treat a roll below 10 as a 10 for Int/Wis checks and concentration saves"
-			]),
-			action : [["bonus action", " (Archer Constellation)"]],
-			weaponOptions : {
-				regExpSearch : /^(?=.*luminous)(?=.*arrow).*$/i,
-				name : "Luminous Arrow",
-				source : [["T", 3]],
-				ability : 5,
-				type : "Spell",
-				damage : [1, 8, "radiant"],
-				range : "60 ft",
-				description : "Use as bonus action",
-				abilitytodamage : true,
-				luminousarrow : true
-			},
-			weaponsAdd : ['Luminous Arrow'],
-		},
-		"subclassfeature6" : {
-			name : "Cosmic Omen",
-			source : [["T", 3]],
-			minlevel : 6,
-			description : desc([
-				"When I finish a long rest, I can roll a die to gain an omen based on the result (odd/even)",
-				"As a reaction when a creature I can see in 30 ft makes an attack, check, or save, I can:",
-				"\u2022 Weal (even): add 1d6 to the number rolled for the attack, check, or save",
-				"\u2022 Woe (odd): subtract 1d6 from the number rolled for the attack, check, or save"
-			]),
-			action : [["reaction", ""]],
-			usages : "Proficiency Bonus per ",
-			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
-			recovery : "long rest"
-		},
-		"subclassfeature10" : {
-			name : "Twinkling Constellations",
-			source : [["T", 3]],
-			minlevel : 10,
-			description : desc([
-				"I can now switch constellation at the start of my turn, additionally, my constellations improve",
-				"\u2022 The 1d8 of the Chalice and Archer become 2d8",
-				"\u2022 While Dragon is Active, I have a 10ft fly speed with hover."
-			]),
-			calcChanges : {
-											atkAdd : [
-													function (fields, v) {
-															if (classes.known.druid && classes.known.druid.level > 9 && ( v.theWea.luminousarrow )) {
-															fields.Damage_Die = '2d8';
-															};
-													}
-											]
-									}
-		},
-		"subclassfeature14" : {
-			name : "Full of Stars",
-			source : [["T", 3]],
-			minlevel : 14,
-			description : "\n   While in my starry form, I have resistance to bludgeoning, piercing, and slashing damage",
-			dmgres : [
-				["Bludgeoning", "Bludgeon. (in form)"],
-				["Piercing", "Piercing (in form)"],
-				["Slashing", "Slashing (in form)"]
-			]}
-
-		}
-});
-AddSubClass("druid", "circle of wildfire", {
-	regExpSearch : /^(?=.*(druid|shaman))(?=.*wild.{0,1}fire).*$/i,
-	subname : "Circle of Wildfire",
-	source : ["T", 1],
-	features : {
-		"subclassfeature2" : {
-			name : "Circle Spells",
-			source : ["T", 1],
-			minlevel : 2,
-			description : desc([
-				"My mystical bond with a wildfire spirit gives me with the ability to cast certain spells",
-				"These are always prepared, but don't count against the number of spells I can prepare",
-				"In addition, I learn the Fire Bolt cantrip"
-			]),
-			spellcastingExtra : ["burning hands", "cure wounds", "flaming sphere", "scorching ray", "plant growth","revivify", "aura of life", "fire shield", "flame strike", "mass cure wounds"]
-		},
-		"subclassfeature2.1" : {
-			name : "Summon Wildfire",
-			source : ["T", 1],
-			minlevel : 2,
-			description : desc([
-				"As an action, I can expend a use of wild shape to summon a wildfire spirit within 30 ft",
-				"All within 10 ft of where it manifests must make a Dex save or take 2d6 fire damage",
-				"It disappears after 1 hour, when it is reduced to 0 HP, or I summon another or die",
-				"It obeys my commands, is friendly to my allies and I, and acts on my initiative, after me",
-				"Unless I use a bonus action to command it, it only takes the Dodge action on its turn",
-				"If I am incapacitated, it can take any action, not just dodge",
-				"Its HP maximum is equal to 5 + five times my druid level"
-			]),
-			action : [["action", ""], ["bonus action", "Command Wildfire"]],
-			eval : function () {
-				var AScompA = isTemplVis('AScomp') ? What('Template.extras.AScomp').split(',') : false;
-				var prefix = false;
-				if (AScompA) {
-					for (var a = 1; a < AScompA.length; a++) {
-						if (!What(AScompA[a] + 'Comp.Race')) {
-							prefix = AScompA[a];
-							break;
-						}
-					}
-				}
-				if (!prefix) prefix = DoTemplate('AScomp', 'Add');
-				Value(prefix + 'Comp.Race', "Wildfire Spirit");
-				Value(prefix + 'Comp.Type', "Wildfire");
-				var changeMsg = "The Wildfire Spirit has been added to the companion page at page number " + (tDoc.getField(prefix + 'Comp.Race').page + 1);
-				CurrentUpdates.types.push("notes");
-				if (!CurrentUpdates.notesChanges) {
-					CurrentUpdates.notesChanges = [changeMsg];
-				} else {
-					CurrentUpdates.notesChanges.push(changeMsg);
-				}
-			},
-			removeeval : function () {
-				var AScompA = isTemplVis('AScomp') ? What('Template.extras.AScomp').split(',') : false;
-				if (!AScompA) return;
-				for (var a = 1; a < AScompA.length; a++) {
-					if (What(AScompA[a] + 'Comp.Race').toLowerCase().indexOf("wildfire spirit") !== -1) {
-						DoTemplate("AScomp", "Remove", AScompA[a], true);
-					}
-				}
-			},
-			changeeval : function (lvlA) {
-				var AScompA = isTemplVis('AScomp') ? What('Template.extras.AScomp').split(',') : false;
-				if (!AScompA) return;
-				var newHP = Math.round(lvlA[1] * 5 + 5);
-				var newProf = ProficiencyBonusList[classes.totallevel - 1];
-				for (var a = 1; a < AScompA.length; a++) {
-					if (What(AScompA[a] + 'Comp.Race').toLowerCase().indexOf("wildfire spirit") !== -1) {
-						Value(AScompA[a] + "Comp.Use.HP.Max", newHP );
-						Value(AScompA[a] + "Comp.Use.Proficiency Bonus", newProf);
-					}
-				}
-			}
-		},
-		"subclassfeature6" : {
-			name : "Enhanced Bond",
-			source : ["T", 1],
-			minlevel : 6,
-			description : desc([
-				"While my wildfire spirit is present, I can have my spells originate from it (no range 'self')",
-				"Also, I can add 1d8 to a single roll of my spells that restore HP or deal fire damage"
-			])
-		},
-		"subclassfeature10" : {
-			name : "Cauterizing Flames",
-			source : ["T", 1],
-			minlevel : 10,
-			description : desc([
-				"As a reaction when a creature dies in 30 ft of me/wildfire spirit, I can have flames erupt",
-				"The creature has to be Small or larger; The flames last for 1 minute or until I extinguish",
-				"As a reaction when I see someone enters its space, it heals or takes fire damage for 2d10 + Wis mod"
-			]),
-			usages : "Wisdom modifier per ",
-			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-			recovery : "long rest"
-		},
-		"subclassfeature14" : {
-			name : "Blazing Revival",
-			source : ["T", 1],
-			minlevel : 14,
-			description : desc([
-				"If I drop to 0 HP and don't die, and my wildfire spiris is within 120 ft, it can save me",
-				"I can have it drop to 0hp, and I regain half my hit points and immediately rise to my feet"
-			]),
-			usages : 1,
-			recovery : "long rest"
-		}
-	}
-});
-CreatureList["wildfire spirit"] = { // Add the Cirle of Wildfire companion spirit
-	name : "Wildfire Spirit",
-	source : ["T", 1],
-	size : 4,
-	type : "Elemental",
-	subtype : "",
-	alignment : "Chaotic",
-	ac : 13,
-	hp : 12,
-	hd : [2, 6],
-	speed : "20 ft, fly 30 ft (hover)",
-	scores : [10, 14, 14, 13, 15, 11],
-	saves : ["", 4, 4, "", 4, ""],
-	skills : {
-		"nature" : 4
-	},
-	damage_immunities : "fire",
-	condition_immunities : "charmed, frightened, grappled, prone, restrained",
-	senses : "Darkvision 60 ft",
-	passivePerception : 12,
-	languages : "understands the languages of its creator",
-	challengeRating : "0",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Flame Seed",
-		ability : 2,
-		damage : [1, 6, "fire"],
-		range : "30 ft",
-		modifiers : ["oWis-Dex", "Prof", false],
-		description : "Ranged weapon attack"
-	}, {
-		name : "Fiery Teleportation",
-		ability : 5,
-		damage : [1, 6, "fire"],
-		range : "10 ft",
-		modifiers : ["dc-Wis+oWis", "Prof", false],
-		description : "Dex save for all within 10 ft of teleportation origin, success - no damage; See traits"
-	}],
-	features : [{
-		name : "Creator",
-		description : "The spirit obeys the commands of its creator and has the same proficiency bonus. It takes its turn immediately after its creator, on the same initiative count. It only takes the Dodge action, unless its creator takes a bonus action to command to do otherwise, in which case it can only take the Flame Seed, Fiery Teleportation, Dash, Disengage, Help, or Hide action."
-	}],
-	actions : [{
-		name : "Fiery Teleportation",
-		description : "The spirit and each willing creature of its creator's choice within 5 ft of it teleport up to 15 ft to unoccupied spaces its creator can see. Each creature within 10 ft of the space that the spirit left must succeed on a Dexterity saving throw against its creator's spell save DC or take fire damage equal to 1d6 + its proficiency bonus."
-	}]
-};
-AddSubClass("fighter", "psi warrior", {
-regExpSearch: /^(?=.*(fighter))(?=.*(psi))(?=.*(warrior)).*$/i,
-	subname : "Psi Warrior",
-	source : ["T", 42],
-	features : {
-		"subclassfeature3" : {
-			name : "Psionic Power",
-			source : ["T", 43],
-			minlevel : 3,
-			description : desc([
-				"I gain twice my proficiency bonus of Psionic Energy Dice (PsiD); 3rd lvl (d6), 5th lvl (d8),",
-				"11th lvl (d10), and 17th lvl (d12). I regain all expended Psionic Energy dice at the end", 
-				"of a long rest. I can use these PsiD to fuel my psionic abilities:",
-				"\u25C6 Protective Field - Use reaction and expend one PsiD to reduce damage equal to",
-				"PsiD roll + Int mod when I or another creature within 30 ft of me takes damage",
-				"\u25C6 Psionic Strike - Once on each of my turns, after I hit a target within 30 ft and deal dmg",
-				"with a weapon, expend one PsiD to deal PsiD + Int mod extra force damage.",
-				"\u25C6 Telekinetic Movement - Once per short rest, I can use an action to move a Large or",
-				"smaller loose object or one willing creature (other than myself) within 30 ft that I can",
-				"see up to 30 ft in any direction to an unoccupied space. If Tiny object I can move it",
-				" to or from my hand. I can also expend one PsiD to use this action again."
-			]),
-			additional : ["", "", "d6", "d6", "d8", "d8", "d8", "d8", "d8", "d8", "d10", "d10", "d10", "d10", "d10", "d10", "d12", "d12", "d12", "d12"],
-			action : ["reaction","Protective Field"],
-			action : ["action","Telekinetic Movement"],
-			usages : "2x Proficiency Bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus')*2",
-//			usages : [0, 0, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8, 10, 10, 10, 10, 12, 12, 12, 12],
-			recovery : "long rest"
-		},
-		"subclassfeature3.1" : {
-			name : "Regain Psionic Energy dice",
-			source : ["T",43],
-			minlevel : 3,
-			description : desc([
-				"Once per short rest, I can regain one expended PsiD as a bonus action"
-			]),
-			action : ["bonus acttion","regain 1 Psionic Energy die"],
-			usages : 1,
-			recovery : "short rest"
-		},
-		"subclassfeature7.1" : {
-			name : "Telekinetic Adept - Psi-Powered Leap",
-			source : ["T", 43],
-			minlevel : 7,
-			description : desc([
-				"Once per short rest, I can use a bonus action to gain fly speed equal to twice my walking",
-				"speed until end of current turn. I can also expend one PsiD to use this bonus action again."
-			]),
-			action : ["bonus action","Psi-Powered Leap"],
-			recovery : "short rest"
-		},
-		"subclassfeature7.2" : {
-			name : "Telekinetic Adept - Telekinetic Thrust",
-			source : ["T", 43],
-			minlevel : 7,
-			description : desc([
-				"When I deal damage with Psionic Strike, target must pass a Strength save",
-				"(DC 8 + Prof + INT mod) or I can chose to either knock it prone or move it 10 feet in",
-				"any horizontal direction I chose."
-			]),
-		},
-		"subclassfeature10" : {
-			name : "Guarded Mind",
-			source : ["T", 43],
-			minlevel : 10,
-			description : desc([
-				"I gain resistance to Psychic damage. If I am charmed or frightened at the start of my turn,",
-				"I can expend one PsiD to end all effects causing charmed & frightened conditions on me."
-			]),
-			dmgres : ["Psychic"]
-		},
-		"subclassfeature15" : {
-			name : "Bulwark of Force",
-			source : ["T", 44],
-			minlevel : 15,
-			description : desc([
-				"Once per long rest, I can use a bonus action to give half cover to up to my INT mod",
-				"(min 1) creatures within 30 ft (including myself) for 1 minute or I am incapacitated.",
-				"I can also expend one PsiD to use this bonus action again."
-			]),
-			action : ["bonus action",""],
-			recovery : "long rest"
-		},
-		"subclassfeature18" : {
-			name : "Telekinetic Master",
-			source : ["T",44],
-			minlevel : 18,
-			description : desc([
-				"Once per long rest, I can cast Telekinesis (needing no components), using Intelligence",
-				"as my spellcasting ability. While concentrating on this spell, once on each of my turns",
-				"(including the turn I cast it), I can make one weapon attack as a bonus action.",
-				"I can also expend one PsiD to cast it again."
-			]),
-			spellcastingBonus : {
-				name : "Telekinetic Master",
-				spellcastingAbility : 4,
-				spells : ["telekinesis"],
-				selection : ["telekinesis"],
-				//firstCol : "(R)"
-			},
-			spellChanges : {
-				"telekinesis" : {
-					// time : "11 min",
-					changes : "I can cast this spell without using any components."
-				}
-			},
-			action : ["bonus action", "Telekinetic Master weapon attack"],
-			recovery : "long rest"
-		}
-	}
-});
-AddSubClass("fighter", "rune knight", {
-	regExpSearch: /^(?=.*(fighter))(?=.*(rune))(?=.*(knight)).*$/i,
-	subname: "Rune Knight",
-	source: ["T", 44],
-  abilitySave : 3,
-	features: {
-		"subclassfeature3": {
-			name: "Rune Carver",
-			source: ["T", 44],
-			minlevel: 3,
-			description : desc([
-					"I have learned to inscribe magic runes on my gear.",
-					"While wearing or carrying gear inscribed by these runes I gain a passive benefit. Moreover, I may invoke a rune to gain its active benefit, they recharge following a short rest."
-			])
-		},
-    "subclassfeature3.runes" : {
-      name : "Runes",
-      source : ["T",44],
-      minlevel : 3,
-      description : "\n   " + 'Use the "Choose Feature" button above to add a Rune to the third page',
-      addtional : levels.map(function (n){
-        return n < 3 ? "" : (n < 7 ? 2 : n < 10 ? 3 : n < 15 ? 4 : 5) + "known";
-      }),
-      extraname : "Rune",
-			extrachoices : ["Cloud Rune", "Fire Rune", "Frost Rune", "Stone Rune", "Hill Rune (prereq: level 7 fighter)", "Storm Rune (prereq: level 7 fighter)"],
-      extraTimes : levels.map(function (n) {
-        return n < 3 ? 0 : n < 7 ? 2 : n < 10 ? 3 : n < 15 ? 4 : 5;
-      }),
-      "cloud rune" : {
-        name : "Cloud Rune",
-        source : ["T", 44],
-        description : desc([
-					"While I wear an object inscribed with this, I gain a deceptiveness reminiscent of cloud giants",
-					"I always gain advantage on Dexterity (Sleight of Hand) and Charisma (Deception) checks",
-					"As a reaction when I or a target I see get hit by an attack within 30 ft, I can invoke this",
-					"This causes the attack to target another within 30 ft with the same roll (ignore range)"
-				]),
-        action : ["reaction"," (invoke)"],
-        // limfeaname : ["Cloud Rune"],
-        // additional : "invoke",
-        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
-        recovery : "short rest",
-        advantages : [["Sleight of Hand", true], ["Deception", true]]
-      },
-      "fire rune" : {
-        name : "Fire Rune",
-        source : ["T", 44],
-        description : desc([
-          "While I wear an object inscribed with this, I gain craftmanship reminiscent of fire giants",
-          "I always double my proficiency bonus when making an ability check with a tool",
-          "When I hit a creature with a weapon attack, I can invoke it to summon fiery shackles",
-          "The target takes 2d6 extra fire damage and must make a Str save or be restrained for 1 min",
-          "While restrained, the creature takes 2d6 fire damage at the start of each of its turns",
-          "They can repeat the save at the end of each of their turns, banishing the shackles on a success"
-        ]),
-        // limfeaname : ["Fire Rune"],
-        // additional : "invoke",
-        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
-        recovery : "short rest",
-        skillstxt : "expertise with all tools I am proficient with",
-				eval : function () { Checkbox('Too Exp', true); },
-				removeeval : function () { Checkbox('Too Exp', false); }
-      },
-      "frost rune" : {
-        name : "Frost Rune",
-        source : ["T", 45],
-        description : desc([
-					"While I wear an object inscribed with this, I gain a stoic calm reminiscent of frost giants",
-					"I always gain advantage on Wisdom (Animal Handling) and Charisma (Intimidation) checks",
-					"As a bonus action, I can invoke this rune to gain +2 to Str & Con checks and saves for 10 mins"
-				]),
-        action : ["bonus action"," (invoke)"],
-        // limfeaname : ["Frost Rune"],
-        // additional : "invoke",
-        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
-        recovery : "short rest",
-        advantages : [["Animal Handling", true], ["Intimidation", true]]
-      },
-      "stone rune" : {
-        name : "Stone Rune",
-        source : ["T", 45],
-        description : desc([
-					"While I wear an object inscribed with this, I gain insightfulness reminiscent of stone giants",
-					"I always gain adv. on Wisdom (Insight) checks and I gain 120ft darkvision",
-					"As a reaction when a creature I can see ends it turn within 30 ft, I can invoke this rune",
-					"This causes the creature to make a Wisdom save or be charmed by me for 1 minute",
-					"While charmed, it descends into a dreamy stupor, becoming incapacitated and has speed 0",
-					"The creature can repeat the save at the end of each of its turns, breaking free on a success"
-				]),
-        action : ["reaction"," (invoke)"],
-        // limfeaname : ["Stone Rune"],
-        // additional : "invoke",
-        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
-        recovery : "short rest",
-        advantages : [["Insight", true]],
-        vision : [["Darkvision", "120"]]
-      },
-      "hill rune (prereq: level 7 fighter)" : {
-        name : "Hill Rune",
-        source : ["T", 45],
-        description : desc([
-					"While I wear an object inscribed with this rune, I gain a resilience reminiscent of hill giants",
-					"I always gain advantage on saves against being poisoned and resistance to poison damage",
-					"As a bonus action, I can invoke it to gain resistance to bludg/slash/pierc damage for 1 min"
-				]),
-        action : ["bonus action"," (invoke)"],
-        // limfeaname : ["Hill Rune"],
-        // additional : "invoke",
-        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
-        recovery : "short rest",
-        dmgres : ["Poison"],
-				prereqeval : function(v) { return classes.known.fighter.level >= 7; },
-				savetxt : { adv_vs : ["poison"] }
-      },
-      "storm rune (prereq: level 7 fighter)" : {
-        name : "Storm Rune",
-        source : ["T", 45],
-        description : desc([
-					"While I wear an object inscribed with this rune, I can glimpse the future like storm giants",
-					"I always gain adv. on Int (Arcana) checks and I can't be surprised while not incapacitated",
-					"As a bonus action, I can invoke it to enter a prophetic state for 1 min or till incapacitated",
-					"While in this state, I can use a reaction to cause a roll to gain advantage or disadvantage",
-					"I can only do this for attacks, saves, and checks of other creatures I can see within 60 ft"
-				]),
-        action : ["bonus action"," (invoke)"],
-        // limfeaname : ["Storm Rune"],
-        // additional : "invoke",
-        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
-        recovery : "short rest",
-        advantages : [["Arcana", true]],
-				prereqeval : function(v) { return classes.known.fighter.level >= 7; },
-        savetxt : {immune : ["surprised"]}
-      }
-    },
-
-		"subclassfeature3.1": {
-			name: "Giant's Might",
-			source : ["T",45],
-			minlevel: 3,
-      description : desc([
-				"As a bonus action, I can imbue myself with giant magic for 1 minute and gain benefits:",
-				" \u2022 Space permitted, I grow to Large size along with everything I'm wearing",
-				" \u2022 Advantage on Strength checks and saves",
-        " \u2022 My unarmed strikes and weapon attacks deal extra damage"
-			]),
-      additional : levels.map(function (n){
-				return n < 3 ? "" : "+1d" + (n < 10 ? 6 : n < 18 ? 8 : 10) + " damage"
-			}),
-			action: ["bonus action",""],
-			usages : "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus');",
-			recovery : "long rest",
-      savetxt : { text : ["Adv. on Str saves in giant might"] },
-      calcChanges : {
-										atkAdd : [
-													function (fields, v) {
-                            v.extradie = function (n) { return n < 10 ? 6 : n < 18 ? 8 : 10}(classes.known.fighter.level);
-															if (v.isMeleeWeapon || v.baseWeaponName == "unarmed strike" ) {
-															fields.Description += (fields.Description ? '; ' : '') + '1d' + v.extradie + " extra damage in giant's might";
-															};
-													}
-											]
-									}
-		},
-		"subclassfeature7": {
-			name: "Runic Shield",
-			source : ["T",45],
-			minlevel: 7,
-			description: desc([
-				"When a creature I see within 60-ft is hit by an attack roll, my runes protect them.",
-        "I can use my reaction to force the attacker to reroll the d20 and use the new roll."
-      ]),
-			action: ["reaction",""],
-			usages : "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus');",
-			recovery : "long rest"
-		},
-		"subclassfeature10": {
-			name: "Great Stature",
-			source : ["T",46],
-			minlevel: 10,
-			description: desc([
-				"When I gain this feature, roll 3d4, accordingly I grow that number of inches.",
-				"Moreover, increase the damage I deal with my Giant's Might feature to 1d8."
-			])
-		},
-		"subclassfeature15": {
-			name: "Master of Runes",
-			source : ["T",46],
-			minlevel: 15,
-			description: desc([
-				"I can invoke my Rune Carver runes twice, instead of just once per short rest."
-			])
-		},
-		"subclassfeature18": {
-			name: "Runic Juggernaut",
-			source : ["T",46],
-			minlevel: 18,
-			description: desc([
-				"Increase the damage dealt with my Giant's Might feature to 1d10.",
-				"In Giant's Might, my size increases to Huge and my reach increases by 5ft."
-			])
-		}
-	}
-}); // rune knight
-AddSubClass("monk", "way of mercy", {
-	regExpSearch : /^(?=.*mercy)((?=.*(monk|monastic))|((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior))).*$/i,
-	subname : "Way of Mercy",
-	source : [["T", 49]],
-	features : {
-		"subclassfeature3" : {
-			name : "Implements of Mercy",
-			source : [["T", 49]],
-			minlevel : 3,
-			description : desc([
-				"I gain proficiency with the herbalism kit and the Insight and Medicine skills",
-				'I also gain a special mask, which I often wear when using my subclass features'
-			]),
-			toolProfs : ["Herbalism kit"],
-			skills : ["Insight", "Medicine"],
-			extraname : "Way of Mercy 3",
-			"hand of healing" : {
-				name : "Hand of Healing",
-				source : [["T", 49]],
-				description : function () {
-					var a = [
-						"As an action, I can spend 1 ki point to touch a creature and restore a number of its HP",
-						"When I do Flurry of Blows, I can do this instead of one unarmed strike (no extra ki cost)"
-					];
-					var b = desc(a);
-					var c = desc([a[0], "It also recovers from one disease or the blinded, deafened, paralyzed, poisoned or stunned", a[1]]);
-					var d = desc([a[0],"It also recovers from one disease or the blinded, deafened, paralyzed, poisoned or stunned", "When I do flurry of Blows, I can do this instead of each strike (no extra ki cost)"]);
-					return levels.map(function (n) {
-						return n < 6 ? b : n < 11 ? c : d;
-					});
-				}(),
-				action : [["action", ""]],
-				additional : levels.map(function (n) {
-					return n < 3 ? "" : "1 ki point; heal 1d" + (n < 5 ? 4 : n < 11 ? 6 : n < 17 ? 8 : 10) + " + Wisdom modifier";
-				})
-			},
-			"hand of harm" : {
-				name : "Hand of Harm",
-				source : [["T", 50]],
-				description : function () {
-					var a = [
-						"When I hit a creature with an unarmed strike, I can spend 1 ki point to deal extra damage",
-						"I can apply this extra damage only once per turn"
-					];
-					var b = desc(a);
-					var c = desc([a[0], "I can also subject the target to the poisoned condition until the end of my next turn", a[1]]);
-					var d = desc([a[0], "I can also subject the target to the poisoned condition until the end of my next turn", "When I do Flurry of Blows, I can do this with one unarmed strike (no extra ki cost)",a[1]]);
-					return levels.map(function (n) {
-						return n < 6 ? b : n < 11 ? c : d;
-					});
-				}(),
-
-				additional : levels.map(function (n) {
-					return n < 3 ? "" : "1 ki point; 1d" + (n < 5 ? 4 : n < 11 ? 6 : n < 17 ? 8 : 10) + " necrotic damage";
-				})
-			},
-		autoSelectExtrachoices : [{
-			extrachoice : "hand of healing"
-		}, {
-			extrachoice : "hand of harm"
-		}]
-	},
-	"subclassfeature6" : {
-		name : "Physician's touch",
-		source : [["T", 50]],
-		minlevel : 6,
-		description :  desc([
-			"With hand of healing I can also end: 1 disease, blind., deaf., paralyz., poisoned or stunned",
-			"With hand of harm I can also subject the target to poisoned until the end of my next turn"
-
-		]),
-		action : [["bonus action", ""]]
-	},
-	"subclassfeature11" : {
-		name : "Flurry of Healing and Harm",
-		source : [["T", 50]],
-		minlevel : 11,
-		description : desc([
-			"When I use flurry of blows, each unarmed strike can be a hand of healing at no extra ki cost",
-			"Also, I can use hand of harm without ki with flurry of blows (still only once per turn)"
-		]),
-		extraname : "Way of Mercy 17",
-		"hand of ultimate mercy" : {
-			name : "Hand of Ultimate Mercy",
-			source : [["T", 50]],
-			description : desc([
-				"As an action, I can use 5 ki to touch a creature that died in the last 24 hours",
-				"The creature returns to life with hp equal to 4d10+ Wis modifier",
-				"The creature is cured of blinded, deafened, paralyzed, poisoned or stunned"
-			]),
-			action : [["action", " (5 ki)"]],
-			additional : "5 ki",
-			usages : 1,
-			recovery : "long rest"
-		},
-		autoSelectExtrachoices : [{
-			extrachoice : "hand of ultimate mercy",
-			minlevel : 17
-		}]
-	}
-}
-});
-AddSubClass("monk", "way of the astral self", {
-	regExpSearch : /^(?=.*astral)(?=.*(self|projection|travel))((?=.*(monk|monastic))|((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior))).*$/i,
-	subname : "Way of the Astral Self",
-	source : ["T", 1],
-	features : {
-		"subclassfeature3" : {
-			name : "Arms of the Astral Self",
-			source : ["T", 1],
-			minlevel : 3,
-			description : "\n   My ki mastery allows me to summon portions of my astral self; See 3rd page notes",
-			action : [["bonus action", "Summon Astral Arms"]],
-			weaponsAdd : ["Astral Arms"],
-			weaponOptions : {
-				regExpSearch : /^(?=.*\bastral\b)(?=.*\barms?\b).*$/i,
-				name : "Astral Arms",
-				source : ["T", 1],
-				ability : 5,
-				type : "Natural",
-				damage : [1, "", typePF ? "Force" : "force"],
-				range : "Melee",
-				astralarms : true,
-				description : "10 ft reach",
-				monkweapon : true,
-				abilitytodamage : true
-			},
-			calcChanges : {
-				atkAdd : [
-					function (fields, v) {
-						if (( v.theWea.astralarms ))  {
-						v.monkdie = function (n) { return n < 5 ? 4 : n < 11 ? 6 : n < 17 ? 8 : 10; }(classes.known.monk.level);
-
-						fields.Description += (fields.Description ? '; ' : '') + 'When summoned, Dex save or 2d' + v.monkdie + ' Force damage to all in 10ft of my choice';
-					};
-					}
-				]},
-			extraname : "Way of the Astral Self 3",
-			"astral arms" : {
-				name : "Astral Arms",
-				source : ["T", 1],
-				description : desc([
-					"As a bonus action, I can summon my astral arms for 10 minutes; I choose their appearance",
-					"While they are summoned, I can use Wisdom instead of Strength for Strength checks/saves",
-					"Can use the arms for unarmed strike with +5 ft reach and can use Wis instead of Str/Dex",
-					"When I summon the arms, all creatures of my choice within 10ft take 2 M.A force damage",
-					"Attacks made with the arms deal force damage",
-				]),
-				additional : levels.map(function (n) {
-					return n < 3 ? "" : "1 ki point"
-				})
-			},
-			autoSelectExtrachoices : [{ extrachoice : "astral arms" }]
-		},
-		"subclassfeature6" : {
-			name : "Visage of the Astral Self",
-			source : ["T", 1],
-			minlevel : 6,
-			description : "\n   I can now also summon the visage of my astral self; See third page notes section",
-			action : [["bonus action", "Summon Astral Arms and/or Visage", "Summon Astral Arms"]],
-			extraname : "Way of the Astral Self 6",
-			"astral visage" : {
-				name : "Astral Visage",
-				source : ["T", 1],
-				description : " [1 ki point]" + desc([
-					"As a bonus action (or when summoning my astral arms), I can summon my astral visage",
-					"It covers my face like a helmet or mask and choose its appearance; It lasts for 10 minutes",
-					"It grants adv. on Insight \u0026 Intimidation, and the ability to see 120 ft in (magical) darkness",
-					"When I speak, I can choose to be heard only by one creature in 60ft, or by all in 300ft"
-				])
-			},
-			autoSelectExtrachoices : [{ extrachoice : "astral visage" }]
-		},
-		"subclassfeature11" : {
-			name : "Body of the Astral Self",
-			source : ["T", 1],
-			minlevel : 11,
-			description : "\n   I can cause my astral body to join my arms and visage; see third page notes",
-			action : [["bonus action", "Summon Astral Arms, Visage, or Complete", "Summon Astral Arms and/or Visage"]],
-			extraname : "Way of the Astral Self 11",
-			"deflect energy" : {
-				name : "Deflect Energy",
-				source : ["T", 1],
-				description : " [if astral body present]" + desc([
-					"As a reaction when I take acid, cold, fire, force, thunder or lightning damage, I can deflect it",
-					"By doing so, the damage is reduced by 1d10 + my Wisdom modifier"
-				])
-			},
-			"empowered arms" : {
-				name : "Empowered Arms",
-				source : ["T", 1],
-				description : " [if astral body present]" + desc([
-					"Once per turn when I hit an astral arms attack, I can add a martial arts die to its damage"
-				])
-			},
-			autoSelectExtrachoices : [
-				{ extrachoice : "deflect energy" },
-				{ extrachoice : "empowered arms" },
-			]
-		},
-		"subclassfeature17" : {
-			name : "Awakened Astral Self",
-			source : ["T", 1],
-			minlevel : 17,
-			description : desc([
-				"I can now summon my complete astral self; See third page notes section"
-			]),
-			action : [["bonus action","Summon Awakened Astral Self"]],
-			extraname : "Way of the Astral Self 17",
-			"awakened astral self" : {
-				name : "Awakened Astral Self",
-				source : ["T", 1],
-				description : " [5 ki points]" + desc([
-					"As a bonus action, I can summon the arms, visage, and body of my astral self for 10 min",
-					"In this awakened state, I have +2 bonus to AC while not incapacitated, and",
-					"When I take the Attack action I can choose to make 3 attacks with my astral arms instead",
-				])
-			},
-			autoSelectExtrachoices : [{ extrachoice : "awakened astral self" }]
-		}
-	}
-});
-AddSubClass("paladin", "oath of glory", {
-    regExpSearch : /^(((?=.*(glory|destined))(((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper))))))).*$/i,
-    subname : "Oath of Glory",
-    source : ["T", 53],
-    features : {
-        "subclassfeature3" : {
-            name : "Channel Divinity: Peerless Athlete",
-            source : ["T", 54],
-            minlevel : 3,
-            description : desc([
-                "As a bonus action, I can gain the following benefits for 10 minutes:",
-                "\u2022 Advantage on my Dex (Acrobatics) and Str (Athletics) checks",
-                "\u2022 I can carry/push/drag/lift twice as much as normal and I add 10ft to long/high jumps"
-            ]),
-            action : ["bonus action", ""],
-            spellcastingExtra : ["guiding bolt", "heroism", "enhance ability", "magic weapon", "haste", "protection from energy", "compulsion", "freedom of movement", "commune", "flame strike"]
-        },
-        "subclassfeature3.1" : {
-            name : "Channel Divinity: Inspiring Smite",
-            source : ["T", 54],
-            minlevel : 3,
-            description : desc([
-                "I can use a bonus action after dealing damage with Divine Strike to grant temporary HP",
-                "I divide 2d8 + paladin level temporary HP across creatures within 30ft, including me"
-            ]),
-            additional : levels.map(function (n) {
-                if (n < 3) return "";
-                return "2d8 + " + n + " temporary HP";
-            }),
-            action : ["bonus action", ""]
-        },
-        "subclassfeature7" : {
-            name : "Aura of Alacrity",
-            source : ["T", 54],
-            minlevel : 7,
-            description : desc([
-                "If I'm not incapacitated, allies starting within range get extra movement for their turn"
-            ]),
-            changeeval : function (v) {
-                var alacritySpd = '+' + (v[1] < 7 ? 0 : 10);
-                SetProf('speed', alacritySpd !== '+0', {allModes : alacritySpd}, "Oath of Glory: Aura of Alacrity");
-            },
-            additional : levels.map(function (n) {
-                if (n < 7) return "";
-                return (n < 18 ? 5 : 10) + "-foot aura; +10ft movement";
-            })
-        },
-        "subclassfeature15" : {
-            name : "Glorious Defense",
-            source : ["T", 54],
-            minlevel : 15,
-            description : desc([
-                "When I or a creature I can see within 10ft is hit, I can use a reaction to give it bonus AC",
-                "The bonus AC is equal to my Charisma modifier (min 1)",
-                "If the attack misses, I can also attack the attacker as long as it's within weapon range"
-            ]),
-            usages : "Charisma modifier per ",
-            usagescalc : "event.value = Math.max(1, What('Cha Mod'));",
-            action : ["reaction", ""],
-            recovery : "long rest"
-        },
-        "subclassfeature20" : {
-            name : "Living Legend",
-            source : ["T", 54],
-            minlevel : 20,
-            description : desc([
-                "As a bonus action, I can gain the following benefits for 1 minute:",
-                "\u2022 I have advantage on Charisma checks",
-                "\u2022 Once per turn, I can cause a missed weapon attack I make to hit instead",
-                "\u2022 If I fail a saving throw, I can use my reaction to reroll it; I must use the new roll"
-            ]),
-            recovery : "long rest",
-            usages : 1,
-            action : ["bonus action", ""],
-            altresource : "SS 5"
-        }
-    }
-});
-AddSubClass("paladin", "oath of the watchers", {
-	regExpSearch : /^(?=.*watchers)((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))).*$/i,
-	subname : "Oath of the Watchers",
-	source : [["T", 3]],
-	features : {
-		"subclassfeature3" : {
-			name : "Channel Divinity: Watcher's Will",
-			source : [["T", 4]],
-			minlevel : 3,
-			description : "\n   As an action, Cha mod of creatures I see in 30 ft plus me adv. on Int/Wis/Cha saves for 1 min",
-			action : [["action", ""]],
-			spellcastingExtra : [ "alarm", "detect magic", "see invisibility", "moonbeam", "counterspell", "nondetection", "aura of purity", "banishment", "hold monster", "scrying"]
-		},
-		"subclassfeature3.1" : {
-			name : "Channel Divinity: Abjure the Extraplanar",
-			source : [["T", 4]],
-			minlevel : 3,
-			description : desc([
-				"As an action, celestials, elementals, fey, fiends, and aberrations within 30 ft make a Wis save",
-				"Succeeds if it can't hear me; On fail, turned for 1 minute or until it takes any damage",
-				"Turned: move away, never within 30 ft of me, no reactions or actions other than Dash",
-				"Turned: may Dodge instead of Dash when nowhere to move and unable to escape bonds"
-			]),
-			action : [["action", ""]]
-		},
-		"subclassfeature7" : {
-			name : "Aura of the Sentinel",
-			source : [["T", 4]],
-			minlevel : 7,
-			description : "\n   If I'm not incapacitated, chosen creatures in range and I add my proficiency to Initiative",
-			additional : levels.map(function (n) { return n < 7 ? "" : (n < 18 ? 10 : 30) + "-foot aura"; }),
-			addMod : [{ type : "skill", field : "Init", mod : "Prof", text : "I can add my Proficiency Bonus to initiative rolls." }]
-		},
-		"subclassfeature15" : {
-			name : "Vigilant Rebuke",
-			source : [["T", 4]],
-			minlevel : 15,
-			description : desc([
-				"As a reaction when I or another I can see makes an int/wis/cha save, I can damage the source",
-				"Has to succeed save within 30 ft of me vs. unwanted spell; 2d8 + Cha mod force damage"
-			]),
-			action : [["reaction", ""]]
-		},
-		"subclassfeature20" : {
-			name : "Mortal Bulwark",
-			source : [["T", 4]],
-			minlevel : 20,
-			description : desc([
-				"As a bonus action, I can gain the following benefits for 1 minute: (recharge lvl 5 spell slot)",
-				" \u2022 Truesight out to 120 ft and adv. on attacks vs. celestials, elementals, fey, fiends, aberrations",
-				" \u2022 I can force creatures I hit and damage with an attack to make a Charisma save",
-				"   If failed, the target is banished to its native plane of existence if it's not currently there",
-				"   If successful, the creature can't be banished by this feature for 24 hours"
-			]),
-			recovery : "long rest",
-			usages : 1,
-			action : [["bonus action", ""]],
-			altresource : "SS 5+"
-		}
-	}
-});
-AddSubClass("ranger", "fey wanderer", {
-	regExpSearch : /^(?=.*fey)(?=.*wanderer).*$/i,
-	subname : "Fey Wanderer",
-	source : ["T", 59],
-	fullname : "Fey Wanderer",
-	features : {
-		"subclassfeature3" : {
-			name : "Dreadful Strikes",
-			source : ["T", 59],
-			minlevel : 3,
-			description : desc(["Once per turn, I can deal extra psychic damage to a creature I hit with a weapon attack"]),
-			additional : levels.map(function (n) {
-				if (n < 3) return "";
-				return "+" + (n < 11 ? "1d4 psychic damage" : "1d6 psychic damage");
-			}),
-			calcChanges : {
-							atkAdd : [
-								function (fields, v) {
-									if (classes.known.ranger && classes.known.ranger.level > 2 && !v.isSpell) {
-										fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.ranger.level < 11 ? "1d4 psychic damage" : "1d6 psychic damage");
-									}
-								},
-								"Once per turn, I can have one of my weapon attacks that hit do extra psychic damage."
-							]
-						}
-		},
-		"subclassfeature3.1" : {
-			name : "Fey Wanderer Magic",
-			source : ["T", 59],
-			minlevel : 3,
-			description : desc([
-				"I add a spell to my known spells at level 3, 5, 9, 13, and 17",
-				"These count as ranger spells, but do not count against the number of spells I can know"
-			]),
-			spellcastingExtra : ["charm person", "misty step", "dispel magic", "dimension door", "mislead"],
-			spellcastingExtraApplyNonconform : true
-		},
-		"subclassfeature3.2" : {
-			name : "Otherworldly Glamour",
-			source : ["T", 59],
-			minlevel : 3,
-			description : desc([
-				"I add my Wisdom modifier (minimum of +1) to any Charisma check I make",
-				"I also gain proficiency my choice of Deception, Performance, or Persuasion"
-			]),
-			extraname : "Otherwordly Glamour",
-			extrachoices : ["Deception Proficiency", "Performance Proficiency", "Persuasion Proficiency"],
-			extraTimes : 1,
-				"deception proficiency" : {
-					name : "Deception Proficiency", description : "",
-					source : [["SRD", 13], ["P", 54]],
-					prereqeval : function(v) { return v.skillProfs.indexOf("Deception") !== 0; },
-					skills : ["Deception"]
-				},
-				"performance proficiency" : {
-					name : "Performance Proficiency", description : "",
-					source : [["SRD", 13], ["P", 54]],
-					prereqeval : function(v) { return v.skillProfs.indexOf("Performance") !== 0; },
-					skills : ["Performance"]
-				},
-				"persuasion proficiency" : {
-					name : "Persuasion Proficiency", description : "",
-					source : [["SRD", 13], ["P", 54]],
-					prereqeval : function(v) { return v.skillProfs.indexOf("Persuasion") !== 0; },
-					skills : ["Persuasion"]
-				},
-			addMod :[
-				{type : "skill", field : ["Persuasion"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
-				{type : "skill", field : ["Deception"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
-				{type : "skill", field : ["Performance"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
-				{type : "skill", field : ["Intimidation"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"}          
-			],
-		},
-		"subclassfeature7" : {
-			name : "Beguiling Twist",
-			source : ["T", 59],
-			minlevel : 7,
-			description : desc([
-				"I have advantage on saves against being charmed or frightened",
-				"When me or a creature within 120 ft passes a save vs charm / frighten I can use my reaction",
-				"When I do this, I target another creature within 120 ft and force it to make a Wisdom save",
-				"The save is against my spell save DC, and if it fail it's charmed or frightened (my choice)",
-				"This lasts a minute, or until it repeats the save at the end of its turn and succeed"
-			]),
-			savetxt : { adv_vs : ["charmed", "frightened"] },
-			action : [["reaction", ""]],
-		},
-		"subclassfeature11" : {
-			minlevel : 11,
-			name : "Fey Reinforcements",
-			source : ["T", 59],
-			description : desc([
-				"I learn Summon Fey, can cast it once a long rest for free, and without material components",
-				"When I cast the spell, whether with or without using a spell slot, I can choose to change it",
-				"When I do, its duration changes to 1 minute, but it no-longer requires concentration"
-			]),
-			action : [["action", "Fey Reinforcements"]],
-			usages : 1,
-			recovery : "long rest",
-			spellcastingBonus : {
-				name : "Fey Reinforcements",
-				spellcastingAbility : 5,
-				spells : ["summon fey"],
-				selection : ["summon fey"]
-			},
-			spellChanges : {
-				"summon fey" : {
-					components : "V,S",
-					compMaterial : "Using Fey Reinforcements, I can cast Summon Fey without requiring material components.",
-					description : "Summon choice of Fey Spirit; obeys commands after my turn; dissapears at 0 hp",
-					descriptionFull : "You call forth a fey spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fey Spirit stat block. When you cast the spell, choose a mood: Fuming, Mirthful, or Tricksy. The creature resembles a fey creature of your choice marked by the chosen mood, which determines one of the traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends." + "\n   " + "The creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger." + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the stat block.",
-					changes : "Using Fey Reinforcements, I can cast Summon Fey without requiring material components.",
-				}
-			},
-		},
-		"subclassfeature15" : {
-			name : "Misty Wanderer",
-			source : ["T", 59],
-			minlevel : 15,
-			description : desc([
-				"I can cast Misty Step Wis mod times per long rest without using a spell slot",
-				"Also, whenever I cast Misty Step I can choose to bring a willing creature within 5 ft with me"
-			]),
-			action : [["bonus action", ""]],
-			usages : "Wisdom modifier per ",
-			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-			recovery : "long rest",
-		},
-	}
-});
-AddSubClass("ranger", "swarmkeeper", {
-	regExpSearch : /swarmkeeper/i,
-	subname : "Swarmkeeper",
-	source : ["T", 59],
-	attacks : [1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-	fullname : "Swarmkeeper",
-	features : {
-		"subclassfeature3" : {
-			name : "Swarmkeeper Magic",
-			source : ["T", 60],
-			minlevel : 3,
-			description : desc([
-				"I learn Mage Hand; When I cast it, the hand takes the form of swarming nature spirits",
-				"I get bonus spells known, which do not count against the number of spells I can know"
-			]),
-			spellcastingBonus : {
-				name : "Swarmkeeper Magic",
-				spells : ["mage hand"],
-				selection : ["mage hand"],
-				firstCol : "atwill"
-			},
-			spellcastingExtra : ["faerie fire", "web", "gaseous form", "arcane eye", "insect plague"],
-			spellcastingExtraApplyNonconform : true
-		},
-		"subclassfeature3.1" : {
-			name : "Gathered Swarm",
-			source : ["T", 60],
-			minlevel : 3,
-			description : desc([
-				"I constantly have a swarm of fey spirits crawling in my space, see 3rd page for effects"
-			]),
-			additional : levels.map(function (n) {
-				return n < 3 ? "" : "+1" + (n < 11 ? "d6" : "d8") + " piercing dmg";
-			}),
-			extraname : "Swarmkeeper 3",
-			"gathered swarm" : {
-				name : "Gathered Swarm",
-				source : ["T", 60],
-				minlevel : 3,
-				description : desc([
-					"Once per turn when I hit a creature with an attack, choose one effect:",
-					"The swarm causes the target to takes extra piercing damage, starting at 1d6",
-					"The target makes a Str. save or is moved by the swarm 15ft horizontally in any direction",
-					"The swarm moves me 5ft horizontally in any direction"
-				])
-			},
-			autoSelectExtrachoices : [{
-				extrachoice : "gathered swarm",
-				minlevel : 14
-			}],
-			calcChanges : {
-				atkAdd : [
-					function (fields, v) {
-						if (( classes.known.ranger && classes.known.ranger.level > 2 && !v.isDC ))  {
-							v.extradie = function (n) { return n < 11 ? "1d6" : "1d8"; }(classes.known.ranger.level);
-						fields.Description += (fields.Description ? '; ' : '') + 'Once per turn, +' + v.extradie + ' piercing damage ';
-					};
-					}
-				]}
-		},
-		"subclassfeature7" : {
-			name : "Writhing Tide",
-			source : ["T", 60],
-			minlevel : 7,
-			description : desc([
-				"I can condense my swarm into a mass that lifts me up.",
-				"As a bonus action, I gain a 10 ft fly speed and I can hover",
-			]),
-			action : [["bonus action", ""]],
-			usages : "Proficiency Bonus per ",
-			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
-			recovery : "long rest",
-		},
-		"subclassfeature11" : {
-			name : "Mighty Swarm",
-			source : ["T", 60],
-			minlevel : 11,
-			description : desc([
-				"My Gathered Swarm grows mightier in the following ways:",
-				"The damage from gathered swarm increases to 1d8",
-				"I can also cause a creature that fails its save against being moved to fall prone",
-				"When I am moved by the swarm, I gain half cover until the start of my next turn"
-			])
-		},
-		"subclassfeature15" : {
-			name : "Swarming Dispersal",
-			source : ["T", 60],
-			minlevel : 15,
-			description : desc([
-				"I can discorporate into my swarm, avoiding danger:",
-				"As a reaction to taking damage, I can vanish into the swarm and teleport 30ft",
-				"to an unoccupied space I can see, and I gain resistance to the triggering damage"
-			]),
-			action : [["reaction", ""]],
-			usages : "Proficiency Bonus per ",
-			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
-			recovery : "long rest",
-		}
-	}
-});
-AddSubClass("rogue", "phantom", {
-	regExpSearch : /^(?=.*rogue)(?=.*phantom).*$/i,
-	subname : "Phantom",
-	source : ["T",62],
-	features : {
-		"subclassfeature3" : {
-			name : "Whispers of the Dead",
-			source : ["T", 62],
-			minlevel : 3,
-			description : desc([
-			"Whenever I finish a short or long rest, I gain one skill or tool proficiency of my choice.",
-			"This proficiency lasts until I use this feature again"
-			])
-		},
-		"subclassfeature3.1" : {
-			name : "Wails from the Grave",
-			source : ["T",62],
-			minlevel : 3,
-			description : desc([
-			"Immediately after I deal Sneak Attack damage on my turn, I can target a second",
-			"creature that I can see within 30 ft of the first creature.  I roll half the number of",
-			"Sneak Attack dice for my level \(round up\). and the second creature takes psychic",
-			"damage equal to the roll's total.",
-			"I can use this feature a number of times equal to my proficiency bonus and regain",
-			"all expended uses when I finish a long rest."
-			]),
-			usages : "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus');",
-			recovery : "long rest"
-		},
-		"subclassfeature9" : {
-			name : "Tokens of the Departed",
-			source : ["T", 63],
-			minlevel : 9,
-			description : desc([
-			"As a reaction when a creature I can see dies within 30 ft of me, I get a Tiny trinket,",
-			"a soul trinket. DM chooses the trinket's form or have me roll on the Trinkets table",
-			"in the Player's Handbook.",
-			"I can have a max number of soul trinkets equal to my proficiency bonus, and I cannot",
-			"create a new one while at my max.",			
-			"While the soul trinket is on my person, I have advantage on death saving throws", 
-			"and Constitution saving throws.",
-			"When I deal Sneak Attack damage on my turn, I can destroy a soul trinket and",
-			"immediately use Wail of the Grave feature without expending a use of that feature.",
-			"As an action, I can destroy one of my soul trinkets, no matter where it's located.",
-			"When I do, I can ask the spirit associated with the trinket one question.  The spirit",
-			"appears and answers in a language it knew in life.  It doesn't have to be truthful and",
-			"it answers as concisely as possible before departing. It knows only what it knew in life."
-			]),
-			action : [["reaction","create a soul trinket"],["action","destroy a soul trinket"]]
-		},
-		"subclassfeature13" : {
-			name : "Ghost Walk",
-			source : ["T", 63],
-			minlevel : 13,
-			description : desc([
-			"As a bonus action, I assume a spectral form.  While in this form, I have a fly speed",
-			"of 10 ft, can hover, and attack rolls have disadvantage against me. I can move through",
-			"creatures and objects as if difficult terrain; I take 1d10 force damage if I end my",
-			"turn inside a creature or an object.",
-			"I stay in this form for 10 minutes or until I end it as a bonus action. To use this",
-			"feature again, I must finish a long rest or destroy a soul trinket as part of the",
-			"bonus action to activate Ghost Walk."
-			]),
-			usages : "destroy soul trinket or 1x per ",
-			recovery : "long rest",
-			action : ["bonus action","begin/end Ghost Walk"]
-		},
-		"subclassfeature17" : {
-			name : "Death's Friend",
-			source : ["T",63],
-			minlevel : 17,
-			description : desc([
-			"\u25C6 When I use my Wails from the Grave feature, I can now deal the psychic damage",
-			"to both the first and second creature.",
-			"\u25C6 I get a soul trinket at the end of a long rest as spirits of the dead are",
-			"drawn to me."
-			])
-		}
-	}
-});
-AddSubClass( // this is the function you will be calling to add the variant
-
-	"rogue", // Parent Class object name; Required; This has to be the exact name of the class of which you are adding a subclass. Look for the name of the class in the ClassList variable. For the default 12 classes these names are: "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", and "wizard"
-
-	"soulknife", // Object name; Required; The name the entry in the ClassSubList will have. This can be anything, it is just something that the sheet uses to reference the new entry and it will never be printed anywhere
-
-	{ // don't forget this opening bracket
-
-		regExpSearch : /^(?=.*soul)(?=.*knife).*$/i, //required; regular expression of what to look for (i.e. now it looks for any entry that has both the words "special" and "me" in it, disregarding capitalization). If this looks too complicated, just write: /specialme/i
-
-		subname : "Soulknife", //required; the name of the subclass
-
-		source : ["T", 63], //required; the source and the page number. "HB" stands for homebrew. See the "Complete SourceList" for an overview of sources that are already defined. Or define a new source using the "Homebrew Syntax - SourceList.js". // This can be an array of arrays to indicate the things appears in multiple sources. For example, if something appears on page 7 of the Elemental Evil Player's Companion and on page 115 of the Sword Coast Adventure Guide, use the following: [["E", 7], ["S", 115]]
-
-		// after defining the above three, you don't need to define anything more, but you can. Defining more stuff will overwrite the entries as they are given in the ClassList. So if you do not need something to be different than the basics of the class (for example, you subclass uses the same spellcasting ability), then you don't need to define it again.
-		// For the syntax of how to define more stuff, look at the ClassList (see "Homebrew Syntax - ClassList.js"). You can define all the same stuff in the same way. The below are a couple of examples:
-
-		fullname : "Soulknife Rogue", //if no fullname is defined it will be automatically generated as "Class Name (Subclass name)". In this example that would be: "MyClass (Path of SpecialMe)"
-
-		abilitySave : 2, //overwrites the abilitySave that was defined in the ClassList
-		abilitySaveAlt : 4,//overwrites the abilitySaveAlt that was defined in the ClassList
-		spellcastingFactor : 6, //overwrites the spellcastingFactor that was defined in the ClassList
-
-		features : { //unlike the other entries, "features" will not delete all the features from the ClassList, but will add to the features in the ClassList. For this to work properly, the feature object has to be named "subclassfeatureX" and not something appropriate for the feature. The below are the features of the purple Dragon Knight
-
-			"subclassfeature3" : { // has to start with "subclassfeature" followed by a number. Note that the name has to be unique for this subclass, but it can be the same name as one of the features of the class in the ClassList variable. If you use the same name as a feature in the ClassList variable, it will be overwritten with this entry
-				name : "Psionic Power",
-				source : ["T", 64],
-				minlevel : 3,
-                description : desc([ 
-                                        "I have twice my proficiency bonus of Psionic Energy dice that start as d6's.They fuel",
-                                        "various psionic powers, and I can't use a power that needs a psionic die if I don't",
-                                        "have any left. The die goes up as you gain levels: at 5th (d8), 11th (d10), 17th (d12).",
-                                        "Psi-Bolstered Knack. If I fail an ability check using a skill or tool that I'm",
-                                        "proficient with, roll one Psionic Energy die and add the number to the check.",
-                                        "You expend the die only if the roll succeeds.",
-                                        "Psychic Whispers. Establish a telepathic link between yourself and others. As an action",
-                                        "choose one or more creatures you can see, up to a number of creatures equal to your",
-                                        "proficiency bonus. Roll one Psionic energy die for a number of hours equal to the",
-                                        "number rolled, you can telepathically speak to each other. Sending or recieving a msg",
-                                        "(no action needed) requires you to be within 1 mile of each other. The connection can",
-                                        "be ended at any time by any member. No action req.",
-                                        "The first time you use this power after each long rest, you don't expend the Energy die",
-                                        "All other times you use the power, you expend the die."
-                                        ]),
-				additional : ["", "", "d6", "d6", "d8", "d8", "d8", "d8", "d8", "d9", "d10", "d10", "d10", "d10", "d10", "d10", "d12", "d12", "d12", "d12"],
-				action : ["action", "Psychic Whispers"],
-			},
-			"subclassfeature3.1" : {
-				name : "Psychic Blades",
-				source : ["T", 64],
-				minlevel : 3,
-                description :  desc([
-                                        "You manifest a Psychic Blade in your free hand and make an attack with that blade.",
-                                        "It is a simple melee weapon with finesse and thrown properties; 60ft thrown range,", 
-                                        "and no long range. On a hit it deals 1d6 + STR/DEX. The blade vanishes after it hits",
-                                        "or misses its target when thrown and leaves no mark on its target if it deals damage."
-                                        
-                                    ]),
-            weaponprofs : [true, false, ["psychic blade", "psychic blade bonus"]],
-            weaponsAdd : ["Psychic Blade", "Psychic Blade Bonus"],
-			weaponOptions : [{
-				regExpSearch : /^(?=.*psychic)(?=.*blade).*$/i,
-				name : "Psychic Blade",
-				ability : 2,
-				type : "Simple",
-				damage : [1, 6, "psychic"],
-				range : "Melee, 60/0 ft",
-				description : "Finesse, light, thrown",
-				abilitytodamage : true,
-				isSoulknifePsychicBlade : true
-            }],
-            },
-            "subclassfeature3.2" : {
-				name : "Psychic Blades Bonus",
-				source : ["T", 64],
-                minlevel : 3,
-                description : desc([
-                    "After you attack with the blade, you can make a melee or ranged attack with a second",
-                    "psychic blade as a bonus action on the same turn, provided your other hand is free to",
-                    "create it. The damage die of this bonus attack is 1d4, instead of 1d6."
-				]),
-				action : ["bonus action", "Psychic Blades Offhand"],
-			    weaponOptions : [{
-				regExpSearch : /^(?=.*psychic)(?=.*blade)(?=.*bonus).*$/i,
-				name : "Psychic Blade Bonus",
-				ability : 2,
-				type : "Simple",
-				damage : [1, 4, "psychic"],
-				range : "Melee, 60/0 ft",
-				description : "Finesse, light, thrown",
-				abilitytodamage : true,
-				isSoulknifePsychicBlade : true
-            }],
-			},
-			"subclassfeature9" : {
-				name : "Soul Blades",
-				source : ["T", 65],
-				minlevel : 9,
-                description : desc([
-                              "You have the following powers that use your Psionic Energy dice.", 
-                              "Homing Strikes. If you maiss an attack with Psychic Blades, you can roll one Psionic",
-                              "Energy and add the number to the attack roll. You only expend the die if the attack hits.",
-                              "Psychic Teleportation. As a bonus action, manifest a Psychic Blade, expend one Psionic",
-                              "Energy die. Throw the blade at an unoccupied space up to a number of feet away",
-                              "equal to 10 times the number rolled to teleport to that space, and the blade vanishes."
-							]),
-							action : ["bonus action", "Psychic Teleportation"],
-			},
-			"subclassfeature13" : {
-				name : "Psychic Veil",
-				source : ["T", 65],
-				minlevel : 13,
-                description : desc([
-                              "As an action, you any anything you are wearing or carrying becomes invisible, for 1 hr", 
-                              "or until you dismiss this effect (no action required). This invisiblity ends immediately",
-                              "after you deal damage to a creature or you force a creature to make a saving throw.",
-                              "Once you use this feature, you can't do so again until you finish a long rest, unless you",
-                              "expend a Psionic Energy die to use this feature again."
-							  ]),
-							  action : ["action", "Psychic Veil"],
-            },
-            "subclassfeature17" : {
-				name : "Rend Mind",
-				source : ["T", 65],
-				minlevel : 17,
-                description : desc([
-                              "When you use your Psychic Blades to deal Sneak Attack damage to a creature, you can", 
-                              "force the target to make a WIS save (DC 8 + prof + DEX). The target is stunned for",
-                              "1 min on a failed save. The save can be repeated at the end of each of their turns.",
-                              "Once you use this feature, you can't do so again until you finish a long rest, unless you",
-                              "expend a Psionic Energy die to use this feature again."
-                              ]),
-			},
-		}
-	}
-);
-AddSubClass("sorcerer", "aberrant mind", { //incomplete - psionic spells needs work
-	regExpSearch : /^(?=.*aberrant)(?=.*mind).*$/i,
-	subname : "Aberrant Mind",
-	source : ["T", 1],
-	features : {
-		"subclassfeature1" : {
-			name : "Telepathic Speech",
-			source : ["T", 1],
-			minlevel : 1,
-			description : desc([
-				"As a bonus action, I can telepathic link myself with a creature within 30 ft that I can see",
-				"The target and I can telepathically communicate; We must share a language to be understood",
-				"and to communicate we must be within a number of miles equal to my Cha mod (min 1 mile)",
-				"The communication ends early if I am incapacitated, I die or if I use this feature again"
-			]),
-			action : [["bonus action", ""]],
-			additional : levels.map(function (n) {
-				return (n) + " minutes";
-			})
-		},
-		"subclassfeature1.1" : {
-			name : "Psionic Spells",
-			source : ["T", 1],
-			minlevel : 1,
-			description : desc([
-				"I learn additional spells, which do not count towards the number of spell I can know",
-				"When I level up I can replace one of these spells with another of the same level",
-				"and from the div. or ench. schools from the wizard, sorcerer or warlock lists."
-			]),
-			spellcastingBonus : { // Need to find a way to add the base psionic spells to the spells from the class and school list
-				name : "Psionic Spells",
-				extraspells : ["mind sliver", "arms of hadar", "dissonant whispers", "calm emotions", "detect thoughts", "hunger of hadar", "sending", "evard's black tentacles", "summon abberation", "rary's telepathic bond", "telekinesis"],
-				"class" : ["sorcerer", "warlock", "wizard"],
-				school : ["Ench", "Div"],
-				selection : ["mind sliver", "arms of hadar", "dissonant whispers", "calm emotions", "detect thoughts", "hunger of hadar", "sending", "evard's black tentacles", "summon abberation", "rary's telepathic bond", "telekinesis"],
-				firstCol : "SP",
-				level : [0,5],
-				times : [3,3,5,5,7,7,9,9,11,11,11,11,11,11,11,11,11,11,11,11]
-			}
-		},
-		"subclassfeature6" : {
-			name : "Psionic Sorcery",
-			source : ["T", 2],
-			minlevel : 6,
-			description : desc([
-				"I can expend sorcery points instead of a spell slot to cast a spell from my Psionic Spells",
-				"This costs the spell's level in sorcery points, but the spell requires no other components",
-				"unless the material components are consumed by the spell."
-			])
-		},
-		"subclassfeature6.1" : {
-			name : "Psychic Defenses",
-			source : ["T", 2],
-			minlevel : 6,
-			description : "\n   I gain resistance to psychic damage and adv. on saves vs. being charmed or frightened",
-			dmgres : ["Psychic"],
-			savetxt : { adv_vs : ["charmed", "frightened"] }
-		},
-		"subclassfeature14" : {
-			name : "Revelation in Flesh",
-			source : ["T", 2],
-			minlevel : 14,
-			description : desc([
-				"As a bonus action, I can expend 1 or more sorcery points to transform for 10 minutes",
-				"For each sorcery point used, I gain one of the following benefits of my choice:",
-				"\u2022 I gain a swimming speed equal to my walking speed and the ability to breathe water",
-				"\u2022 I gain a flying speed equal to my walking speed and I can hover",
-				"\u2022 I can move, with equipment, through any space as narrow as 1 inch without squeezing",
-				"  I can spend 5 ft of movement to escape form a grapple or from nonmagical restraints",
-				"\u2022 I can see any invisible creatures within 60 ft of me not behind total cover"
-			]),
-			action : [["bonus action", ""]],
-			additional : "1+ sorcery points"
-		},
-		"subclassfeature18" : {
-			name : "Warping Implosion",
-			source : ["T", 2],
-			minlevel : 18,
-			description : desc([
-				"As an action, I can teleport to an unoccupied space i can see within 120ft",
-				"Creatures within 30ft of the space I left must make a strength save or take",
-				"3d10 force damage and be pulled to the nearest unoccupied space from where I left",
-				"On a successful save, a creature takes half damage and isn't pulled"
-			]),
-			action : [["action", ""]],
-			recovery : "long rest",
-			usages : 1,
-			altResource : "5 SP"
-		}
-	}
-});
-AddSubClass("sorcerer", "clockwork soul", { //incomplete - clockwork magic needs work
-	regExpSearch : /^((?=.*(sorcerer|witch))(?=.*mechanus)|(?=.*clockwork)(?=.*soul)).*$/i,
-	subname : "Clockwork Soul",
-	source : [["T", 4]],
-	fullname : "Clockwork Soul",
-	features : {
-		"subclassfeature1" : {
-			name : "Clockwork Magic",
-			source : [["T", 4]],
-			minlevel : 1,
-			description : desc([
-				"I learn additional spells, which do not count towards the number of spell I can know",
-				"When I level up I can replace one of these spells with another of the same level",
-				"and from the abj. or trans. schools from the wizard, sorcerer or warlock lists."
-			]),
-			spellcastingBonus : { // Need to find a way to add the base clockwork spells to the spells from the class and school list
-				name : "Clockwork Magic",
-				extraspells : ["alarm", "protection from evil and good", "aid", "lesser restoration", "dispel magic", "protection from energy", "freedom of movement", "summon construct", "greater restoration", "wall of force"],
-				"class" : ["sorcerer", "warlock", "wizard"],
-				school : ["Abjur", "Trans"],
-				selection : ["alarm", "protection from evil and good", "aid", "lesser restoration", "dispel magic", "protection from energy", "freedom of movement", "summon construct", "greater restoration", "wall of force"],
-				firstCol : "markedbox",
-				level : [1,5],
-				times : [2,2,4,4,6,6,8,8,10,10,10,10,10,10,10,10,10,10,10,10]
-			}
-		},
-		"subclassfeature1.1" : {
-			name : "Restore Balance",
-			source : [["T", 4]],
-			minlevel : 1,
-			description : desc([
-				"As a reaction when a creature I can see in 60 ft is about to roll a d20 with adv./disadv.,",
-				"I can prevent that roll from being affected by advantage and disadvantage."
-			]),
-			usages : "Charisma modifier per ",
-			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
-			recovery : "long rest",
-			action : [["reaction", ""]],
-
-			extraLimitedFeatures : [{
-				name : "Restore Balance",
-				usages : "Proficiency Bonus per ",
-				recovery : "long rest",
-				usagescalc : "event.value = Number(What('Proficiency Bonus'));"
-			}]
-		},
-		"subclassfeature6" : {
-			name : "Bulwark of Law",
-			source : [["T", 4]],
-			minlevel : 6,
-			description : desc([
-				"As an action, I can imbue a creature I can see within 30 ft with a magical ward",
-				"I grant it a number of d8s equal to the number of sorcery points I expend when I do this",
-				"When it takes damage, it can use its reaction to spend and roll any number of those dice",
-				"The dice roll reduces the damage; The ward lasts until I finish a long rest or do this again"
-			]),
-			additional : "1-5 sorcery points; 1d8 per point",
-			action : [["action", ""]]
-		},
-		"subclassfeature14" : {
-			name : "Trance of Order",
-			source : [["T", 4]],
-			minlevel : 14,
-			description : desc([
-				"As a bonus action, I can enter a state of clockwork consciousness for 1 minute",
-				"While in this state, attack rolls against me can't benefit from advantage",
-				"Also, I can then treat a d20 roll below 9 as a 10 for my attack rolls, checks, and saves",
-				"I can do this once per long rest, or by expending a 5 sorcery points (5 SP)"
-			]),
-			action : [["bonus action", ""]],
-			usages : 1,
-			recovery : "long rest",
-			altResource : "5 SP",
-
-			extraLimitedFeatures : [{
-				name : "Trance of Order",
-				usages : 1,
-				recovery : "long rest",
-			}]
-		},
-		"subclassfeature18" : {
-			name : "Clockwork Cavalcade",
-			source : [["T", 5]],
-			minlevel : 18,
-			description : desc([
-				"As an action, I can call spirits to bring balance in a 30-ft cube originating from me",
-				"Inside the cube, the intangible spirits do all the following before vanishing:",
-				" \u2022 Restore up to 100 HP, divided among the creatures in the cube as I choose",
-				" \u2022 Repair all damaged objects entirely in the cube",
-				" \u2022 End spells of my choice of 6th-level or lower on objects or creatures in the cube",
-				"I can do this once per long rest, or by expending a 7 sorcery points (7 SP)"
-			]),
-			action : [["action", ""]],
-			usages : 1,
-			recovery : "long rest",
-			altResource : "7 SP",
-
-			extraLimitedFeatures : [{
-				name : "Clockwork Cavalcade",
-				usages : 1,
-				recovery : "long rest",
-			}]
-
-		}
-	}
-});
-AddSubClass("warlock", "the fathomless", {
-	regExpSearch : /^(?=.*warlock)(?=.*fathomless).*$/i,
-	subname : "The Fathomless",
-	source : ["T",72],
-	features : {
-		"subclassfeature1" : {
-			name : "Tentacle of the Deep",
-			source : ["T",72],
-			minlevel : 1,
-			description : desc([
-			"Bonus action to create a 10 foot-long tentacle within 60 feet.",
-			"Can attack with it when created and when I use a bonus action to move it 30'",
-			"Melee spell attack that does 1d8 cold dmg and -10 to its speed.",
-			"Tentacle lasts for 1 minute and can be summoned a number of times equal to my","Proficiency bonus per long rest"
-			]),
-			action : ["bonus action","summon/move tentacle"],
-			usages : "Prof. Bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus');",
-			recovery : "long rest"
-		},
-		"subclassfeature1.1" : {
-			name : "Expanded Spell List",
-			source : ["T",72],
-			minlevel : 1,
-			spellcastingExtra : ["create or destroy water", "thunderwave", "gust of wind", "silence", "lightning bolt", "sleet storm", "control water", "summon elemental", "bigby's hand", "cone of cold"],
-			description : desc([
-			"My patron grants me extra spells I can choose from. Water only for",
-			"Summon Elemental and Bigby's Hand appears as a tentacle."
-			]),
-		},
-		"subclassfeature1.2" : {
-			name : "Gift of the Sea",
-			source : ["T",72],
-			minlevel : 1,
-			description : desc([
-			"I gain a swim speed of 40' and can breathe underwater."
-			]),
-		},
-		"subclassfeature6" : {
-			name : "Oceanic Soul",
-			minlevel : 6,
-			source : ["T",73],
-			description : desc ([
-			"I gain resistance to cold damage.  In addition, while completely",
-			"submerged under water, othe submerged creatures understand me."
-			]),
-			dmgres : ["Cold"]
-		},
-		"subclassfeature6.1" : {
-			name : "Guardian Coil",
-			minlevel : 6,
-			source : ["T",73],
-			description : desc([
-			"With Tentacle of the Deep summoned, reaction when me or any",
-			"creature that I see within 10 feet of it to reduce dmg by 1d8",
-			"This increases to 2d8 at level 10."
-			]),
-			/* action : ["reaction","reduce dmg by 1d8"], */
-		},
-		"subclassfeature10" : {
-			name : "Grasping Tentacles",
-			source : ["T",73],
-			minlevel : 10,
-			description : desc([
-			"I learn Evard's Black Tentacles spell, it counts as a Warlock spell",
-			"but doesn't count against number of spells known.  Can cast it once",
-			"per long rest without using a spell slot",
-			"I gain temporary hit points equal to my Warlock level and damage",
-			"doesn't break concentration on this spell"
-			]),
-			spellcastingBonus : {
-			name: "Grasping Tentacles",
-			spells: ["evard's black tentacles"],
-			selection: ["evard's black tentacles"],
-			firstCol: "oncelr"
-			},
-			usages : "1x per ",
-			recovery : "long rest"
-		},
-		"subclassfeature14" : {
-			name : "Fathomless Plunge",
-			source : ["T",73],
-			minlevel : 14,
-			description : desc ([
-			"As an action, I teleport myself and up to 5 willing creatures up to 1 mile to a body",
-			"of water I've seen (pond or larger) or within 30 feet of it, appearing within 30'",
-			"of each other. Must finish short or long rest to use again."
-			]),
-			action : ["action",""],
-			usages : "1x per ",
-			recovery : "short rest"
-		}
-	}
-});
-AddSubClass("warlock", "the genie", {
-	regExpSearch : /^(?=.*warlock)((?=.*genie)|(?=.*dao)(?=.*djinni)(?=.*efreeti)(?=.*marid)).*$/i,
-	subname : "The Genie",
-	source : ["T", 2],
-	features : {
-		"subclassfeature1" : {
-			name : "Choose your patron",
-			source : ["T", 2],
-			minlevel : 1,
-			description : "\n   " + "Use the \"Choose Feature\" button above to choose your Genie Patron",
-			extraname : "Genie Kind",
-			choices : ["dao", "djinni", "efreeti", "marid"],
-			"dao" : {
-				name : "Dao",
-				source : ["T", 2],
-				spellcastingExtra : ["detect evil and good", "sanctuary", "phantasmal force", "spike growth", "create food and water", "meld into stone", "phantasmal killer", "creation", "stone shape", "wall of stone", "wish"],
-				description : "\n   " + "My Genie patron is a Dao, associated with Earth"
-			},
-			"djinni" : {
-				name : "Djinni",
-				source : ["T", 2],
-				spellcastingExtra : ["detect evil and good", "thunderwave", "phantasmal force", "gust of wind", "create food and water", "wind wall", "phantasmal killer", "greater invisibility", "creation", "seeming", "wish"],
-				description : "\n   " + "My Genie patron is a Djinni, associated with Air"
-			},
-			"efreeti" : {
-				name : "Efreeti",
-				source : ["T", 2],
-				spellcastingExtra : ["detect evil and good", "burning hands", "phantasmal force", "scorching ray", "create food and water", "fireball", "phantasmal killer", "fire shield", "creation", "flame strike", "wish"],
-				description : "\n   " + "My Genie patron is an Efreeti, associated with Fire"
-			},
-			"marid" : {
-				name : "Marid",
-				source : ["T", 2],
-				spellcastingExtra : ["detect evil and good", "fog cloud", "phantasmal force", "blur", "create food and water", "sleet storm", "phantasmal killer", "control water", "creation", "cone of cold", "wish"],
-				description : "\n   " + "My Genie patron is a Marid, associated with Water"
-			},
-			choiceDependencies : [{
-				feature : "subclassfeature6"
-			}, {
-				feature : "subclassfeature1.2"
-			}]
-		},
-		"subclassfeature1.1" : {
-			name : "Expanded Spell List",
-			source : ["T", 3],
-			minlevel : 1,
-/*			description : "\n   " + "I gain additional spells which I can choose from when selecting my Warlock spells" + "\n   " + "These additional spells are determined by my Genie patron.",*/
-			calcChanges : {
-				spellList : [
-					function(spList, spName, spType) {
-					// don't add if this is not a class or a list of spells is already given
-					if (!ClassList[spName] || spList.spells || spList.psionic) return;
-					// if this is an 'extra spell', also test if it uses the class' spell list or not
-					if (spType.indexOf("bonus") !== -1 && (spList.school || !spList["class"] || (spList["class"].indexOf(spName) === -1 && spName !== "fighter"))) return;
-					spList.extraspells = spList.extraspells.concat(["wish"]);
-					},
-				"The Genie Patron adds Wish as a spell available as a 9th level Mystic Arcanum."
-				]
-			},
-		},
-		"subclassfeature1.2" : {
-			name : "Genie's Vessel",
-			source : ["T", 3],
-			minlevel : 1,
-			description : desc([
-			"My patron gifts me a magical vessel that grants me a measure of my patron's power.",
-			"Tiny object; spellcasting focus for my Warlock spells",
-			"While I am touching the vessel, I can use Bottled Respite or Genie's Wrath \(See Notes.\).",
-			"The Vessel's AC equals my spell save DC. Its hit points equal my Warlock level plus my",
-			"prof. bonus, and it is immune to poison and psychic damage.",
-			"If destroyed, I can perform a 1 hour ritual to reclaim. It vanishes when I die."
-			]),
-			"dao" : {
-				name : "Genie's Vessel",
-				additional : "Genie's Wrath: bludgeoning"
-			},
-			"djinni" : {
-				name : "Genie's Vessel",
-				additional : "Genie's Wrath: thunder"
-			},
-			"efreeti" : {
-				name : "Genie's Vessel",
-				additional : "Genie's Wrath: fire"
-			},
-			"marid" : {
-				name : "Genie's Vessel",
-				additional : "Genie's Wrath: cold"
-			},
-			toNotesPage : [{
-				name : "Genie's Vessel",
-				source : ["T",3],
-				popupName : "Genie's Vessel",
-				note : [
-				"Bottled Respite",
-				"As an action, I can magically vanish and enter my vessel, which remains in the space I left.",
-				"The interior of the vessel is an extradimensional space in the shape of a 20-foot-radius",
-				"cylinder, 20 feet high, and resembles my vessel. The interior is comfortably appointed with",
-				"cushions and low tables and is a comfortable temperature. While inside, I can hear the area",
-				"around my vessel as if I were in its space. I can remain inside the vessel up to a number of",
-				"hours equal to twice my proficiency bonus. I exit the vessel early if I use a bonus action",
-				"to leave, if I die, or if the vessel is destroyed. When I exit the vessel, I appear in the",
-				"unoccupied space closest to it. Any objects left in the vessel remain there until carried",
-				"out, and if the vessel is destroyed, every object stored there harmlessly appears in the",
-				"unoccupied spaces closest to the vessel’s former space. Once I enter the vessel, I can’t",
-				"enter again until I finish a long rest.",
-				"Genie's Wrath",
-				"Once during each of my turns when I hit with an attack roll, I can deal extra damage to", 
-				"the target equal to my proficiency bonus. The type of this damage is determined by",
-				"my patron: bludgeoning \(dao\), thunder \(djinni\), fire \(efreeti\), or cold \(marid\)."
-				]
-			}],
-			action :["action","Bottled Respite"],
-			usages : "Enter 1x per ",
-			recovery : "long rest"
-		},
-		"subclassfeature6" : {
-			name : "Elemental Gift",
-			minlevel : 6,
-			"dao" : {
-				name : "Elemental Gift",
-				source : ["T", 3],
-				description : desc ([
-					"I gain resistance to bludgeoning damage. Bonus action to gain a fly speed of 30 ft",
-					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
-					"times equal to my prof. bonus and I regain all uses after a long rest.",
-				]),
-				dmgres : "Bludgeoning"
-			},
-			"djinni" : {
-				name : "Elemental Gift",
-				source : ["T", 3],
-				description : desc ([
-					"I gain resistance to thunder damage. Bonus action to gain a fly speed of 30 ft",
-					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
-					"times equal to my prof. bonus and I regain all uses after a long rest.",
-				]),
-				dmgres : ["Thunder"]
-			},
-			"efreeti" : {
-				name : "Elemental Gift",
-				source : ["US:SR0512",3],
-				description : desc ([
-					"I gain resistance to fire damage. Bonus action to gain a fly speed of 30 ft",
-					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
-					"times equal to my prof. bonus and I regain all uses after a long rest.",
-				]),
-				dmgres : ["Fire"]
-			},
-			"marid" : {
-				name : "Elemental Gift",
-				source : ["T",3],
-				description : desc ([
-					"I gain resistance to cold damage. Bonus action to gain a fly speed of 30 ft",
-					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
-					"times equal to my prof. bonus and I regain all uses after a long rest.",
-				]),
-				dmgres : ["Cold"]
-			},
-			action : ["bonus action","30 ft Fly Speed"],
-			usages : "Prof. Bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus');",
-			recovery : "long rest"
-		},
-		"subclassfeature10" : {
-			name : "Sanctuary Vessel",
-			source : ["T", 3],
-			minlevel : 10,
-			description : desc([
-			"When I enter my Genie’s Vessel via the Bottled Respite feature, I can now choose up to",
-			"five willing creatures that I can see within 30 feet of me, and the chosen creatures are",
-			"drawn into the vessel with me. As a bonus action, I can eject any number of creatures",
-			"from the vessel, and everyone is ejected if I leave or the vessel is destroyed.",
-			"In addition, anyone (including me) who remains within the vessel for at least 10 minutes",
-			"gains the benefit of finishing a short rest, and anyone can add my proficiency bonus",
-			"to the number hit points they regain if they spend Hit Dice as part of a short rest there."
-			])
-		},
-		"subclassfeature14" : {
-			name : "Limited Wish",
-			source : ["T", 4],
-			minlevel : 14,
-			description : desc ([
-			"I entreat my patron to grant me a small wish. As an action, I can speak my desire to my",
-			"Genie’s Vessel, requesting the effect of one spell that is 6th level or lower and has a",
-			"casting time of 1 action. The spell can be from any class’s spell list, and I don’t need to",
-			"meet the requirements in that spell, including costly components; the spell simply takes",
-			"effect as part of this action.",
-			"Once I use this feature, I can’t use it again until I finish 1d4 long rests."
-			]),
-			action : ["action",""],
-			usages : "1d4 ",
-			recovery : "long rest"
-		}
-	}
-});
-AddSubClass("wizard", "bladesinging", {
-	regExpSearch : /(bladesinging|bladesinger)/i,
-	subname : "Tradition of Bladesinging",
-	fullname : "Bladesinger",
-	attacks : [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-	source : ["T", 76],
-	features : {
-		"subclassfeature2" : {
-			name : "Training in War and Song",
-			source : ["T", 76],
-			minlevel : 2,
-			description : "\n   " + "I gain proficiency with light armor, a one-handed melee weapon, and Performance",
-			armor : [true, false, false, false],
-			skills : ["Performance"],
-			skillstxt : "\n\n" + toUni("Bladesinger") + ": Performance"
-		},
-		"subclassfeature2.1" : {
-			name : "Bladesong",
-			source : ["T", 76],
-			minlevel : 2,
-			description: desc([
-			"As a bonus action, I can start the bladesong for 1 minute; I can dismiss it at any time",
-			"It stops when I wear a shield, medium or heavy armor, or attack with two hands",
-			"While the bladesong is active I have the following benefits:",
-			" \u2022 " + "Armor Class bonus equal to my Intelligence modifier (minimum of 1)",
-			" \u2022 " + "My base walking speed increases by 10 feet",
-			" \u2022 " + "Advantage on Dexterity (Acrobatics) checks",
-			" \u2022 " + "Intelligence modifier bonus (minimum of 1) to Constitution saving throws to maintain concentration"
-			]),
-			action : ["bonus action", " (start)"],
-			usages: "Proficiency bonus per ",
-			usagescalc : "event.value = What('Proficiency Bonus')",
-			recovery: "long rest",
-		},
-		"subclassfeature6" : {
-			name : "Extra Attack",
-			source : ["T", 77],
-			minlevel : 6,
-			description: desc([
-				"I can attack twice instead of once when I take the Attack action on my turn",
-				"Moreover, I can cast one of my cantrips in place of one of those attacks."
-			]),
-		},
-		"subclassfeature10" : {
-			name : "Song of Defense",
-			source : ["T", 77],
-			minlevel : 10,
-			description : "\n   " + "As a reaction while my bladesong is active, I can expand a spell slot to reduce damage" + "\n   " + "The damage I take is reduced by 5 for every level of the spell slot I expand",
-			action : ["reaction", " (in bladesong)"]
-
-		},
-		"subclassfeature14" : {
-			name : "Song of Victory",
-			source : ["T", 77],
-			minlevel : 14,
-			description : "\n   " + "While my bladesong is active, I can add my Int mod to melee weapon attack damage",
-			calcChanges : {
-				atkCalc : ["if (classes.known.wizard && classes.known.wizard.level > 13 && isMeleeWeapon && (/blade.?song/i).test(WeaponText)) { output.extraDmg += What('Int Mod'); }; ", "If I include the word 'Bladesong' in the name or description of a melee weapon, it gets my Intelligence modifier added to its Damage."]
-			}
-		}
-	}
-});
-AddSubClass("wizard","order of scribes", {
-	regExpSearch : /(scribe|scrivener)/i,
-	subname : "Order of Scribes",
-	fullname : "Scrivener",
-	source : ["T",77],
-	features : {
-		"subclassfeature2" : {
-			name : "Wizardly Quill",
-			source : ["T",77],
-			minlevel : 2,
-			description : desc([
-				"As a bonus action, I can magically create a Tiny quill with the following properties:",
-				"\u2022 It doesn't require ink; when writing, produces ink of any color",
-				"\u2022 Time to transcribe spells is 2 minutes per spell level",
-				"\u2022 As a bonus action, I can erase its writing; must be within 5 ft"
-			]),
-			action : [["bonus action"," (create/erase)"]]
-		},
-		"subclassfeature2.1" : {
-			name : "Awakened Spellbook",
-			source :["T",77],
-			minlevel : 2,
-			description : desc ([
-				"My spellbook gains sentience, granting the following benefits while held:",
-				"\u2022 I can use the book as a spellcasting focus for my wizard spells",
-				"\u2022 I can change the damage type of wizard spells I cast that use spell slots",
-				"    The type must be from a spell in my spellbook with the same level as the spell slot",
-				"    This effect only applies to a single instance of casting the spell",
-				"\u2022 Once per long rest, I can ritual cast a wizard spell using its normal casting time",
-				"I can replace the spellbook over a short rest; transferring spells and sentience",
-				"\u2022 I do so by writing arcane sigils in a mundane spellbook/attuned magical spellbook",
-				"\u2022 Spells vanish from the previous awakened spellbook, if it exists"
-			]),
-			extraLimitedFeatures : [{
-				name : "Awakened Spellbook (cast ritual)",
-				usages : 1,
-				recovery : "long rest"
-			}]
-		},
-		"subclassfeature6" : {
-			name : "Manifest Mind",
-			source : ["T",78],
-			minlevel : 6,
-			description : desc([
-				"As a bonus action, I can cause the mind of my spellbook to manifest as a Tiny object",
-				"I can do this once per long rest, or by expending a spell slot (SS 1+) to manifest it again",
-			]),
-			additional : "See 3rd Page Notes",
-			toNotesPage : [{
-				name : "Manifest Mind",
-				source : ["T",78],
-				popupName : "Manifest Mind",
-				page3notes : true,
-				note : desc ([
-					"As a bonus action, I can cause the mind of my spellbook to manifest as a Tiny object",
-					"It appears hovering in an unoccupied space within 60ft",
-					"While manifested, the spectral mind has the following properties:",
-					"\u2022 It's intangible and doesn't occupy its space; can pass though creatures, but not objects",
-					"\u2022 It sheds dim light in a 10 ft radius",
-					"\u2022 It appears as my choice of: ghostly tome, cascade of text, or a scholar from my past",
-					"\u2022 It can see and hear, and it has darkvision with a range of 60 ft",
-					"\u2022 It can telepathically share with you what it sees and hears, no action required",
-					"\u2022 I can cast a spell a wizard spell from its space, using its senses",
-					"\u2022 As a bonus action, I can cause it to hover 30 ft to a seen, unoccupied space",
-					"The mind stops manifesting if:",
-					"\u2022 It is more than 300 ft away from me; someone casts dispel magic on it",
-					"\u2022 If the Awakened Spellbook is destroyed; I die",
-					"\u2022 I dismiss it as a bonus action"
-				])
-			}],
-			action : [["bonus action"," (conjure/move/dismiss)"]],
-			extraLimitedFeatures : [{
-				name : "Manifest Mind",
-				usages : 1,
-				recovery : "long rest",
-				altResource : "SS 1+"
-			},{
-				name : "Manifest Mind: Cast Spell",
-				usages : "Prof. Bonus per ",
-				recovery : "long rest",
-				usagescalc : "event.value = What('Proficiency Bonus');",
-			}]
-		},
-		"subclassfeature10" : {
-			name : "Master Scrivener",
-			source : ["T",79],
-			minlevel : 10,
-			description : desc([
-				"After a long rest, I can create one spell scroll; See 3rd Page Notes",
-				"Using my Wizardly Quill, the gold and time spent to craft spell scrolls is halved"
-			]),
-			action : ["action", " (cast scroll)"],
-			toNotesPage : [{
-			name : "Master Scrivener",
-			source : ["T",79],
-			popupName : "Master Scrivener",
-			page3notes : true,
-			note : desc ([
-				"After a long rest, I can create one spell scroll; spell is from my Awakened Spellbook",
-				"To do so, I touch my Wizardly Quill to paper/parchment; spellbook must be within 5 ft",
-				"The spell must be of 1st or 2nd level and have a casting time of 1 action",
-				"Once in the scroll, the spell's level increases by 1 and is unintelligle to anyone else",
-				"The spell vanishes from the scroll when it is cast or after my next long rest"
-			])
-		}]
-		},
-		"subclassfeature14" : {
-			name : "One with the Word",
-			source : ["T",79],
-			minlevel : 14,
-			description : desc([
-				"I have advantage on Arcana checks while my Awakened Spellbook is on my person",
-				"If damaged while my spellbook is manifested, I can use a reaction to dismiss it",
-				"If I do, I prevent all of the damage taken",
-				"I temporarily lose spells with a combined level of 3d6 from my Awakened Spellbook",
-				"If I do not have enough spells to cover the number rolled, I drop to 0 HP",
-				"The spells vanish from the spellbook, reappearing after 1d6 long rests",
-				"Spells lost this way cannot be cast, even if found on a scroll or another spellbook"
-			]),
-			action : ["reaction"," (when damaged)"]
-		}
-	}
-});
-// Add a subclass for the Artificer (but after all other scripts, so that all armor options are present)
 // Artificer class
 ClassList.artificer = {
 	regExpSearch : /^(?=.*artificer)(?!.*wizard).*$/i,
@@ -3941,6 +1141,214 @@ AddSubClass("artificer", "battle smith", {
 		}
 	}
 });
+
+// Add the new special magic items for the artificer class (infusions)
+
+
+MagicItemsList["boots of the winding path"] = {
+	name : "Boots of the Winding Path",
+	source : [["T", 21]],
+	type : "wondrous item",
+	description : "While wearing these boots, I can teleport up to 15 ft as a bonus action to an unoccupied space I can see, as long as I occupied that space at some point during the current turn.",
+	descriptionFull : "While wearing these boots, a creature can teleport up to 15 feet as a bonus action to an unoccupied space the creature can see. The creature must have occupied that space at some point during the current turn.",
+	attunement : true,
+	action : [["bonus action", ""]]
+}
+MagicItemsList["radiant weapon"] = {
+	name : "Radiant Weapon",
+	nameTest : "Radiant",
+	source : [["T", 22]],
+	type : "weapon (any)",
+	description : "This item adds a +1 on its to hit and damage, has 4 charges, and regains 1d4 at dawn. As a bonus action, I can have it start/stop shedding light, bright in 30 ft, dim in another 30 ft. As a reaction if hit by an attack, I can use 1 charge to blind the attacker until the end of its next turn unless it makes a Con save (my spell DC).",
+	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it. While holding it, the wielder can take a bonus action to cause it to shed bright light in a 30-foot radius and dim light for an additional 30 feet. The wielder can extinguish the light as a bonus action.\n   The weapon has 4 charges. As a reaction immediately after being hit by an attack, the wielder can expend 1 charge and cause the attacker to be blinded until the end of the attacker's next turn, unless the attacker suc­ceeds on a Constitution saving throw against your spell save DC. The weapon regains 1d4 expended charges daily at dawn. ",
+	attunement : true,
+	usages : 4,
+	recovery : "dawn",
+	additional : "blind attacker; regains 1d4",
+	action : [["bonus action", " (start/stop light)"], ["reaction", " (1 charge; after hit)"]],
+	chooseGear : {
+		type : "weapon",
+		prefixOrSuffix : "suffix",
+		descriptionChange : ["replace", "weapon"]
+	},
+	calcChanges : {
+		atkAdd : [
+			function (fields, v) {
+				if (!v.theWea.isMagicWeapon && !v.isSpell && (/radiant/i).test(v.WeaponText)) {
+					v.theWea.isMagicWeapon = true;
+					fields.Description = fields.Description.replace(/(, |; )?Counts as magical/i, '');
+					fields.Description += (fields.Description ? '; ' : '') + 'Reaction to blind attacker';
+				}
+			},
+			'If I include the word "Radiant" in the name of a weapon, it will be treated as the magic weapon Radiant Weapon. It has +1 to hit and damage and can be used to shed light and to blind an attacker.'
+		],
+		atkCalc : [
+			function (fields, v, output) {
+				if (v.isMeleeWeapon && !v.isSpell && (/radiant/i).test(v.WeaponTextName)) {
+					output.magic = v.thisWeapon[1] + 1;
+				}
+			}
+		]
+	}
+}
+MagicItemsList["repeating shot"] = {
+	name : "Repeating Shot",
+	source : [["T", 22]],
+	type : "weapon (any with ammunition)",
+	description : "When I use this magic weapon to make a ranged attack, it magically produces one piece of ammunition and grants a +1 bonus to its attack and damage rolls. Thus, it doesn't require ammunition and ignores the loading property if it has it. The produced ammunition vanishes once it hits or misses a target.",
+	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it when it's used to make a ranged attack, and it ignores the loading property if it has it.\n   If you load no ammunition in the weapon, it produces its own, automatically creating one piece of magic am­munition when you make a ranged attack with it. The ammunition created by the weapon vanishes the instant after it hits or misses a target.",
+	attunement : true,
+	chooseGear : {
+		type : "weapon",
+		prefixOrSuffix : "suffix",
+		descriptionChange : ["replace", "weapon"],
+		excludeCheck : function (inObjKey, inObj) {
+			return !(/ammunition/i).test(inObj.description);
+		}
+	},
+	calcChanges : {
+		atkAdd : [
+			function (fields, v) {
+				if (!v.theWea.isMagicWeapon && !v.isSpell && (/^(?=.*repeating shot)(?=.*ammunition).*$/i).test(v.WeaponText)) {
+					v.theWea.isMagicWeapon = true;
+					fields.Description = fields.Description.replace(/(, |; )?Counts as magical/i, '').replace(/(;|,)? ?loading/i, '');
+				}
+			},
+			'If I include the words "Repeating Shot" in the name of a weapon with the ammunition property, it will be treated as the magic weapon Repeating Shot. It has +1 to hit and damage and produces its own ammunition, thus its loading property is removed if it has it.'
+		],
+		atkCalc : [
+			function (fields, v, output) {
+				if ((/^(?=.*repeating shot)(?=.*ammunition).*$/i).test(v.WeaponText) && !v.isSpell) {
+					output.magic = v.thisWeapon[1] + 1;
+				}
+			}, ''
+		]
+	}
+}
+MagicItemsList["repulsion shield"] = {
+	name : "Repulsion Shield",
+	source : [["T", 23]],
+	type : "shield",
+	description : "I gain an additional +1 bonus to Armor Class while wielding this shield. The shield has 4 charges and regains 1d4 expended charges daily at dawn. As a reaction immediately after being hit by a melee attack, I can expend 1 charge to push the attacker up to 15 ft away.",
+	descriptionFull : "A creature gains a + 1 bonus to Armor Class while wield­ing this shield.\n   The shield has 4 charges. While holding it, the wielder can use a reaction immediately after being hit by a me­lee attack to expend 1 of the shield's charges and push the attacker up to 15 feet away. The shield regains 1d4 expended charges daily at dawn. ",
+	weight : 6,
+	attunement : true,
+	usages : 4,
+	additional : "regains 1d4",
+	recovery : "dawn",
+	action : [["reaction", " (1 charge)"]],
+	shieldAdd : ["Repulsion Shield", 3, 6]
+}
+MagicItemsList["returning weapon"] = {
+	name : "Returning Weapon",
+	nameTest : "Returning",
+	source : [["T", 23]],
+	type : "weapon (any thrown)",
+	description : "This magic weapon grants a +1 bonus to attack and damage rolls I make with it. It returns to my hand immediately after I use it to make a ranged attack.",
+	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it, and it returns to the wielder's hand immediately after it is used to make a ranged attack.",
+	chooseGear : {
+		type : "weapon",
+		prefixOrSuffix : "suffix",
+		descriptionChange : ["replace", "weapon"],
+		excludeCheck : function (inObjKey, inObj) {
+			return !(/melee/i).test(inObj.range) || !(/thrown/i).test(inObj.description);
+		}
+	},
+	calcChanges : {
+		atkAdd : [
+			function (fields, v) {
+				if (!v.theWea.isMagicWeapon && v.isMeleeWeapon && (/^(?=.*returning)(?=.*thrown).*$/i).test(v.WeaponText)) {
+					v.theWea.isMagicWeapon = true;
+					fields.Description = fields.Description.replace(/(, |; )?Counts as magical/i, '');
+					fields.Description += (fields.Description ? '; ' : '') + 'Returns immediately after ranged attack';
+				}
+			},
+			'If I include the word "Returning" in the name of a thrown weapon, it will be treated as the magic weapon Returning Weapon. It has +1 to hit and damage and returns to my hand immediately after I use it to make a ranged attack.'
+		],
+		atkCalc : [
+			function (fields, v, output) {
+				if (v.isMeleeWeapon && (/^(?=.*returning)(?=.*thrown).*$/i).test(v.WeaponText)) {
+					output.magic = v.thisWeapon[1] + 1;
+				}
+			}, ''
+		]
+	}
+};
+
+MagicItemsList["arcane propulsion armor"] = {
+	name : "Arcane Propulsion Armor",
+	source : [["T", 20]],
+	type : "armor (any)",
+	rarity : "very rare",
+	description : "Replaces any missing limbs. Increases walking speed by 5 feet. It can't be removed against my will. I can use either empty-handed gauntlet as a proficient melee weapon with the thrown property. After a throwing attack with it, it returns and reattaches immediately.",
+	descriptionFull : "While worn, the armor provides these benefits:\n \u2022 The armor replaces any missing limbs.\n \u2022 The wearer's walking speed increases by 5 feet.\n \u2022 An empty-handed gauntlet is a magic melee weapon with which you're proficient. It deals 1d8 force damage on a hit and has the thrown property, with a normal range of 20 feet and a long range of 60 feet. When thrown, the prosthetic detaches and flies at the target of the attack, then immediately returns to you and reattaches.",
+	attunement : true,
+	chooseGear : {
+		type : "armor",
+		prefixOrSuffix : "suffix",
+		descriptionChange : ["prefix", "armor"]
+	},
+	speed : { walk : {spd : "+5", enc : "+5" } },
+	weaponsAdd : ["Arcane Propulsion Armor"],
+	weaponOptions : {
+		regExpSearch : /^(?=.*arcane)(?=.*propulsion)(?=.*armor).*$/i,
+		name : "Arcane Propulsion Armor",
+		source : [["T", 20]],
+		ability : 1,
+		type : "AlwaysProf",
+		damage : [1, 8, "force"],
+		range : "Melee, 20/60 ft",
+		description : "Thrown gauntlet; Returns immediately after thrown",
+		abilitytodamage : true
+	}
+}
+MagicItemsList["armor of magical strength"] = {
+	name : "Armor of Magical Strength",
+	source : [["T", 20]],
+	type : "armor (any)",
+	description : "This armor has 6 charges and regains 1d6 expended charges daily at dawn. If I would be knocked prone, as a reaction I can expend 1 charge to avoid being knocked prone. When I make a strength check, I can expend one charge to add my intelligence modifier.",
+	descriptionFull : "This armor has 6 charges and regains 1d6 expended charges daily at dawn. If the wearer would be knocked prone, as a reaction the wearer can expend 1 charge to avoid being knocked prone. When the wearer makes a strength check, they can expend one charge to add their intelligence modifier to that check.",
+	attunement : true,
+	chooseGear : {
+		type : "armor",
+		prefixOrSuffix : "suffix",
+		descriptionChange : ["prefix", "armor"]
+	},
+	usages : 6,
+	additional : "regains 1d6",
+	recovery : "dawn",
+	action : [["reaction", " (1 charge, no prone)"],["action", " (1 charge, add Int to Str)"]],
+}
+MagicItemsList["helm of awareness"] = {
+	name : "Helm of Awareness",
+	source : [["T", 21]],
+	type : "helmet",
+	description : "I get advantage on initiative rolls and cannot be surprised.",
+	descriptionFull : "The wearer of this helmet gains advantage on initiative rolls. Additionally, they cannot be surprised provided they are not incapacitated.",
+	attunement : true,
+}
+MagicItemsList["mind sharpener"] = {
+	name : "Mind Sharpener",
+	source : [["T", 22]],
+	type : "robes or armor (any)",
+	description : "This infused item has 4 charges and regains 1d4 expended charges daily at dawn. If I fail a concentration check on a spell, as a reaction I can expend 1 charge to succeed instead.",
+	descriptionFull : "This armor has 4 charges and regains 1d4 expended charges daily at dawn. If the wearer would fail a Constitution saving throw to maintain concentration on a spell, as a reaction the wearer can expend 1 charge to succeed at that check instead.",
+	usages : 4,
+	additional : "regains 1d4",
+	recovery : "dawn",
+	action : [["reaction", " (1 charge)"]],
+}
+MagicItemsList["spell-refueling ring"] = {
+	name : "Spell-Refueling Ring",
+	source : [["T", 23]],
+	type : "ring",
+	description : "Once per day as an action, I can recover one 3rd level or lower spell slot.",
+	descriptionFull : "While wearing this ring, once per day as an action a creature can recover one 3rd level or lower spell slot.",
+	attunement : true,
+	usages : 1,
+	recovery : "dawn",
+	action : [["action", " (1 charge)"]],
+}
 // Add a subclass for the Artificer (but after all other scripts, so that all armor options are present)
 RunFunctionAtEnd(function () {
 	var artificerSubclassArmorer = AddSubClass("artificer", "armorer", {
@@ -4154,653 +1562,12 @@ RunFunctionAtEnd(function () {
 		itsFea.choices.push(gArmName, iArm.name);
 	}
 });
-// Add the new special magic items for the artificer class (infusions)
-MagicItemsList["arcane propulsion armor"] = {
-	name : "Arcane Propulsion Armor",
-	source : [["T", 20]],
-	type : "armor (any)",
-	rarity : "very rare",
-	description : "Replaces any missing limbs. Increases walking speed by 5 feet. It can't be removed against my will. I can use either empty-handed gauntlet as a proficient melee weapon with the thrown property. After a throwing attack with it, it returns and reattaches immediately.",
-	descriptionFull : "While worn, the armor provides these benefits:\n \u2022 The armor replaces any missing limbs.\n \u2022 The wearer's walking speed increases by 5 feet.\n \u2022 An empty-handed gauntlet is a magic melee weapon with which you're proficient. It deals 1d8 force damage on a hit and has the thrown property, with a normal range of 20 feet and a long range of 60 feet. When thrown, the prosthetic detaches and flies at the target of the attack, then immediately returns to you and reattaches.",
-	attunement : true,
-	chooseGear : {
-		type : "armor",
-		prefixOrSuffix : "suffix",
-		descriptionChange : ["prefix", "armor"]
-	},
-	speed : { walk : {spd : "+5", enc : "+5" } },
-	weaponsAdd : ["Arcane Propulsion Armor"],
-	weaponOptions : {
-		regExpSearch : /^(?=.*arcane)(?=.*propulsion)(?=.*armor).*$/i,
-		name : "Arcane Propulsion Armor",
-		source : [["T", 20]],
-		ability : 1,
-		type : "AlwaysProf",
-		damage : [1, 8, "force"],
-		range : "Melee, 20/60 ft",
-		description : "Thrown gauntlet; Returns immediately after thrown",
-		abilitytodamage : true
-	}
-}
-MagicItemsList["armor of magical strength"] = {
-	name : "Armor of Magical Strength",
-	source : [["T", 20]],
-	type : "armor (any)",
-	description : "This armor has 6 charges and regains 1d6 expended charges daily at dawn. If I would be knocked prone, as a reaction I can expend 1 charge to avoid being knocked prone. When I make a strength check, I can expend one charge to add my intelligence modifier.",
-	descriptionFull : "This armor has 6 charges and regains 1d6 expended charges daily at dawn. If the wearer would be knocked prone, as a reaction the wearer can expend 1 charge to avoid being knocked prone. When the wearer makes a strength check, they can expend one charge to add their intelligence modifier to that check.",
-	attunement : true,
-	chooseGear : {
-		type : "armor",
-		prefixOrSuffix : "suffix",
-		descriptionChange : ["prefix", "armor"]
-	},
-	usages : 6,
-	additional : "regains 1d6",
-	recovery : "dawn",
-	action : [["reaction", " (1 charge, no prone)"],["action", " (1 charge, add Int to Str)"]],
-}
-MagicItemsList["boots of the winding path"] = {
-	name : "Boots of the Winding Path",
-	source : [["T", 21]],
-	type : "wondrous item",
-	description : "While wearing these boots, I can teleport up to 15 ft as a bonus action to an unoccupied space I can see, as long as I occupied that space at some point during the current turn.",
-	descriptionFull : "While wearing these boots, a creature can teleport up to 15 feet as a bonus action to an unoccupied space the creature can see. The creature must have occupied that space at some point during the current turn.",
-	attunement : true,
-	action : [["bonus action", ""]]
-}
-MagicItemsList["helm of awareness"] = {
-	name : "Helm of Awareness",
-	source : [["T", 21]],
-	type : "helmet",
-	description : "I get advantage on initiative rolls and cannot be surprised.",
-	descriptionFull : "The wearer of this helmet gains advantage on initiative rolls. Additionally, they cannot be surprised provided they are not incapacitated.",
-	attunement : true,
-}
-MagicItemsList["mind sharpener"] = {
-	name : "Mind Sharpener",
-	source : [["T", 22]],
-	type : "robes or armor (any)",
-	description : "This infused item has 4 charges and regains 1d4 expended charges daily at dawn. If I fail a concentration check on a spell, as a reaction I can expend 1 charge to succeed instead.",
-	descriptionFull : "This armor has 4 charges and regains 1d4 expended charges daily at dawn. If the wearer would fail a Constitution saving throw to maintain concentration on a spell, as a reaction the wearer can expend 1 charge to succeed at that check instead.",
-	usages : 4,
-	additional : "regains 1d4",
-	recovery : "dawn",
-	action : [["reaction", " (1 charge)"]],
-}
-MagicItemsList["radiant weapon"] = {
-	name : "Radiant Weapon",
-	nameTest : "Radiant",
-	source : [["T", 22]],
-	type : "weapon (any)",
-	description : "This item adds a +1 on its to hit and damage, has 4 charges, and regains 1d4 at dawn. As a bonus action, I can have it start/stop shedding light, bright in 30 ft, dim in another 30 ft. As a reaction if hit by an attack, I can use 1 charge to blind the attacker until the end of its next turn unless it makes a Con save (my spell DC).",
-	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it. While holding it, the wielder can take a bonus action to cause it to shed bright light in a 30-foot radius and dim light for an additional 30 feet. The wielder can extinguish the light as a bonus action.\n   The weapon has 4 charges. As a reaction immediately after being hit by an attack, the wielder can expend 1 charge and cause the attacker to be blinded until the end of the attacker's next turn, unless the attacker suc­ceeds on a Constitution saving throw against your spell save DC. The weapon regains 1d4 expended charges daily at dawn. ",
-	attunement : true,
-	usages : 4,
-	recovery : "dawn",
-	additional : "blind attacker; regains 1d4",
-	action : [["bonus action", " (start/stop light)"], ["reaction", " (1 charge; after hit)"]],
-	chooseGear : {
-		type : "weapon",
-		prefixOrSuffix : "suffix",
-		descriptionChange : ["replace", "weapon"]
-	},
-	calcChanges : {
-		atkAdd : [
-			function (fields, v) {
-				if (!v.theWea.isMagicWeapon && !v.isSpell && (/radiant/i).test(v.WeaponText)) {
-					v.theWea.isMagicWeapon = true;
-					fields.Description = fields.Description.replace(/(, |; )?Counts as magical/i, '');
-					fields.Description += (fields.Description ? '; ' : '') + 'Reaction to blind attacker';
-				}
-			},
-			'If I include the word "Radiant" in the name of a weapon, it will be treated as the magic weapon Radiant Weapon. It has +1 to hit and damage and can be used to shed light and to blind an attacker.'
-		],
-		atkCalc : [
-			function (fields, v, output) {
-				if (v.isMeleeWeapon && !v.isSpell && (/radiant/i).test(v.WeaponTextName)) {
-					output.magic = v.thisWeapon[1] + 1;
-				}
-			}
-		]
-	}
-}
-MagicItemsList["repeating shot"] = {
-	name : "Repeating Shot",
-	source : [["T", 22]],
-	type : "weapon (any with ammunition)",
-	description : "When I use this magic weapon to make a ranged attack, it magically produces one piece of ammunition and grants a +1 bonus to its attack and damage rolls. Thus, it doesn't require ammunition and ignores the loading property if it has it. The produced ammunition vanishes once it hits or misses a target.",
-	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it when it's used to make a ranged attack, and it ignores the loading property if it has it.\n   If you load no ammunition in the weapon, it produces its own, automatically creating one piece of magic am­munition when you make a ranged attack with it. The ammunition created by the weapon vanishes the instant after it hits or misses a target.",
-	attunement : true,
-	chooseGear : {
-		type : "weapon",
-		prefixOrSuffix : "suffix",
-		descriptionChange : ["replace", "weapon"],
-		excludeCheck : function (inObjKey, inObj) {
-			return !(/ammunition/i).test(inObj.description);
-		}
-	},
-	calcChanges : {
-		atkAdd : [
-			function (fields, v) {
-				if (!v.theWea.isMagicWeapon && !v.isSpell && (/^(?=.*repeating shot)(?=.*ammunition).*$/i).test(v.WeaponText)) {
-					v.theWea.isMagicWeapon = true;
-					fields.Description = fields.Description.replace(/(, |; )?Counts as magical/i, '').replace(/(;|,)? ?loading/i, '');
-				}
-			},
-			'If I include the words "Repeating Shot" in the name of a weapon with the ammunition property, it will be treated as the magic weapon Repeating Shot. It has +1 to hit and damage and produces its own ammunition, thus its loading property is removed if it has it.'
-		],
-		atkCalc : [
-			function (fields, v, output) {
-				if ((/^(?=.*repeating shot)(?=.*ammunition).*$/i).test(v.WeaponText) && !v.isSpell) {
-					output.magic = v.thisWeapon[1] + 1;
-				}
-			}, ''
-		]
-	}
-}
-MagicItemsList["repulsion shield"] = {
-	name : "Repulsion Shield",
-	source : [["T", 23]],
-	type : "shield",
-	description : "I gain an additional +1 bonus to Armor Class while wielding this shield. The shield has 4 charges and regains 1d4 expended charges daily at dawn. As a reaction immediately after being hit by a melee attack, I can expend 1 charge to push the attacker up to 15 ft away.",
-	descriptionFull : "A creature gains a + 1 bonus to Armor Class while wield­ing this shield.\n   The shield has 4 charges. While holding it, the wielder can use a reaction immediately after being hit by a me­lee attack to expend 1 of the shield's charges and push the attacker up to 15 feet away. The shield regains 1d4 expended charges daily at dawn. ",
-	weight : 6,
-	attunement : true,
-	usages : 4,
-	additional : "regains 1d4",
-	recovery : "dawn",
-	action : [["reaction", " (1 charge)"]],
-	shieldAdd : ["Repulsion Shield", 3, 6]
-}
-MagicItemsList["spell-refueling ring"] = {
-	name : "Spell-Refueling Ring",
-	source : [["T", 23]],
-	type : "ring",
-	description : "Once per day as an action, I can recover one 3rd level or lower spell slot.",
-	descriptionFull : "While wearing this ring, once per day as an action a creature can recover one 3rd level or lower spell slot.",
-	attunement : true,
-	usages : 1,
-	recovery : "dawn",
-	action : [["action", " (1 charge)"]],
-}
-MagicItemsList["returning weapon"] = {
-	name : "Returning Weapon",
-	nameTest : "Returning",
-	source : [["T", 23]],
-	type : "weapon (any thrown)",
-	description : "This magic weapon grants a +1 bonus to attack and damage rolls I make with it. It returns to my hand immediately after I use it to make a ranged attack.",
-	descriptionFull : "This magic weapon grants a +1 bonus to attack and damage rolls made with it, and it returns to the wielder's hand immediately after it is used to make a ranged attack.",
-	chooseGear : {
-		type : "weapon",
-		prefixOrSuffix : "suffix",
-		descriptionChange : ["replace", "weapon"],
-		excludeCheck : function (inObjKey, inObj) {
-			return !(/melee/i).test(inObj.range) || !(/thrown/i).test(inObj.description);
-		}
-	},
-	calcChanges : {
-		atkAdd : [
-			function (fields, v) {
-				if (!v.theWea.isMagicWeapon && v.isMeleeWeapon && (/^(?=.*returning)(?=.*thrown).*$/i).test(v.WeaponText)) {
-					v.theWea.isMagicWeapon = true;
-					fields.Description = fields.Description.replace(/(, |; )?Counts as magical/i, '');
-					fields.Description += (fields.Description ? '; ' : '') + 'Returns immediately after ranged attack';
-				}
-			},
-			'If I include the word "Returning" in the name of a thrown weapon, it will be treated as the magic weapon Returning Weapon. It has +1 to hit and damage and returns to my hand immediately after I use it to make a ranged attack.'
-		],
-		atkCalc : [
-			function (fields, v, output) {
-				if (v.isMeleeWeapon && (/^(?=.*returning)(?=.*thrown).*$/i).test(v.WeaponText)) {
-					output.magic = v.thisWeapon[1] + 1;
-				}
-			}, ''
-		]
-	}
-};
-// Add the special artificer constructs, the Homunculus Servant and Steel Defender
-CreatureList["homunculus servant"] = {
-	name : "Homunculus Servant",
-	source : [["T", 21]],
-	size : 5,
-	type : "Construct",
-	subtype : "",
-	alignment : "Neutral",
-	ac : 13,
-	hp : 1,
-	hd : [2,4],
-	speed : "20 ft, fly 30 ft",
-	scores : [4, 15, 12, 10, 10, 7],
-	saves : ["", 4, "", "", "", ""],
-	skills : {
-		"perception" : 4,
-		"stealth" : 4
-	},
-	damage_immunities : "poison",
-	condition_immunities : "exhaustion, poisoned",
-	senses : "Darkvision 60 ft",
-	passivePerception : 14,
-	languages : "understands the languages of its creator but can't speak",
-	challengeRating : "0",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Force Strike",
-		ability : 0,
-		damage : [1, 4, "force"],
-		range : "30 ft",
-		modifiers : ["oInt", "Prof", ""]
-	}],
-	features : [{
-		name : "Creator",
-		description : "The homunculus obeys the commands of its creator and has the same proficiency bonus. It takes its turn immediately after its creator, on the same initiative count. It can move and take reactions on its own, but only takes the Dodge action on its turn unless its creator takes a bonus action to command to do otherwise, in which case it can only take the Force Strike, Dash, Disengage, Help, Hide, or Search action."
-	}],
-	traits : [{
-		name : "Healing",
-		description : "The homunculus regains 2d6 hit points whenever the Mending spell is cast on it. Its HP total is equal to its creator's artificer level + its creator's Intelligence modifier + its Constitution modifier. If it dies, it vanishes, leaving its heart in its space."
-	}, {
-		name : "Evasion",
-		description : "If the homunculus is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it fails. It can't use this trait if it's incapacitated."
-	}],
-	actions : [{
-		name : "Channel Magic",
-		description : "As a reaction, the homunculus delivers a spell cast by its creator that has a range of touch. The homunculus must be within 120 feet of its creator to do so."
-	}],
-	eval : function(prefix) {
-		// set type in the top right
-		Value(prefix + 'Comp.Type', "Construct");
-		// auto calculate HP
-		var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
-		HPmaxFld.setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel) + Number(What('Int Mod')) + Number(What('" + prefix + "Comp.Use.Ability.Con.Mod'));");
-		HPmaxFld.readonly = true;
-		Hide(prefix + "Buttons.Comp.Use.HP.Max");
-		// auto calculate proficiency bonus
-		var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
-		ProfFld.setAction("Calculate", "event.value = Number(How('Proficiency Bonus'));");
-		ProfFld.readonly = true;
-		ProfFld.calcOrderIndex = tDoc.getField(prefix + "Comp.Use.Attack.1.To Hit").calcOrderIndex - 1;
-		// auto calculate hit die
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel);");
-		// add bonus action to first page
-		processActions(true, "Homunculus Servant", [["bonus action", " (command)"]], "Homunculus Servant");
-	},
-	removeeval : function(prefix) {
-		if (prefix) {
-			// reset type in top right
-			Value(prefix + 'Comp.Type', "Companion");
-			// reset HP, HD and proficiency bonus calculation
-			var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
-			HPmaxFld.setAction("Calculate", "1");
-			HPmaxFld.readonly = false;
-			DontPrint(prefix + "Buttons.Comp.Use.HP.Max");
-			var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
-			ProfFld.setAction("Calculate", "1");
-			ProfFld.readonly = false;
-			tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "1");
-		}
-		// remove action
-		if (!ClassList.artificer || ClassList.artificer.artificerCompFunc.find("homunculus servant").length < (prefix ? 2 : 1)) processActions(false, "Homunculus Servant", [["bonus action", " (command)"]], "Homunculus Servant");
-	}
-};
-CreatureList["eldritch cannon"] = {
-	name : "Eldritch Cannon",
-	source : [["T", 17]],
-	size : 5,
-	type : "Construct",
-	subtype : "",
-	alignment : "Neutral",
-	ac : 18,
-	hp : 5,
-	hd : [],
-	speed : "15 ft, climb 15 ft",
-	scores : [10, 10, 10, 10, 10, 10],
-	saves : ["", "", "", "", "", ""],
-	damage_immunities : "poison, psychic",
-	condition_immunities : "all conditions",
-	passivePerception : 10,
-	senses : "",
-	languages : "",
-	challengeRating : "1",
-	proficiencyBonus : 0,
-	attacksAction : 0,
-	attacks : [{
-		name : "Flamethrower",
-		ability : 0,
-		damage : [2, 8, "fire"],
-		range : "15-ft cone",
-		description : "Dex save, success - half damage; Unattended flammable objects ignite",
-		dc : true,
-		abilitytodamage : false,
-		tooltip : "The cannon exhales fire in an adjacent 15-ft cone that its creator designates. Each creature in that area must make a Dexterity saving throw against its creator's artificer spell save DC, taking 2d8 fire damage on a failed save or half as much damage on a successful one. The fire ignites any flammable objects in the area that aren't being worn or carried."
-	}, {
-		name : "Force Ballista",
-		ability : 0,
-		damage : [2, 8, "force"],
-		range : "120 ft",
-		description : "Creature hit is pushed 5 ft away",
-		abilitytodamage : false,
-		tooltip : "The cannon's creator makes a ranged spell attack, originating from the cannon, at one creature or object within 120 ft of it. On a hit, the target takes 2d8 force damage, and if the target is a creature, it is pushed up to 5 ft away from the cannon."
-	}, {
-		name : "Detonate",
-		ability : 0,
-		damage : [3, 8, "force"],
-		range : "20-ft radius",
-		description : "Dex save, success - half damage; Destroys cannon; [prereq: 9th level artificer]",
-		dc : true,
-		abilitytodamage : false,
-		tooltip : "As an action, its creator can command the cannon to deto­nate if its creator is within 60 ft of it. Doing so destroys the cannon and forces each creature within 20 ft of it to make a Dexterity saving throw against its creator's artificer spell save DC, taking 3d8 force damage on a failed save or half as much damage on a successful one."
-	}],
-	features : [{
-		name : "Healing",
-		description : "The cannon regains 2d6 HP whenever Mending is cast on it."
-	}, {
-		name : "Cannon Type",
-		description : "Upon creation, the creator decides what type of cannon it is: Flamethrower, Force Ballista, or Protector. What feature/attack it can use depends on its type."
-	}, {
-		name : "Protector",
-		description : "The cannon emits a burst of positive energy that grants itself and each creature of its creator's choice within 10 ft of it a number of temporary hit points equal to 1d8 + its creator's Intelligence modifier (minimum of +1)."
-	}],
-	traits : [{
-		name: "Creator",
-		description: "The cannon doesn't act unless activated by its creator. It uses its creator's artificer spell attack, spell save DC, and has five times the artificer level in HP. It disappears after 1 hour, when reduced to 0 HP, or when its creator dismisses it as an action."
-	}, {
-		name: "Activation",
-		description: "The creator of the cannon can activate it as a bonus action while within 60 ft of it. Once activated, the cannon does as instructed, moves and uses the action associated with its type: flamethrower attack, force ballista attack, or protector feature."
-	}, {
-		name: "Detonate",
-		description: "The creator of the cannon, if a 9th level artificer (artillerist), can use an action to detonate the cannon when within 60 ft of it, see the attack section."
-	}, {
-		name: "Shimmering Field",
-		description: "If the creator of the cannon is a 15th level artificer (artillerist), they and their allies have half cover while within 10 ft of the cannon."
-	}],
-	eval : function(prefix) {
-		// set type in the top right
-		Value(prefix + 'Comp.Type', "Construct");
-		// auto calculate HP
-		var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
-		HPmaxFld.setAction("Calculate", "event.value = 5 * (classes.known.artificer ? classes.known.artificer.level : classes.totallevel);");
-		HPmaxFld.readonly = true;
-		Hide(prefix + "Buttons.Comp.Use.HP.Max");
-		// set attacks
-		var artLvl9 = classes.known.artificer && classes.known.artificer.subclass == "artificer-artillerist" && classes.known.artificer.level >= 9;
-		for (var i = 1; i <= 3; i++) {
-			var ToHitFld = tDoc.getField(prefix + "BlueText.Comp.Use.Attack." + i + ".To Hit Bonus");
-			ToHitFld.setAction("Calculate", "var fldVal = What(event.target.name.replace('BlueText.', '').replace('To Hit Bonus', 'Weapon Selection'));\nif (fldVal) {\nvar atkType = fldVal.toLowerCase().indexOf('force ballista') == -1 ? 'dc' : 'attack';\nvar curSp = CurrentSpells.artificer && CurrentSpells.artificer.calcSpellScores && CurrentSpells.artificer.calcSpellScores[atkType] ? CurrentSpells.artificer.calcSpellScores[atkType] : false;\nevent.value = atkType == 'dc' ? (curSp ? 'dc+' + (curSp - 8) : 'dc+oProf+oInt') : (curSp ? curSp : 'oProf+oInt');\n};");
-			ToHitFld.calcOrderIndex = tDoc.getField(prefix + "Comp.Use.Attack." + i + ".To Hit").calcOrderIndex - 1;
-			ToHitFld.readonly = true;
-			if (artLvl9) Value(prefix + "BlueText.Comp.Use.Attack." + i + ".Damage Die", "3d8");
-		}
-		// add bonus action to first page
-		processActions(true, "Eldritch Cannon", [["bonus action", " (activate)"]], "Eldritch Cannon");
-	},
-	removeeval : function(prefix) {
-		if (prefix) {
-			// reset type in top right
-			Value(prefix + 'Comp.Type', "Companion");
-			// reset HP and proficiency bonus calculation
-			var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
-			HPmaxFld.setAction("Calculate", "1");
-			HPmaxFld.readonly = false;
-			DontPrint(prefix + "Buttons.Comp.Use.HP.Max");
-			// reset attacks
-			for (var i = 1; i <= 3; i++) {
-				var ToHitFld = tDoc.getField(prefix + "BlueText.Comp.Use.Attack." + i + ".To Hit Bonus");
-				ToHitFld.setAction("Calculate", "1");
-				ToHitFld.readonly = false;
-			}
-		}
-		// remove action
-		if (!ClassList.artificer || ClassList.artificer.artificerCompFunc.find("eldritch cannon").length < (prefix ? 2 : 1)) processActions(false, "Eldritch Cannon", [["bonus action", " (activate)"]], "Eldritch Cannon");
-	}
-};
-CreatureList["steel defender"] = {
-	name : "Steel Defender",
-	source : [["T", 19]],
-	size : 3,
-	type : "Construct",
-	subtype : "",
-	alignment : "Neutral",
-	ac : 15,
-	hp : 7,
-	hd : [3, 8],
-	speed : "40 ft",
-	scores : [14, 12, 14, 4, 10, 6],
-	saves : ["", 3, 4, "", "", ""],
-	skills : {
-		"athletics" : 4,
-		"perception" : 4
-	},
-	damage_immunities : "poison",
-	condition_immunities : "charmed, exhaustion, poisoned",
-	passivePerception : 14,
-	senses : "Darkvision 60 ft",
-	languages : "understands the languages of its creator but can't speak",
-	challengeRating : "1",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Force-Empowered Rend",
-		ability : 0,
-		damage : [1, 8, "force"],
-		range : "Melee (5 ft)",
-		modifiers : ["oInt", "Prof", ""]
-	}, {
-		name : "Deflect Attack (reaction)",
-		ability : 0,
-		damage : [1, 4, "force"],
-		range : "Melee (5 ft)",
-		modifiers : ["-Prof", "oInt", ""],
-		description : "After using the reaction, the attacker takes this damage, no attack roll required"
-	}],
-	features : [{
-		name : "Creator",
-		description : "The steel defender obeys the commands of its creator and shares its proficiency bonus. It takes its turn immediately after its creator, on the same initiative count. It can move and take reactions on its own, but only takes the Dodge action on its turn unless its creator takes a bonus action to command to do otherwise, in which case it can only take the Repair, Dash, Force-Empowered Rend, Disengage, Help, Hide, or Search action."
-	}, {
-		name : "Vigilant",
-		description : "The " + (typePF ? "" : "steel ") + "defender can't be surprised."
-	}],
-	actions : [{
-		name : "Healing",
-		description : "The steel defender regains 2d6 HP whenever the Mending spell is cast on it. Its HP total is equal to its creator's artificer level times five + its creator's Intelligence modifier + its Constitution modifier. Within an hour of its death, while within 5 ft, its creator can take an action to use smith's tools and expend a spell slot to have it return to full HP after 1 minute."
-	}, {
-		name : "Repair (3/Day)",
-		description : "As an action, the " + (typePF ? "" : "magical mechanisms inside the ") + "steel defender restore" + (typePF ? "s" : "") + " 2d8 + its proficiency bonus in HP to itself or to one construct or object within 5 ft of it."
-	}, {
-		name : "Deflect Attack (reaction)",
-		description : "As a reaction, the steel defender imposes disadvantage on the attack roll of one creature it can see that is within 5 ft of it, provided the attack roll is against a creature other than the steel defender. If its creator is a 15th level artificer (battle smith), this also deals 1d4 + its creator's Int modifier in force damage to the attacker."
-	}],
-	eval : function(prefix) {
-		// set type in the top right
-		Value(prefix + 'Comp.Type', "Construct");
-		// auto calculate HP
-		var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
-		HPmaxFld.setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel) * 5 + Number(What('Int Mod')) + Number(What('" + prefix + "Comp.Use.Ability.Con.Mod'));");
-		HPmaxFld.readonly = true;
-		Hide(prefix + "Buttons.Comp.Use.HP.Max");
-		// auto calculate proficiency bonus
-		var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
-		ProfFld.setAction("Calculate", "event.value = Number(How('Proficiency Bonus'));");
-		ProfFld.readonly = true;
-		ProfFld.calcOrderIndex = tDoc.getField(prefix + "Comp.Use.Attack.1.To Hit").calcOrderIndex - 1;
-		// auto calculate hit die
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = (classes.known.artificer ? classes.known.artificer.level : classes.totallevel);");
-		// add bonus action to first page
-		processActions(true, "Steel Defender", [["bonus action", " (command)"], ["action", " (restore)"]], "Steel Defender");
-		// set extra abilities from artificer level
-		var artLvl = classes.known.artificer && classes.known.artificer.subclass == "artificer-battle smith" ? classes.known.artificer.level : 0;
-		if (artLvl >= 9) {
-			// Extra damage or healing on attack hit
-			Value(prefix + "Comp.Use.Attack.1.Description", "Arcane Jolt (" + (artLvl < 15 ? 2 : 4) + "d6): On hit, deal force damage or heal target in 30 ft");
-		}
-		if (artLvl >= 15) {
-			// +2 AC if level 15 "artificer-battle smith" or higher
-			Value(prefix + "Comp.Use.AC", 17);
-		} else {
-			// Remove Deflect Attack
-			Value(prefix + "Comp.Use.Attack.2.Weapon Selection", "");
-		}
-	},
-	removeeval : function(prefix) {
-		if (prefix) {
-			// reset type in top right
-			Value(prefix + 'Comp.Type', "Companion");
-			// reset HP, HD and proficiency bonus calculation
-			var HPmaxFld = tDoc.getField(prefix + "Comp.Use.HP.Max");
-			HPmaxFld.setAction("Calculate", "1");
-			HPmaxFld.readonly = false;
-			DontPrint(prefix + "Buttons.Comp.Use.HP.Max");
-			var ProfFld = tDoc.getField(prefix + "Comp.Use.Proficiency Bonus");
-			ProfFld.setAction("Calculate", "1");
-			ProfFld.readonly = false;
-			tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "1");
-		}
-		// remove action
-		if (!ClassList.artificer || ClassList.artificer.artificerCompFunc.find("steel defender").length < (prefix ? 2 : 1)) processActions(false, "Steel Defender", [["bonus action", " (command)"], ["action", " (restore)"]], "Steel Defender");
-	}
-};
-//Add special Beastmaster companions, Beast of Land, Sea, and Sky
-CreatureList["beast of the sky"] = {
-	name : "Beast of the Sky",
-	source : ["T", 61],
-	size : 4,
-	type : "Beast",
-	subtype : "",
-	alignment : "Unaligned",
-	ac : 13,
-	hp : 5,
-	hd : [1, 6],
-	speed : "10 ft, fly 60 ft",
-	scores : [6, 16, 13, 8, 14, 11],
-	saves : ["", "", "", "", "", ""],
-	senses : "Darkvision 60 ft",
-	passivePerception : 12,
-	languages : "understands the languages of its master (me)",
-	challengeRating : "1/4",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Shred",
-		ability : 2,
-		damage : [1, 6, "slashing"],
-        range : "Melee (5 ft)"
-	}],
-	features : [{
-		name : "Primal Rebirth",
-		description : "If the beast has died within the last hour, I can use my action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored."
-	}],
-	traits : [{
-		name : "Flyby",
-		description : "The beast doesn't provoke opportunity attacks when it flies out of an enemy's reach."
-	}, {
-		name : "Primal Bond",
-		description : "I can add my proficiency bonus to any ability check or saving throw that the beast makes."
-	}],
-	eval : function(prefix) {
-		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "event.value = (classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1) * 5 + 5;");
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1;");
-	},
-	removeeval : function(prefix) {
-		if (!prefix) return;
-		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "");
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "");
-	}
-};
-CreatureList["beast of the land"] = {
-	name : "Beast of the Land",
-	source : ["T", 61],
-	size : 3,
-	type : "Beast",
-	subtype : "",
-	alignment : "Unaligned",
-	ac : 13,
-	hp : 5,
-	hd : [1, 8],
-	speed : "40 ft, climb 40 ft",
-	scores : [14, 14, 15, 8, 14, 11],
-	saves : ["", "", "", "", "", ""],
-	senses : "Darkvision 60 ft",
-	passivePerception : 14,
-	languages : "understands the languages of its master (me)",
-	challengeRating : "1/4",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Maul",
-		ability : 1,
-		damage : [1, 6, "slashing"],
-		range : "Melee (5 ft)",
-		description : "If used after moving 20 ft straight in the same round, see Charge trait"
-	}],
-	features : [{
-		name : "Primal Rebirth",
-		description : "If the beast has died within the last hour, I can use my action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored."
-	}],
-	traits : [{
-		name : "Charge",
-		description : "If the beast moves at least 20 ft straight toward a target and then hits it with a maul attack on the same turn, the target takes an extra 1d6 slashing damage. If the target is a creature, it must succeed on a Strength saving throw against my spell save DC or be knocked prone."
-	}, {
-		name : "Primal Bond",
-		description : "I can add my proficiency bonus to any ability check or saving throw that the beast makes."
-	}],
-	eval : function(prefix) {
-		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "event.value = (classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1) * 5 + 5;");
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1;");
-	},
-	removeeval : function(prefix) {
-		if (!prefix) return;
-		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "");
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "");
-	}
-};
-CreatureList["beast of the sea"] = {
-	name : "Beast of the Sea",
-	source : ["T", 61],
-	size : 3,
-	type : "Beast",
-	subtype : "",
-	alignment : "Unaligned",
-	ac : 13,
-	hp : 5,
-	hd : [1, 8],
-	speed : "5 ft, swim 60 ft",
-	scores : [14, 14, 15, 8, 14, 11],
-	saves : ["", "", "", "", "", ""],
-	senses : "Darkvision 60 ft",
-	passivePerception : 12,
-	languages : "understands the languages of its master (me)",
-	challengeRating : "1/4",
-	proficiencyBonus : 2,
-	attacksAction : 1,
-	attacks : [{
-		name : "Binding Strike",
-		ability : 1,
-		damage : [1, 6, "pierc./bludgeon"],
-		range : "Melee (5 ft)",
-		description : "On hit, target is grappled (escape DC is spell DC) and beast can't use attack on other target"
-	}],
-	features : [{
-		name : "Primal Rebirth",
-		description : "If the beast has died within the last hour, I can use my action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored."
-	}],
-	traits : [{
-        name : "Amphibious",
-        description : "The beast can breathe both air and water."
-	}, {
-		name : "Primal Bond",
-		description : "I can add my proficiency bonus to any ability check or saving throw that the beast makes."
-	}],
-	eval : function(prefix) {
-		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "event.value = (classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1) * 5 + 5;");
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1;");
-	},
-	removeeval : function(prefix) {
-		if (!prefix) return;
-		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "");
-		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "");
-	}
-};
 
-// Add Optional Class Features
+
+
+
+// Add Subclasses
+
 // Barbarian Optional Class Features
 AddFeatureChoice(ClassList.barbarian.features["danger sense"],true,"Primal Knowledge",{
 	name:"Primal Knowledge",
@@ -4814,6 +1581,204 @@ AddFeatureChoice(ClassList.barbarian.features["feral instinct"],true,"Instinctiv
 	description:desc(["As part of the bonus action I take to rage, I can move up to half my speed."]),
 	action:[["bonus action","Rage (Instinctive Pounce)"]]},
 	"Optional Class Features");
+
+AddSubClass("barbarian", "path of the beast", {
+	regExpSearch : /^(?=.*\bbarbarian\b)(?=.*\bpath\b)(?=.*\bbeast\b).*$/i,
+	subname : "Path of the Beast",
+	source : ["T", 24],
+	features : {
+		"subclassfeature3" : {
+			name : "Form of the Beast",
+			source : ["T", 24],
+			minlevel : 3,
+			description : desc([
+				"When I enter my rage, I can transform to gain a bite, tail, or claws attack for that rage",
+				"The bite attack allows me to regain my prof bonus in HP on a hit once on my turn, providing",
+				"I am at less than half my maximum hit points when I bite",
+				"The claws attack allows me to make one extra attack when I use it in my Attack action",
+				"The tail attack allows me to use my reaction to add a d8 to AC versus that attack"
+			]),
+			toNotesPage : [{
+				name : "Form of the Beast Table",
+				source : ["T", 24],
+				popupName : "Form of the Beast",
+				note : [
+				"When I enter my rage, I can transform, revealing the bestial power within me.",
+				" Until the rage ends, I manifest a natural weapon. It counts as a simple melee weapon for me, and I add my Strength modifier to the attack and damage rolls when I attack with it, as normal.",
+				" I choose the weapon's form each time I rage:",
+				"Bite. My mouth transforms, which deals 1d8 piercing damage on a hit. Once on each of my turns when I damage a creature with this bite, I regain a number of hit points equal to my proficiency bonus, provided I have less than half my hit points when I am hit.", 
+				"Claws. My hands transform into claws which deal 1d6 slashing damage, which I can use as weapons if they are empty. Once on each of my turns when I attack with a claw using the Attack action, I can make one additional claw attack as part of the same action.",
+				"Tail. I grow a tail, which deals 1d8 piercing damage on a hit and has the reach property. If a creature I can see within 10 feet of me hits me with an attack roll, I can use my reaction to swipe your tail and roll a d8, applying a bonus to your AC equal to the number rolled, potentially causing the attack to miss."
+				],
+			}],
+			weaponOptions : [{
+				regExpSearch : /^(?=.*(bestial|beast))(?=.*bite).*$/i,
+				name : "Bestial Bite",
+				source : [["T", 24]],
+				ability : 1,
+				type : "Simple",
+				damage : [1, 8, "piercing"],
+				range : "Melee",
+				description : "Only in rage; (1/my turn) if less than half max hp, regain prof bonus in HP",
+				abilitytodamage : true,
+				bestialNaturalWeapon : true
+			}, {
+				regExpSearch : /^(?=.*(bestial|beast))(?=.*claws?).*$/i,
+				name : "Bestial Claws",
+				source : [["T", 24]],
+				ability : 1,
+				type : "Simple",
+				damage : [1, 6, "slashing"],
+				range : "Melee",
+				description : "Only in rage; Extra attack as part of Attack action",
+				abilitytodamage : true,
+				bestialNaturalWeapon : true
+			}, {
+				regExpSearch : /^(?=.*(bestial|beast))(?=.*tail).*$/i,
+				name : "Bestial Tail",
+				source : [["T", 24]],
+				ability : 1,
+				type : "Simple",
+				damage : [1, 8, "piercing"],
+				range : "Melee",
+				description : "Only in rage; Reach",
+				abilitytodamage : true,
+				bestialNaturalWeapon : true,
+
+			}],
+			weaponsAdd : ["Bestial Bite", "Bestial Claws", "Bestial Tail"],
+			additional : levels.map(function(n) {
+				return n < 6 ? "" : "chosen weapon counts as magical";
+			}),
+			action : [["reaction", "Beastial Tail (d8 to AC)"]],
+		},
+		"subclassfeature6" : {
+			name : "Beastial Soul",
+			source : ["T", 25],
+			minlevel : 6,
+			description : desc([
+				"The natural weapons of my Form of the Beast to count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.",
+				"I can also alter my form to help adapt to my surroundings. When finishing a short or long rest, I may choose one of the following benefits until my next short or long rest:",
+				" - Swimming: Gain swimming speed equal to walking speed, and can breathe underwater.",
+				" - Climbing: Gain climbing speed equal to walking speed, and can climb difficult surfaces without need to make an ability check.",
+				" - Jumping: Once per turn, when I jump, I can make a Strength(Athletics) check to extend the distance equal to the check's total."
+			]),
+			usages: 1,
+			recovery: "short rest",
+			action : [["action", ""]]
+		},
+		"subclassfeature10" : {
+			name : "Infectious Fury",
+			source : ["T", 25],
+			minlevel : 10,
+			description : desc([
+				"When I hit a creature with my natural weapons while raging, the target must succeed on a Wisdom saving throw (DC equal to 8 + my Constitution mod + Proficiency bonus) or suffer one of the following effects of my choice:",
+				" - The target must use its reaction to make a melee attack against another creature of your choice that you can see.",
+				" - The target takes 2d 1 2 psychic damage.",
+				"I can use this feature a number of times equal to my Proficiency bonus, and regain all expended uses when I finish a long rest."
+			]),
+			usages: "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus')",
+			recovery: "long rest",
+		},
+		"subclassfeature14" : {
+			name : "Call of the Hunt",
+			source : ["T", 25],
+			minlevel : 14,
+			description : desc([
+				"Whenever I rage, I can choose a number of other willing creatures I can see within 30 feet of me equal to your Constitution modifier (minimum of one creature).",
+				"I gain 5 temporary hit points for each creature that accepts this feature.",
+				"Until the rage ends, the chosen creatures can each use the following benefit once on each of their turns:",
+				"when the creature hits a target with an attack roll and deals damage to it, the creature can roll a d6 and gain a bonus to the damage equal to the number rolled.",
+				"I can use this feature a number of times equal to my Proficiency bonus, and regain all expended uses when I finish a long rest."
+			]),
+			usages: "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus')",
+			recovery: "long rest",
+		},
+	},
+});
+AddSubClass("barbarian", "path of wild magic", {
+	regExpSearch : /^(?=.*\bwild\b)(?=.*\bmagic\b).*$/i,
+	subname : "Path of Wild Magic",
+	source : ["T", 25],
+	abilitySave : 3,
+	features : {
+		"subclassfeature3" : {
+			name : "Magic Awareness",
+			source : ["T", 25],
+			minlevel : 3,
+			description : desc([
+				"As an action, until the end of my next turn, I know any spell or magic item within 60 ft",
+				"I learn the school and location of the magic I detect", 
+				"I can't sense the magic if it is behind total cover"
+			]),
+			usages: "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus')",
+			recovery: "long rest",
+			action : [["action", ""]]
+		},
+		"subclassfeature3.1" : {
+			name : "Wild Surge",
+			source : ["T", 25],
+			minlevel : 3,
+			description : "\n   Whenever I enter my rage, I roll on the Wild Magic table (see Notes page)",
+			toNotesPage : [{
+				name : "Wild Magic Table",
+				source : ["T", 26],
+				popupName : "Wild Magic Table",
+				note : [
+					"Magic erupts from me while I rage. Whenever I enter my rage, I have to roll on the table below to see what happens.",
+					"If the effect calls for a saving throw, the DC is equal to 8 + my proficiency bonus + my Constitution modifier.\n",
+					"d8\tEFFECT",
+					" 1\tShadowy tendrils lash around me. Each creature of my choice that I can see within 30 feet of me must succeed on a Constitution saving throw or take 1dl2 necrotic damage. I also gain 1d12 temporary hit points.",
+					" 2\tI teleport up to 30 feet to an unoccupied space I can see. Until my rage ends, I can use this effect again on each of my turns as a bonus action.",
+					" 3\tAn intangible spirit, which looks like a flumph or a pixie (my choice), appears within 5 feet of one creature of my choice that I can see within 30 feet of me. At the end of the current turn, the spirit explodes, and each creature within 5 feet of it must succeed on a Dexterity saving throw or take 1d6 force damage. Until my rage ends, I can use this effect again, summoning another spirit, on each of my turns as a bonus action.",
+					" 4\tMagic infuses one weapon of my choice that I am holding. Until my rage ends, the weapon's damage type changes to force, and it gains the light and thrown properties, with a normal range of 20 feet and a long range of 60 feet. If the weapon leaves my hand, the weapon reappears in my hand at the end of the current turn.",
+					" 5\tWhenever a creature hits me with an attack roll before my rage ends, that creature takes 1d6 force damage, as magic lashes out in retribution.",
+					" 6\tUntil my rage ends, I am surrounded by multicolored, protective lights; I gain a +l bonus to AC, and while within 10 feet of me, my allies gain the same bonus.",
+					" 7\tFlowers and vines temporarily grow around me; until my rage ends, the ground within 15 feet of me is difficult terrain for my enemies.",
+					" 8\tA bolt of light shoots from my chest. Another creature of my choice that I can see within 30 feet of me rust succeed on a Constitution Saving throw or take 1d6 radiant damage and be blinded until the start of my next turn. Until my rage ends, I can use this effect again on each of my turns as a bonus action."
+				]
+			}]
+		},
+		"subclassfeature6" : {
+			name : "Bolstering Magic",
+			source : ["T", 26],
+			minlevel : 6,
+			description : desc([
+				"As an action, I can touch a creature or myself and confer one of the following benefits:",
+				" - For 10 minutes, they can add 1d3 to any attack roll or ability check",
+				" - Roll 1d3. They regain an expended spell slot of a level equal to or lower than the roll",
+				"A creature that receives the second benefit can't receive it again until after a long rest"
+			]),
+			usages: "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus')",
+			recovery: "long rest",			
+			action : [["action", ""]]
+		},
+		"subclassfeature10" : {
+			name : "Unstable Backlash",
+			source : ["T", 26],
+			minlevel : 10,
+			description : desc([
+				"After taking damage or failing a saving throw while raging, I can change my wild surge",
+				"I reroll my effect on the Wild Magic table and immediately produce the results rolled",
+				"This replaces the current wild surge effect with a new one"
+			]),
+			action : [["reaction", " (in Rage after taking damage or failing save)"]]
+		},
+		"subclassfeature14" : {
+			name : "Controlled Surge",
+			source : ["T", 26],
+			minlevel : 14,
+			description : desc([
+				"Whenever I roll for my wild surge, I can roll the die twice and choose which result to use",
+				"If I roll the same on both dice, I can choose any effect on the Wild Magic table"
+			])
+		}
+	}
+});
 
 // Bard Optional Class Features
 AddFeatureChoice(ClassList.bard.features.spellcasting,true,"Additional Bard Spells",{
@@ -4834,6 +1799,147 @@ AddFeatureChoice(ClassList.bard.features.spellcasting,true,"Bardic Versatility",
 	description:desc(["When I reach a level that grants the ASI feature I can do one of the following","• Replace one of the skills I chose for the Expertise feature with one of my other skill proficiencies that isn't benefitting from Expertise","• Replace one cantrip I learned from this class's Spellcasting feature with another cantrip from the bard spell list"])},
 	"Optional Class Features");
 
+AddSubClass("bard", "college of creation", {
+	regExpSearch : /^(?=.*(college|bard|minstrel|troubadour|jongleur))(?=.*creation).*$/i,
+	subname : "College of Creation",
+	source : [["T", 26]],
+	features : {
+		"subclassfeature3" : {
+			name : "Mote of Potential",
+			source : [["T", 26]],
+			minlevel : 3,
+			description : desc([
+				"I can also grant a mote of potential to whomever I give a bardic inspiration die",
+				"This tiny, invulnerable object orbits in 5 ft; It enhances the use of the inspiration die:",
+				"\u2022 Attack Roll: others within 5 ft must make a Con save",
+				"  If failed, they take the die roll in thunder damage; This uses my spell save DC",
+				"\u2022 Saving Throw: Grants temp HP equal to the roll + my Cha mod",
+				"\u2022 Ability Check: Roll the die twice and choose which result to use"
+			])
+		},
+		"subclassfeature3" : {
+			name : "Performance of Creation",
+			source : [["T", 26]],
+			minlevel : 3,
+			description : desc([
+				"As an action, I can create one nonmagical, medium or smaller item of my choice in an unoccupied space within 10'",
+				"The item must appear on a surface or in a liquid that can support it",
+				"The gp value of the item can't be more than 20 times my bard level",
+				"It disappears after a number of hours equal to my proficiency bonus",
+				"I can only make one item per long rest unless I expend a spell slot of 2nd level or higher",
+				"I can only have one item created by this feature at a time, if I make another the first one will vanish",
+				"The size of the item created increases by level: 6th (Large) and 14th (Huge)"
+			])
+		},
+		"subclassfeature6" : {
+			name : "Animating Performance",
+			source : [["T", 1]],
+			minlevel : 6,
+			description : desc([
+				"As an action, I can animate a Large or smaller nonmagical item I can see within 30 ft",
+				"It lasts for 1 hour or until it has 0 HP; I control it and it acts on my initiative, after me",
+				"Unless I use a bonus action to command it, it only takes the Dodge action on its turn",
+				"When I use bardic inspiration, I can command the item as part of the same bonus action",
+				"I can't have multiple at once; Select \"Dancing Item\" on a companion page for its stats",
+				"I can do this once per long rest, or by expending a 3rd-level or higher spell slot (SS 3+)"
+			]),
+			action : [["action", ""]],
+			usages : 1,
+			recovery : "long rest",
+			altResource : "SS 3+",
+			eval : function (lvl, chc) {
+				var useFunct = ClassList.artificer ? ClassList.artificer.artificerCompFunc : ClassList.bard.artificerCompFunc;
+				useFunct.add("Dancing Item");
+			},
+			removeeval : function (lvl, chc) {
+				var useFunct = ClassList.artificer ? ClassList.artificer.artificerCompFunc : ClassList.bard.artificerCompFunc;
+				useFunct.remove("dancing item");
+				if (CreatureList["dancing item-ua"]) CreatureList["dancing item-ua"].removeeval();
+			}
+		},
+		"subclassfeature14" : {
+			name : "Creative Crescendo",
+			source : [["T", 26]],
+			minlevel : 14,
+			description : desc([
+				"I can create more than one item with Performance of Creation equal to my Cha modifier",
+				"If I create an item that would exceed that number, I choose which of the previously created items disappears",
+				"Only one of these items can be of the maximum size you can create; the rest must be Small or Tiny",
+				"I am no longer limited by gp value when creating items with Performance of Creation"
+			]),
+			action : [["action", ""]],
+			usages : 1,
+			recovery : "long rest",
+			altResource : "SS 5+",
+			additional : levels.map(function (n) {
+				return n < 14 ? "" : n * 20 + " gp";
+			})
+		}
+	}
+});
+AddSubClass("bard", "college of eloquence", {
+	regExpSearch : /^(?=.*(college|bard|minstrel|troubadour|jongleur))(?=.*eloquence).*$/i,
+	subname : "College of Eloquence",
+	source : ["T", 54],
+	features : {
+		"subclassfeature3" : {
+			name : "Silver Tongue",
+			source : ["T", 30],
+			minlevel : 3,
+			description : desc([
+				"When I make a Persuasion or Deception check, I can treat a roll of 9 or lower as a 10"
+			])
+		},
+		"subclassfeature3.1" : {
+			name : "Unsettling Words",
+			source : ["T", 30],
+			minlevel : 3,
+			description : desc([
+				"As a bonus action I can choose one creature I can see within 60 feet",
+				"They subtract my inspiration die from their first saving throw before my next turn"
+			]),
+			additional : "1 bardic inspiration die",
+			action : [["bonus action", ""]]
+		},
+		"subclassfeature6" : {
+			name : "Unfailing Inspiration",
+			source : ["T", 30],
+			minlevel : 6,
+			description : desc([
+				"When a creature adds my inspiration die to a roll and fails, they keep the die"
+			])
+		},
+		"subclassfeature6.1" : {
+			name : "Universal Speech",
+			source : ["T", 30],
+			minlevel : 6,
+			description : desc([
+				"As an action I can choose up to my Charisma mod (min 1) creatures within 60 feet",
+				"Those creatures magically understand any language I speak for an hour",
+				"I can expend a spell slot of any level to use this feature again"
+			]),
+			recovery : "long rest",
+			usages : 1,
+			action : [["action", ""]],
+      altresource : "SS 1+"
+		},
+		"subclassfeature14" : {
+			name : "Infectious Inspiration",
+			source : ["T", 30],
+			minlevel : 14,
+			description : desc([
+				"As a reaction when a creature uses my inspiration die and succeeds, I can inspire another",
+				"I give a creature within 60 ft that can hear me an inspiration die without expending any",
+				"I can use this reaction a number of times per long rest equal to my Cha mod (min 1)"
+			]),
+			action : [["reaction", ""]],
+			usages : "Charisma mod per ",
+			usagescalc : "event.value = Math.max(1, What('Cha Mod'));",
+			recovery : "long rest"
+		}
+	}
+});
+
 // Cleric Optional Class Features
 AddFeatureChoice(ClassList.cleric.features.spellcasting,true,"Additional Cleric Spells",{
 	name:"Additional Cleric Spells",
@@ -4849,6 +1955,12 @@ AddFeatureChoice(ClassList.cleric.features["channel divinity"],true,"Harness Div
 	recovery : "long rest",
 	action : [["bonus action", "Harness Divine Power"]]},
 	"Optional Class Features");
+AddFeatureChoice(ClassList.cleric.features.spellcasting,true,"Cantrip Versatility",{
+	name:"Cantrip Versatility",
+	source:["T",31],
+	description:"\n   When I reach a level that grants the ASI feature I can replace one cantrip I learned from this class's Spellcasting feature with another cantrip from the cleric spell list"},
+	"Optional Class Features");
+
 RunFunctionAtEnd(function() {
 	for (var i = 0; i < ClassList.cleric.subclasses[1].length; i++) {
 		var aDomain = ClassSubList[ClassList.cleric.subclasses[1][i]];
@@ -4868,11 +1980,291 @@ RunFunctionAtEnd(function() {
 					},
 					"Once per turn when a creature takes damage from one of my cantrips or weapon attacks, I can also deal 1d8 radiant damage to the target."
 				]} }); } });
-AddFeatureChoice(ClassList.cleric.features.spellcasting,true,"Cantrip Versatility",{
-	name:"Cantrip Versatility",
-	source:["T",31],
-	description:"\n   When I reach a level that grants the ASI feature I can replace one cantrip I learned from this class's Spellcasting feature with another cantrip from the cleric spell list"},
-	"Optional Class Features");
+
+AddSubClass("cleric", "order domain-tcoe", {
+	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*order).*$/i,
+	subname : "Order Domain",
+	source : ["T", 31],
+	spellcastingExtra : ["command", "heroism", "hold person", "zone of truth", "mass healing word", "slow", "compulsion", "locate creature", "commune", "dominate person"],
+	features : {
+		"subclassfeature1" : {
+			name : "Bonus Proficiency",
+			source : ["T", 32],
+			minlevel : 1,
+			description : "\n   " + "I gain proficiency with heavy armor, and either the Intimidation or Persuasion skill",
+			armorProfs : [false, false, true, false],
+			skillstxt : "Choose one from Intimidation or Persuasion"
+		},
+		"subclassfeature1.1" : {
+			name : "Voice of Authority",
+			source : ["T", 32],
+			minlevel : 1,
+			description : desc([
+				"Whenever I use a spell slot to cast a spell on an ally, it can use its reaction to attack",
+				"The ally makes one weapon attack against a target of my choice that I can see",
+				"If the spell targets multiple allies, I can choose which one can make the attack"
+			])
+		},
+		"subclassfeature2" : {
+			name : "Channel Divinity: Order's Demand",
+			source : ["T", 32],
+			minlevel : 2,
+			description : desc([
+				"As an action, all chosen targets in 30 ft that can see or hear me must make a Wis save",
+				"If failed, it is charmed by me until the end of my next turn or it takes any damage",
+				"Also, I can choose to have a charmed target drop what its holding when it fails its save"
+			]),
+			action : [["action", ""]]
+		},
+		"subclassfeature6" : {
+			name : "Embodiment of the Law",
+			source : ["T", 32],
+			minlevel : 6,
+			description : desc([
+				"When I cast an enchantment spell using a spell slot, I can reduce its casting time",
+				"If the spell normally has a casting time of an action, I can now cast it as a bonus action"
+			]),
+			usages : "Wisdom modifier per ",
+			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
+			recovery : "long rest",
+			calcChanges : {
+				spellAdd : [
+					function (spellKey, spellObj, spName) {
+						if (CurrentSpells[spName].refType == "class" && spellObj.school == "Ench" && spellObj.time == "1 a") {
+							spellObj.time = "1a/bns"
+							return true;
+						};
+					},
+					"When I cast an enchantment spell using a spell slot that normally requires 1 action to cast, I can reduce its casting time to a bonus action."
+				]
+			}
+		},
+		"subclassfeature8" : {
+			name : "Divine Strike",
+			source : ["T", 32],
+			minlevel : 8,
+			description : "\n   " + "Once per turn, when I hit a creature with a weapon attack, I can do extra damage",
+			additional : levels.map(function (n) {
+				if (n < 8) return "";
+				return "+" + (n < 14 ? 1 : 2) + "d8 psychic damage";
+			}),
+			calcChanges : {
+				atkAdd : [
+					function (fields, v) {
+						if (classes.known.cleric && classes.known.cleric.level > 7 && !v.isSpell) {
+							fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.cleric.level < 14 ? 1 : 2) + 'd8 psychic damage' + (classes.known.cleric.level < 17 ? '' : ' \u0026 again if hit by ally before my next turn');
+						}
+					},
+					"Once per turn, I can have one of my weapon attacks that hit do extra psychic damage."
+				]
+			}
+		},
+		"subclassfeature17" : {
+			name : "Order's Wrath",
+			source : ["T", 32],
+			minlevel : 17,
+			description : desc([
+				"If I deal my Divine Strike damage to a creature, it is cursed until my next turn starts",
+				"The next time it is hit by a weapon attack from my allies, it takes +2d8 psychic damage"
+			])
+		}
+	}
+});
+AddSubClass("cleric", "peace domain", {
+	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*peace).*$/i,
+	subname : "Peace Domain",
+	source : ["T", 32],
+	spellcastingExtra : ["heroism", "sanctuary", "aid", "warding bond", "beacon of hope", "sending", "aura of purity", "Otiluke's resilient sphere", "greater restoration", "Rary's telepathic bond"],
+	features : {
+		"subclassfeature1" : {
+			name : "Implement of Peace",
+			source : ["T", 33],
+			minlevel : 1,
+			description : "\n   " + "I gain proficiency Insight, Performance, or Persuasion skill",
+			skillstxt : "Choose one from Insight or Performance or Persuasion"
+		},
+		"subclassfeature1.1" : {
+			name : "Emboldening Bond",
+			source : ["T", 33],
+			minlevel : 1,
+			description : desc([
+				"As an ation, I choose a number of willing creatures (can include myself) within",
+				"30 feet of me equal to proficiency bonus, For 10 minutes or until I use the",
+				"feature again, once per turn, targets within 30 ft of each other can gain",
+				"bonus to attack roll, ability check, or saving throw equal to 1d4.",
+				"Can use a number of times per long rest equal to my proficiency bonus."
+			]),
+			//additional : levels.map(function(n) {
+			//	return n < 5 ? "2" : n < 9 ? "3" : n < 13 ? "4" : n < 17 ? "5" : "6";
+			//}),
+			action : ["action", "Emboldening Bond"],
+			usages : "Prof. Bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus');",
+			recovery : "long rest"
+		},
+		"subclassfeature2" : {
+			name : "Channel Divinity: Balm of Peace",
+			source : ["T", 33],
+			minlevel : 2,
+			description : desc([
+				"As an action, I can move up to my speed without provoking attcks of opportunity",
+				"and when I move within 5 ft of another creature during this action, I can restore",
+				"a number of hit points to it equal to 2d6 + my Wisdom modifier (min. 1 hit point).",
+				"A creature can only benefit once when using this action."
+			]),
+			action : ["action", ""]
+		},
+		"subclassfeature6" : {
+			name : "Protective Bond",
+			source : ["T", 33],
+			minlevel : 6,
+			description : desc([
+				"When a creature affected by Emboldening Bond is attacked, a second bonded creature",
+				"within 30 ft of the 1st creature can use reaction: teleport to unoccupied space",
+				"within 5 ft of the 1st creature and take all the damage instead."
+			]),
+			action : ["reaction", "Protective Bond"]
+		},
+		"subclassfeature8" : {
+			name : "Potent Spellcasting",
+			source : ["P", 60],
+			minlevel : 8,
+			description : "\n   " + "I can add my Wisdom modifier to the damage I deal with my cleric cantrips",
+			calcChanges : {
+				atkCalc : [
+					function (fields, v, output) {
+						if (classes.known.cleric && classes.known.cleric.level > 7 && v.thisWeapon[3] && v.thisWeapon[4].indexOf('cleric') !== -1 && SpellsList[v.thisWeapon[3]].level === 0) {
+							output.extraDmg += What('Wis Mod');
+						};
+					},
+					"My cleric cantrips get my Wisdom modifier added to their damage."
+				],
+				spellAdd : [
+					function (spellKey, spellObj, spName) {
+						if (spName.indexOf("cleric") == -1 || !What("Wis Mod") || Number(What("Wis Mod")) <= 0 || spellObj.psionic || spellObj.level !== 0) return;
+						if (spellKey == "shillelagh") {
+							spellObj.description = spellObj.description.replace("1d8", "1d8+" + What("Wis Mod"));
+							return true;
+						}
+						return genericSpellDmgEdit(spellKey, spellObj, "\\w+\\.?", "Wis", true);
+					},
+					"My cleric cantrips get my Wisdom modifier added to their damage."
+				]
+			}
+		},
+		"subclassfeature17" : {
+			name : "Expansive Bond",
+			source : ["T", 33],
+			minlevel : 17,
+			description : desc([
+				"Emboldening Bond and Protective Bond work when bonded creatures are within 60 ft",
+				"of each other. Also, when a creature uses Protective Bond to take damage for another",
+				"bonded creature, it has resistance to that damage."
+			])
+		}
+	}
+});
+AddSubClass("cleric", "twilight domain", {
+	regExpSearch : /^(?=.*(cleric|priest|clergy|acolyte))(?=.*(twilight|transition)).*$/i,
+	subname : "Twilight Domain",
+	source : ["T", 1],
+	spellcastingExtra : ["faerie fire", "sleep", "moonbeam", "see invisibility", "aura of vitality", "leomund's tiny hut", "aura of life", "greater invisibility", "circle of power", "mislead"],
+	features : {
+		"subclassfeature1" : {
+			name : "Bonus Proficiencies",
+			source : ["T", 1],
+			minlevel : 1,
+			description : desc([
+				"I gain proficiency with martial weapons and heavy armor"
+			]),
+			armorProfs : [false, false, true, false],
+			weaponProfs : [false, true]
+		},
+		"subclassfeature1.1" : {
+			name : "Eyes of Night",
+			source : ["T", 1],
+			minlevel : 1,
+			description : desc([
+				"I gain darkvision out to 300 ft and can magically share it with willing creatures",
+				"As an action, I can choose up to my Wis" + (typePF ? "dom" : "") + " mod (min 1) creatures I can see within 10 ft",
+				"The chosen creatures then gain this darkvision for 1 hour",
+				"If I have no more uses of this feature, I can expend a spell slot to use it again"
+			]),
+			vision : [["Darkvision", 300]],
+			additional : "extend to others",
+			usages : 1,
+			recovery : "long rest",
+			action : [["action", ""]]
+		},
+		"subclassfeature1.2" : {
+			name : "Vigilant Blessing",
+			source : ["T", 1],
+			minlevel : 1,
+			description : desc([
+				"As an action, I can grant myself or a creature I touch adv. on the next initiative roll",
+				"This benefit ends immediately after the roll or when I use this feature again"
+			]),
+			action : [["action", ""]]
+		},
+		"subclassfeature2" : {
+			name : "Channel Divinity: Twilight Sanctuary",
+			source : ["T", 1],
+			minlevel : 2,
+			description : desc([
+				"As an action, I can use my holy symbol to create a 30-ft radius sphere around myself",
+				"It moves with me, is filled with dim light, and lasts for 1 min or until I'm incapacitated",
+				"When a creature, including me, ends its turn inside the sphere, I can grant it a benefit:",
+				" \u2022 I grant it temporary hit points equal to 1d6 + my cleric level",
+				" \u2022 I end one effect on it causing it to be charmed or frightened"
+			]),
+			action : [["action", ""]]
+		},
+		"subclassfeature6" : {
+			name : "Steps of Night",
+			source : ["T", 1],
+			minlevel : 6,
+			description : desc([
+				"As a bonus action, when in dim light/darkness, I can magically grant myself flight",
+				"I gain flying speed equal to my walking speed for 1 minute"
+			]),
+			additional : levels.map(function(n) {
+				return n < 5 ? "2" : n < 9 ? "3" : n < 13 ? "4" : n < 17 ? "5" : "6";
+			}),
+			recovery : "long rest",
+			action : [["bonus action", " (in dim light/darkness)"]]
+		},
+		"subclassfeature8" : {
+			name : "Divine Strike",
+			source : ["T", 1],
+			minlevel : 8,
+			description : desc([
+				"Once per turn, when I hit a creature with a weapon attack, I can do extra damage"
+			]),
+			additional : levels.map(function (n) {
+				if (n < 8) return "";
+				return "+" + (n < 14 ? 1 : 2) + "d8 radiant damage";
+			}),
+			calcChanges : {
+				atkAdd : [
+					function (fields, v) {
+						if (classes.known.cleric && classes.known.cleric.level > 7 && !v.isSpell) {
+							fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.cleric.level < 14 ? 1 : 2) + 'd8 radiant damage';
+						}
+					},
+					"Once per turn, I can have one of my weapon attacks that hit do extra radiant damage."
+				]
+			}
+		},
+		"subclassfeature17" : {
+			name : "Twilight Shroud",
+			source : ["T", 2],
+			minlevel : 17,
+			description : desc([
+				"Me and my allies have half cover while in the sphere created by my Twilight Sanctuary"
+			])
+		}
+	}
+});
 
 // Druid Optional Class Features
 AddFeatureChoice(ClassList.druid.features.spellcasting,true,"Additional Druid Spells",{
@@ -4914,6 +2306,366 @@ AddFeatureChoice(ClassList.druid.features.spellcasting,true,"Cantrip Versatility
 	source:["T",36],
 	description:"\n   When I reach a level that grants the ASI feature I can replace one cantrip I learned from this class's Spellcasting feature with another cantrip from the druid spell list"},
 	"Optional Class Features");
+
+
+AddSubClass("druid", "circle of spores-tcoe", {
+	regExpSearch : /^(?=.*(druid|shaman))(?=.*spores).*$/i,
+	subname : "Circle of Spores",
+	source : ["T", 36],
+	features : {
+		"subclassfeature2" : {
+			name : "Circle Spells",
+			source : ["T", 36],
+			minlevel : 2,
+			description : desc([
+				"I learn the Chill Touch cantrip and gain the ability to cast certain spells",
+				"These are always prepared, but don't count against the number of spells I can prepare"
+			]),
+			spellcastingBonus : {
+				name : "Circle Spells",
+				spells : ["chill touch"],
+				selection : ["chill touch"]
+			},
+			spellcastingExtra : ["blindness/deafness", "gentle repose", "animate dead", "gaseous form", "blight", "confusion", "cloudkill", "contagion"]
+		},
+		"subclassfeature2.1" : {
+			name : "Halo of Spores",
+			source : ["T", 36],
+			minlevel : 2,
+ 			description : desc([
+				"As a reaction when someone I can see in 10 ft starts its turn or moves, I can have it save",
+				"It must succeed on a Constitution save or take necrotic damage from my cloud of spores"
+			]),
+			additional : levels.map(function (n) { return n < 2 ? "" : 'Con save or 1d' + (n < 6 ? 4 : n < 10 ? 6 : n < 14 ? 8 : 10) + " necrotic damage"; }),
+			action : ["reaction", ""]
+		},
+		"subclassfeature2.2" : {
+			name : "Symbiotic Entity",
+			source : ["T", 37],
+			minlevel : 2,
+			description : desc([
+				"As an action, I expend a Wild Shape use to boost my spores instead of transforming",
+				"I gain 4 temporary hit points per druid level and my Halo of Spores damage increases",
+				"Also, my melee weapon attacks do +1d6 necrotic damage with every hit",
+				"This lasts for 10 min, until these temporary HP run out, or until I use Wild Shape again"
+			]),
+			additional : levels.map(function (n) {
+				return n < 2 ? "" : Math.floor(n*4) + " temp HP; Halo of Spores: 2d" + (n < 6 ? 4 : n < 10 ? 6 : n < 14 ? 8 : 10);
+			}),
+			action : [["action", ""]],
+			calcChanges : {
+				atkAdd : [
+					function (fields, v) {
+						if (((v.isMeleeWeapon && !v.isNaturalWeapon) || v.baseWeaponName == "unarmed strike") && (/\b(spore|symbiotic)\b/i).test(v.WeaponText)) {
+							fields.Description += (fields.Description ? '; ' : '') + '+1d6 necrotic damage';
+						};
+					},
+					"If I include the word 'Spore' or 'Symbiotic' in a melee weapon's name, it gets treated as a weapon that is infused by my Symbiotic Entity feature, adding +1d6 necrotic damage in the description."
+				]
+			}
+		},
+		"subclassfeature6" : {
+			name : "Fungal Infestation",
+			source : ["T", 37],
+			minlevel : 6,
+			description : desc([
+				"As a reaction when a Small/Medium beast/humanoid dies in 10 ft, I can animate it",
+				"It rises as a zombie with 1 HP that follows my mental commands and dies after 1 hour",
+				"It can only take the attack action for one melee attack; It takes its turns after mine"
+			]),
+			usages : "Wisdom modifier per ",
+			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
+			recovery : "long rest",
+			action : ["reaction", ""]
+		},
+		"subclassfeature10" : {
+			name : "Spreading Spores",
+			source : ["T", 37],
+			minlevel : 10,
+			description : " [only while Symbiotic Entity is active]" + desc([
+				"As a bonus action, I create a 10-ft cube of fungal spores within 30 ft, lasting for 1 min",
+				"Any creature moving into or starting its turn in it must save against my Halo of Spores",
+				"The cube ends if I use this feature again; While it persists, I can't use my Halo of Spores"
+			]),
+			action : ["bonus action", " (start/end)"]
+		},
+		"subclassfeature14" : {
+			name : "Fungal Body",
+			source : ["T", 38],
+			minlevel : 14,
+			description : desc([
+				"I'm immune to being blinded, deafened, frightened, poisoned, and critical hits"
+			]),
+			savetxt : { immune : ["blinded", "deafened", "frightened", "poisoned", "critical hits (unless incapacitated)"] }
+		}
+	}
+});
+AddSubClass("druid", "circle of stars", {
+	regExpSearch : /^(?=.*(druid|shaman))(?=.*circle)(?=.*stars).*$/i,
+	subname : "Circle of Stars",
+	source : [["T", 3]],
+	features : {
+		"subclassfeature2" : {
+			name : "Star Map",
+			source : [["T", 3]],
+			minlevel : 2,
+			description : desc([
+				"I've created a star map, a Tiny object which I can use as my spellcasting focus",
+				"If I lose it, I can preform a 1-hour (over a rest) ceremony during a rest to create a replacement",
+				"I can use it to cast Guidance or Guiding Bolt, even unprepared, without using a spell slot"
+			]),
+			spellcastingBonus : {
+				name : "Star Map",
+				spells : ["guiding bolt", "guidance"],
+				selection : ["guiding bolt", "augury"],
+				firstCol : "Sp",
+				times: 2
+			},
+			usages : "Proficiency Bonus per ",
+			usagescalc :  "event.value = Number(What('Proficiency Bonus'));",
+			recovery : "long rest",
+
+			extraLimitedFeatures : [{
+				name : "Guiding Bolt",
+				usages : "Proficiency Bonus per ",
+				recovery : "long rest",
+				usagescalc : "event.value = Number(What('Proficiency Bonus'));"
+			}],
+		},
+		"subclassfeature2.1" : {
+			name : "Starry Form",
+			source : [["T", 3]],
+			minlevel : 2,
+			description : desc([
+				"As an action, I can expend a use of wild shape to take on a starry form for 10 minutes",
+				"In that form I shed bright light in a 10-ft radius and dim light for an extra 10-ft radius",
+				"It ends if I choose to end it, am incapacitated, die, or use it again.",
+				"When I do so, I choose one constellation below to grant me benefits in my starry form:",
+				"\u2022 Chalice: When I use a spell slot to cast a healing spell, I also heal a creature in 30 ft",
+				"  This can be myself or the original target; I restore 1d8 + my wisdom mod in HP",
+				"\u2022 Archer: As a bonus action, I can make a ranged spell attack to hurl a luminous arrow",
+				"  This has a range of 60 ft and deals radiant damage equal to 1d8 + my Wisdom mod",
+				"\u2022 Dragon: I can treat a roll below 10 as a 10 for Int/Wis checks and concentration saves"
+			]),
+			action : [["bonus action", " (Archer Constellation)"]],
+			weaponOptions : {
+				regExpSearch : /^(?=.*luminous)(?=.*arrow).*$/i,
+				name : "Luminous Arrow",
+				source : [["T", 3]],
+				ability : 5,
+				type : "Spell",
+				damage : [1, 8, "radiant"],
+				range : "60 ft",
+				description : "Use as bonus action",
+				abilitytodamage : true,
+				luminousarrow : true
+			},
+			weaponsAdd : ['Luminous Arrow'],
+		},
+		"subclassfeature6" : {
+			name : "Cosmic Omen",
+			source : [["T", 3]],
+			minlevel : 6,
+			description : desc([
+				"When I finish a long rest, I can roll a die to gain an omen based on the result (odd/even)",
+				"As a reaction when a creature I can see in 30 ft makes an attack, check, or save, I can:",
+				"\u2022 Weal (even): add 1d6 to the number rolled for the attack, check, or save",
+				"\u2022 Woe (odd): subtract 1d6 from the number rolled for the attack, check, or save"
+			]),
+			action : [["reaction", ""]],
+			usages : "Proficiency Bonus per ",
+			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
+			recovery : "long rest"
+		},
+		"subclassfeature10" : {
+			name : "Twinkling Constellations",
+			source : [["T", 3]],
+			minlevel : 10,
+			description : desc([
+				"I can now switch constellation at the start of my turn, additionally, my constellations improve",
+				"\u2022 The 1d8 of the Chalice and Archer become 2d8",
+				"\u2022 While Dragon is Active, I have a 10ft fly speed with hover."
+			]),
+			calcChanges : {
+											atkAdd : [
+													function (fields, v) {
+															if (classes.known.druid && classes.known.druid.level > 9 && ( v.theWea.luminousarrow )) {
+															fields.Damage_Die = '2d8';
+															};
+													}
+											]
+									}
+		},
+		"subclassfeature14" : {
+			name : "Full of Stars",
+			source : [["T", 3]],
+			minlevel : 14,
+			description : "\n   While in my starry form, I have resistance to bludgeoning, piercing, and slashing damage",
+			dmgres : [
+				["Bludgeoning", "Bludgeon. (in form)"],
+				["Piercing", "Piercing (in form)"],
+				["Slashing", "Slashing (in form)"]
+			]}
+
+		}
+});
+AddSubClass("druid", "circle of wildfire", {
+	regExpSearch : /^(?=.*(druid|shaman))(?=.*wild.{0,1}fire).*$/i,
+	subname : "Circle of Wildfire",
+	source : ["T", 1],
+	features : {
+		"subclassfeature2" : {
+			name : "Circle Spells",
+			source : ["T", 1],
+			minlevel : 2,
+			description : desc([
+				"My mystical bond with a wildfire spirit gives me with the ability to cast certain spells",
+				"These are always prepared, but don't count against the number of spells I can prepare",
+				"In addition, I learn the Fire Bolt cantrip"
+			]),
+			spellcastingExtra : ["burning hands", "cure wounds", "flaming sphere", "scorching ray", "plant growth","revivify", "aura of life", "fire shield", "flame strike", "mass cure wounds"]
+		},
+		"subclassfeature2.1" : {
+			name : "Summon Wildfire",
+			source : ["T", 1],
+			minlevel : 2,
+			description : desc([
+				"As an action, I can expend a use of wild shape to summon a wildfire spirit within 30 ft",
+				"All within 10 ft of where it manifests must make a Dex save or take 2d6 fire damage",
+				"It disappears after 1 hour, when it is reduced to 0 HP, or I summon another or die",
+				"It obeys my commands, is friendly to my allies and I, and acts on my initiative, after me",
+				"Unless I use a bonus action to command it, it only takes the Dodge action on its turn",
+				"If I am incapacitated, it can take any action, not just dodge",
+				"Its HP maximum is equal to 5 + five times my druid level"
+			]),
+			action : [["action", ""], ["bonus action", "Command Wildfire"]],
+			eval : function () {
+				var AScompA = isTemplVis('AScomp') ? What('Template.extras.AScomp').split(',') : false;
+				var prefix = false;
+				if (AScompA) {
+					for (var a = 1; a < AScompA.length; a++) {
+						if (!What(AScompA[a] + 'Comp.Race')) {
+							prefix = AScompA[a];
+							break;
+						}
+					}
+				}
+				if (!prefix) prefix = DoTemplate('AScomp', 'Add');
+				Value(prefix + 'Comp.Race', "Wildfire Spirit");
+				Value(prefix + 'Comp.Type', "Wildfire");
+				var changeMsg = "The Wildfire Spirit has been added to the companion page at page number " + (tDoc.getField(prefix + 'Comp.Race').page + 1);
+				CurrentUpdates.types.push("notes");
+				if (!CurrentUpdates.notesChanges) {
+					CurrentUpdates.notesChanges = [changeMsg];
+				} else {
+					CurrentUpdates.notesChanges.push(changeMsg);
+				}
+			},
+			removeeval : function () {
+				var AScompA = isTemplVis('AScomp') ? What('Template.extras.AScomp').split(',') : false;
+				if (!AScompA) return;
+				for (var a = 1; a < AScompA.length; a++) {
+					if (What(AScompA[a] + 'Comp.Race').toLowerCase().indexOf("wildfire spirit") !== -1) {
+						DoTemplate("AScomp", "Remove", AScompA[a], true);
+					}
+				}
+			},
+			changeeval : function (lvlA) {
+				var AScompA = isTemplVis('AScomp') ? What('Template.extras.AScomp').split(',') : false;
+				if (!AScompA) return;
+				var newHP = Math.round(lvlA[1] * 5 + 5);
+				var newProf = ProficiencyBonusList[classes.totallevel - 1];
+				for (var a = 1; a < AScompA.length; a++) {
+					if (What(AScompA[a] + 'Comp.Race').toLowerCase().indexOf("wildfire spirit") !== -1) {
+						Value(AScompA[a] + "Comp.Use.HP.Max", newHP );
+						Value(AScompA[a] + "Comp.Use.Proficiency Bonus", newProf);
+					}
+				}
+			}
+		},
+		"subclassfeature6" : {
+			name : "Enhanced Bond",
+			source : ["T", 1],
+			minlevel : 6,
+			description : desc([
+				"While my wildfire spirit is present, I can have my spells originate from it (no range 'self')",
+				"Also, I can add 1d8 to a single roll of my spells that restore HP or deal fire damage"
+			])
+		},
+		"subclassfeature10" : {
+			name : "Cauterizing Flames",
+			source : ["T", 1],
+			minlevel : 10,
+			description : desc([
+				"As a reaction when a creature dies in 30 ft of me/wildfire spirit, I can have flames erupt",
+				"The creature has to be Small or larger; The flames last for 1 minute or until I extinguish",
+				"As a reaction when I see someone enters its space, it heals or takes fire damage for 2d10 + Wis mod"
+			]),
+			usages : "Wisdom modifier per ",
+			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
+			recovery : "long rest"
+		},
+		"subclassfeature14" : {
+			name : "Blazing Revival",
+			source : ["T", 1],
+			minlevel : 14,
+			description : desc([
+				"If I drop to 0 HP and don't die, and my wildfire spiris is within 120 ft, it can save me",
+				"I can have it drop to 0hp, and I regain half my hit points and immediately rise to my feet"
+			]),
+			usages : 1,
+			recovery : "long rest"
+		}
+	}
+});
+CreatureList["wildfire spirit"] = { // Add the Cirle of Wildfire companion spirit
+	name : "Wildfire Spirit",
+	source : ["T", 1],
+	size : 4,
+	type : "Elemental",
+	subtype : "",
+	alignment : "Chaotic",
+	ac : 13,
+	hp : 12,
+	hd : [2, 6],
+	speed : "20 ft, fly 30 ft (hover)",
+	scores : [10, 14, 14, 13, 15, 11],
+	saves : ["", 4, 4, "", 4, ""],
+	skills : {
+		"nature" : 4
+	},
+	damage_immunities : "fire",
+	condition_immunities : "charmed, frightened, grappled, prone, restrained",
+	senses : "Darkvision 60 ft",
+	passivePerception : 12,
+	languages : "understands the languages of its creator",
+	challengeRating : "0",
+	proficiencyBonus : 2,
+	attacksAction : 1,
+	attacks : [{
+		name : "Flame Seed",
+		ability : 2,
+		damage : [1, 6, "fire"],
+		range : "30 ft",
+		modifiers : ["oWis-Dex", "Prof", false],
+		description : "Ranged weapon attack"
+	}, {
+		name : "Fiery Teleportation",
+		ability : 5,
+		damage : [1, 6, "fire"],
+		range : "10 ft",
+		modifiers : ["dc-Wis+oWis", "Prof", false],
+		description : "Dex save for all within 10 ft of teleportation origin, success - no damage; See traits"
+	}],
+	features : [{
+		name : "Creator",
+		description : "The spirit obeys the commands of its creator and has the same proficiency bonus. It takes its turn immediately after its creator, on the same initiative count. It only takes the Dodge action, unless its creator takes a bonus action to command to do otherwise, in which case it can only take the Flame Seed, Fiery Teleportation, Dash, Disengage, Help, or Hide action."
+	}],
+	actions : [{
+		name : "Fiery Teleportation",
+		description : "The spirit and each willing creature of its creator's choice within 5 ft of it teleport up to 15 ft to unoccupied spaces its creator can see. Each creature within 10 ft of the space that the spirit left must succeed on a Dexterity saving throw against its creator's spell save DC or take fire damage equal to 1d6 + its proficiency bonus."
+	}]
+};
 
 // Fighter Optional Class Features
 AddFeatureChoice(ClassList.fighter.features["fighting style"], true, "Martial Versatility", {
@@ -5049,6 +2801,328 @@ AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature
 	description : "\n   When I make a Wis (Insight) or Int (Investigation) or Int (History) check, I can add a superiority die to it"});
 }
 
+
+
+
+
+AddSubClass("fighter", "psi warrior", {
+regExpSearch: /^(?=.*(fighter))(?=.*(psi))(?=.*(warrior)).*$/i,
+	subname : "Psi Warrior",
+	source : ["T", 42],
+	features : {
+		"subclassfeature3" : {
+			name : "Psionic Power",
+			source : ["T", 43],
+			minlevel : 3,
+			description : desc([
+				"I gain twice my proficiency bonus of Psionic Energy Dice (PsiD); 3rd lvl (d6), 5th lvl (d8),",
+				"11th lvl (d10), and 17th lvl (d12). I regain all expended Psionic Energy dice at the end", 
+				"of a long rest. I can use these PsiD to fuel my psionic abilities:",
+				"\u25C6 Protective Field - Use reaction and expend one PsiD to reduce damage equal to",
+				"PsiD roll + Int mod when I or another creature within 30 ft of me takes damage",
+				"\u25C6 Psionic Strike - Once on each of my turns, after I hit a target within 30 ft and deal dmg",
+				"with a weapon, expend one PsiD to deal PsiD + Int mod extra force damage.",
+				"\u25C6 Telekinetic Movement - Once per short rest, I can use an action to move a Large or",
+				"smaller loose object or one willing creature (other than myself) within 30 ft that I can",
+				"see up to 30 ft in any direction to an unoccupied space. If Tiny object I can move it",
+				" to or from my hand. I can also expend one PsiD to use this action again."
+			]),
+			additional : ["", "", "d6", "d6", "d8", "d8", "d8", "d8", "d8", "d8", "d10", "d10", "d10", "d10", "d10", "d10", "d12", "d12", "d12", "d12"],
+			action : ["reaction","Protective Field"],
+			action : ["action","Telekinetic Movement"],
+			usages : "2x Proficiency Bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus')*2",
+//			usages : [0, 0, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8, 10, 10, 10, 10, 12, 12, 12, 12],
+			recovery : "long rest"
+		},
+		"subclassfeature3.1" : {
+			name : "Regain Psionic Energy dice",
+			source : ["T",43],
+			minlevel : 3,
+			description : desc([
+				"Once per short rest, I can regain one expended PsiD as a bonus action"
+			]),
+			action : ["bonus acttion","regain 1 Psionic Energy die"],
+			usages : 1,
+			recovery : "short rest"
+		},
+		"subclassfeature7.1" : {
+			name : "Telekinetic Adept - Psi-Powered Leap",
+			source : ["T", 43],
+			minlevel : 7,
+			description : desc([
+				"Once per short rest, I can use a bonus action to gain fly speed equal to twice my walking",
+				"speed until end of current turn. I can also expend one PsiD to use this bonus action again."
+			]),
+			action : ["bonus action","Psi-Powered Leap"],
+			recovery : "short rest"
+		},
+		"subclassfeature7.2" : {
+			name : "Telekinetic Adept - Telekinetic Thrust",
+			source : ["T", 43],
+			minlevel : 7,
+			description : desc([
+				"When I deal damage with Psionic Strike, target must pass a Strength save",
+				"(DC 8 + Prof + INT mod) or I can chose to either knock it prone or move it 10 feet in",
+				"any horizontal direction I chose."
+			]),
+		},
+		"subclassfeature10" : {
+			name : "Guarded Mind",
+			source : ["T", 43],
+			minlevel : 10,
+			description : desc([
+				"I gain resistance to Psychic damage. If I am charmed or frightened at the start of my turn,",
+				"I can expend one PsiD to end all effects causing charmed & frightened conditions on me."
+			]),
+			dmgres : ["Psychic"]
+		},
+		"subclassfeature15" : {
+			name : "Bulwark of Force",
+			source : ["T", 44],
+			minlevel : 15,
+			description : desc([
+				"Once per long rest, I can use a bonus action to give half cover to up to my INT mod",
+				"(min 1) creatures within 30 ft (including myself) for 1 minute or I am incapacitated.",
+				"I can also expend one PsiD to use this bonus action again."
+			]),
+			action : ["bonus action",""],
+			recovery : "long rest"
+		},
+		"subclassfeature18" : {
+			name : "Telekinetic Master",
+			source : ["T",44],
+			minlevel : 18,
+			description : desc([
+				"Once per long rest, I can cast Telekinesis (needing no components), using Intelligence",
+				"as my spellcasting ability. While concentrating on this spell, once on each of my turns",
+				"(including the turn I cast it), I can make one weapon attack as a bonus action.",
+				"I can also expend one PsiD to cast it again."
+			]),
+			spellcastingBonus : {
+				name : "Telekinetic Master",
+				spellcastingAbility : 4,
+				spells : ["telekinesis"],
+				selection : ["telekinesis"],
+				//firstCol : "(R)"
+			},
+			spellChanges : {
+				"telekinesis" : {
+					// time : "11 min",
+					changes : "I can cast this spell without using any components."
+				}
+			},
+			action : ["bonus action", "Telekinetic Master weapon attack"],
+			recovery : "long rest"
+		}
+	}
+});
+AddSubClass("fighter", "rune knight", {
+	regExpSearch: /^(?=.*(fighter))(?=.*(rune))(?=.*(knight)).*$/i,
+	subname: "Rune Knight",
+	source: ["T", 44],
+  abilitySave : 3,
+	features: {
+		"subclassfeature3": {
+			name: "Rune Carver",
+			source: ["T", 44],
+			minlevel: 3,
+			description : desc([
+					"I have learned to inscribe magic runes on my gear.",
+					"While wearing or carrying gear inscribed by these runes I gain a passive benefit. Moreover, I may invoke a rune to gain its active benefit, they recharge following a short rest."
+			])
+		},
+    "subclassfeature3.runes" : {
+      name : "Runes",
+      source : ["T",44],
+      minlevel : 3,
+      description : "\n   " + 'Use the "Choose Feature" button above to add a Rune to the third page',
+      addtional : levels.map(function (n){
+        return n < 3 ? "" : (n < 7 ? 2 : n < 10 ? 3 : n < 15 ? 4 : 5) + "known";
+      }),
+      extraname : "Rune",
+			extrachoices : ["Cloud Rune", "Fire Rune", "Frost Rune", "Stone Rune", "Hill Rune (prereq: level 7 fighter)", "Storm Rune (prereq: level 7 fighter)"],
+      extraTimes : levels.map(function (n) {
+        return n < 3 ? 0 : n < 7 ? 2 : n < 10 ? 3 : n < 15 ? 4 : 5;
+      }),
+      "cloud rune" : {
+        name : "Cloud Rune",
+        source : ["T", 44],
+        description : desc([
+					"While I wear an object inscribed with this, I gain a deceptiveness reminiscent of cloud giants",
+					"I always gain advantage on Dexterity (Sleight of Hand) and Charisma (Deception) checks",
+					"As a reaction when I or a target I see get hit by an attack within 30 ft, I can invoke this",
+					"This causes the attack to target another within 30 ft with the same roll (ignore range)"
+				]),
+        action : ["reaction"," (invoke)"],
+        // limfeaname : ["Cloud Rune"],
+        // additional : "invoke",
+        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        recovery : "short rest",
+        advantages : [["Sleight of Hand", true], ["Deception", true]]
+      },
+      "fire rune" : {
+        name : "Fire Rune",
+        source : ["T", 44],
+        description : desc([
+          "While I wear an object inscribed with this, I gain craftmanship reminiscent of fire giants",
+          "I always double my proficiency bonus when making an ability check with a tool",
+          "When I hit a creature with a weapon attack, I can invoke it to summon fiery shackles",
+          "The target takes 2d6 extra fire damage and must make a Str save or be restrained for 1 min",
+          "While restrained, the creature takes 2d6 fire damage at the start of each of its turns",
+          "They can repeat the save at the end of each of their turns, banishing the shackles on a success"
+        ]),
+        // limfeaname : ["Fire Rune"],
+        // additional : "invoke",
+        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        recovery : "short rest",
+        skillstxt : "expertise with all tools I am proficient with",
+				eval : function () { Checkbox('Too Exp', true); },
+				removeeval : function () { Checkbox('Too Exp', false); }
+      },
+      "frost rune" : {
+        name : "Frost Rune",
+        source : ["T", 45],
+        description : desc([
+					"While I wear an object inscribed with this, I gain a stoic calm reminiscent of frost giants",
+					"I always gain advantage on Wisdom (Animal Handling) and Charisma (Intimidation) checks",
+					"As a bonus action, I can invoke this rune to gain +2 to Str & Con checks and saves for 10 mins"
+				]),
+        action : ["bonus action"," (invoke)"],
+        // limfeaname : ["Frost Rune"],
+        // additional : "invoke",
+        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        recovery : "short rest",
+        advantages : [["Animal Handling", true], ["Intimidation", true]]
+      },
+      "stone rune" : {
+        name : "Stone Rune",
+        source : ["T", 45],
+        description : desc([
+					"While I wear an object inscribed with this, I gain insightfulness reminiscent of stone giants",
+					"I always gain adv. on Wisdom (Insight) checks and I gain 120ft darkvision",
+					"As a reaction when a creature I can see ends it turn within 30 ft, I can invoke this rune",
+					"This causes the creature to make a Wisdom save or be charmed by me for 1 minute",
+					"While charmed, it descends into a dreamy stupor, becoming incapacitated and has speed 0",
+					"The creature can repeat the save at the end of each of its turns, breaking free on a success"
+				]),
+        action : ["reaction"," (invoke)"],
+        // limfeaname : ["Stone Rune"],
+        // additional : "invoke",
+        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        recovery : "short rest",
+        advantages : [["Insight", true]],
+        vision : [["Darkvision", "120"]]
+      },
+      "hill rune (prereq: level 7 fighter)" : {
+        name : "Hill Rune",
+        source : ["T", 45],
+        description : desc([
+					"While I wear an object inscribed with this rune, I gain a resilience reminiscent of hill giants",
+					"I always gain advantage on saves against being poisoned and resistance to poison damage",
+					"As a bonus action, I can invoke it to gain resistance to bludg/slash/pierc damage for 1 min"
+				]),
+        action : ["bonus action"," (invoke)"],
+        // limfeaname : ["Hill Rune"],
+        // additional : "invoke",
+        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        recovery : "short rest",
+        dmgres : ["Poison"],
+				prereqeval : function(v) { return classes.known.fighter.level >= 7; },
+				savetxt : { adv_vs : ["poison"] }
+      },
+      "storm rune (prereq: level 7 fighter)" : {
+        name : "Storm Rune",
+        source : ["T", 45],
+        description : desc([
+					"While I wear an object inscribed with this rune, I can glimpse the future like storm giants",
+					"I always gain adv. on Int (Arcana) checks and I can't be surprised while not incapacitated",
+					"As a bonus action, I can invoke it to enter a prophetic state for 1 min or till incapacitated",
+					"While in this state, I can use a reaction to cause a roll to gain advantage or disadvantage",
+					"I can only do this for attacks, saves, and checks of other creatures I can see within 60 ft"
+				]),
+        action : ["bonus action"," (invoke)"],
+        // limfeaname : ["Storm Rune"],
+        // additional : "invoke",
+        usages : [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2],
+        recovery : "short rest",
+        advantages : [["Arcana", true]],
+				prereqeval : function(v) { return classes.known.fighter.level >= 7; },
+        savetxt : {immune : ["surprised"]}
+      }
+    },
+
+		"subclassfeature3.1": {
+			name: "Giant's Might",
+			source : ["T",45],
+			minlevel: 3,
+      description : desc([
+				"As a bonus action, I can imbue myself with giant magic for 1 minute and gain benefits:",
+				" \u2022 Space permitted, I grow to Large size along with everything I'm wearing",
+				" \u2022 Advantage on Strength checks and saves",
+        " \u2022 My unarmed strikes and weapon attacks deal extra damage"
+			]),
+      additional : levels.map(function (n){
+				return n < 3 ? "" : "+1d" + (n < 10 ? 6 : n < 18 ? 8 : 10) + " damage"
+			}),
+			action: ["bonus action",""],
+			usages : "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus');",
+			recovery : "long rest",
+      savetxt : { text : ["Adv. on Str saves in giant might"] },
+      calcChanges : {
+										atkAdd : [
+													function (fields, v) {
+                            v.extradie = function (n) { return n < 10 ? 6 : n < 18 ? 8 : 10}(classes.known.fighter.level);
+															if (v.isMeleeWeapon || v.baseWeaponName == "unarmed strike" ) {
+															fields.Description += (fields.Description ? '; ' : '') + '1d' + v.extradie + " extra damage in giant's might";
+															};
+													}
+											]
+									}
+		},
+		"subclassfeature7": {
+			name: "Runic Shield",
+			source : ["T",45],
+			minlevel: 7,
+			description: desc([
+				"When a creature I see within 60-ft is hit by an attack roll, my runes protect them.",
+        "I can use my reaction to force the attacker to reroll the d20 and use the new roll."
+      ]),
+			action: ["reaction",""],
+			usages : "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus');",
+			recovery : "long rest"
+		},
+		"subclassfeature10": {
+			name: "Great Stature",
+			source : ["T",46],
+			minlevel: 10,
+			description: desc([
+				"When I gain this feature, roll 3d4, accordingly I grow that number of inches.",
+				"Moreover, increase the damage I deal with my Giant's Might feature to 1d8."
+			])
+		},
+		"subclassfeature15": {
+			name: "Master of Runes",
+			source : ["T",46],
+			minlevel: 15,
+			description: desc([
+				"I can invoke my Rune Carver runes twice, instead of just once per short rest."
+			])
+		},
+		"subclassfeature18": {
+			name: "Runic Juggernaut",
+			source : ["T",46],
+			minlevel: 18,
+			description: desc([
+				"Increase the damage dealt with my Giant's Might feature to 1d10.",
+				"In Giant's Might, my size increases to Huge and my reach increases by 5ft."
+			])
+		}
+	}
+}); // rune knight
+
 // Monk Optional Class Features
 CreateClassFeatureVariant("monk", "martial arts", "Choose Monk Weapons", {
 	name : "Dedicated Weapon",
@@ -5141,6 +3215,230 @@ AddFeatureChoice(ClassList.monk.features.ki, true, "Quickened Healing (2 ki poin
 	action : [["action", ""]]
 }, "Ki Enhancement");
 
+
+AddSubClass("monk", "way of mercy", {
+	regExpSearch : /^(?=.*mercy)((?=.*(monk|monastic))|((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior))).*$/i,
+	subname : "Way of Mercy",
+	source : [["T", 49]],
+	features : {
+		"subclassfeature3" : {
+			name : "Implements of Mercy",
+			source : [["T", 49]],
+			minlevel : 3,
+			description : desc([
+				"I gain proficiency with the herbalism kit and the Insight and Medicine skills",
+				'I also gain a special mask, which I often wear when using my subclass features'
+			]),
+			toolProfs : ["Herbalism kit"],
+			skills : ["Insight", "Medicine"],
+			extraname : "Way of Mercy 3",
+			"hand of healing" : {
+				name : "Hand of Healing",
+				source : [["T", 49]],
+				description : function () {
+					var a = [
+						"As an action, I can spend 1 ki point to touch a creature and restore a number of its HP",
+						"When I do Flurry of Blows, I can do this instead of one unarmed strike (no extra ki cost)"
+					];
+					var b = desc(a);
+					var c = desc([a[0], "It also recovers from one disease or the blinded, deafened, paralyzed, poisoned or stunned", a[1]]);
+					var d = desc([a[0],"It also recovers from one disease or the blinded, deafened, paralyzed, poisoned or stunned", "When I do flurry of Blows, I can do this instead of each strike (no extra ki cost)"]);
+					return levels.map(function (n) {
+						return n < 6 ? b : n < 11 ? c : d;
+					});
+				}(),
+				action : [["action", ""]],
+				additional : levels.map(function (n) {
+					return n < 3 ? "" : "1 ki point; heal 1d" + (n < 5 ? 4 : n < 11 ? 6 : n < 17 ? 8 : 10) + " + Wisdom modifier";
+				})
+			},
+			"hand of harm" : {
+				name : "Hand of Harm",
+				source : [["T", 50]],
+				description : function () {
+					var a = [
+						"When I hit a creature with an unarmed strike, I can spend 1 ki point to deal extra damage",
+						"I can apply this extra damage only once per turn"
+					];
+					var b = desc(a);
+					var c = desc([a[0], "I can also subject the target to the poisoned condition until the end of my next turn", a[1]]);
+					var d = desc([a[0], "I can also subject the target to the poisoned condition until the end of my next turn", "When I do Flurry of Blows, I can do this with one unarmed strike (no extra ki cost)",a[1]]);
+					return levels.map(function (n) {
+						return n < 6 ? b : n < 11 ? c : d;
+					});
+				}(),
+
+				additional : levels.map(function (n) {
+					return n < 3 ? "" : "1 ki point; 1d" + (n < 5 ? 4 : n < 11 ? 6 : n < 17 ? 8 : 10) + " necrotic damage";
+				})
+			},
+		autoSelectExtrachoices : [{
+			extrachoice : "hand of healing"
+		}, {
+			extrachoice : "hand of harm"
+		}]
+	},
+	"subclassfeature6" : {
+		name : "Physician's touch",
+		source : [["T", 50]],
+		minlevel : 6,
+		description :  desc([
+			"With hand of healing I can also end: 1 disease, blind., deaf., paralyz., poisoned or stunned",
+			"With hand of harm I can also subject the target to poisoned until the end of my next turn"
+
+		]),
+		action : [["bonus action", ""]]
+	},
+	"subclassfeature11" : {
+		name : "Flurry of Healing and Harm",
+		source : [["T", 50]],
+		minlevel : 11,
+		description : desc([
+			"When I use flurry of blows, each unarmed strike can be a hand of healing at no extra ki cost",
+			"Also, I can use hand of harm without ki with flurry of blows (still only once per turn)"
+		]),
+		extraname : "Way of Mercy 17",
+		"hand of ultimate mercy" : {
+			name : "Hand of Ultimate Mercy",
+			source : [["T", 50]],
+			description : desc([
+				"As an action, I can use 5 ki to touch a creature that died in the last 24 hours",
+				"The creature returns to life with hp equal to 4d10+ Wis modifier",
+				"The creature is cured of blinded, deafened, paralyzed, poisoned or stunned"
+			]),
+			action : [["action", " (5 ki)"]],
+			additional : "5 ki",
+			usages : 1,
+			recovery : "long rest"
+		},
+		autoSelectExtrachoices : [{
+			extrachoice : "hand of ultimate mercy",
+			minlevel : 17
+		}]
+	}
+}
+});
+AddSubClass("monk", "way of the astral self", {
+	regExpSearch : /^(?=.*astral)(?=.*(self|projection|travel))((?=.*(monk|monastic))|((?=.*martial)(?=.*(artist|arts)))|((?=.*spiritual)(?=.*warrior))).*$/i,
+	subname : "Way of the Astral Self",
+	source : ["T", 1],
+	features : {
+		"subclassfeature3" : {
+			name : "Arms of the Astral Self",
+			source : ["T", 1],
+			minlevel : 3,
+			description : "\n   My ki mastery allows me to summon portions of my astral self; See 3rd page notes",
+			action : [["bonus action", "Summon Astral Arms"]],
+			weaponsAdd : ["Astral Arms"],
+			weaponOptions : {
+				regExpSearch : /^(?=.*\bastral\b)(?=.*\barms?\b).*$/i,
+				name : "Astral Arms",
+				source : ["T", 1],
+				ability : 5,
+				type : "Natural",
+				damage : [1, "", typePF ? "Force" : "force"],
+				range : "Melee",
+				astralarms : true,
+				description : "10 ft reach",
+				monkweapon : true,
+				abilitytodamage : true
+			},
+			calcChanges : {
+				atkAdd : [
+					function (fields, v) {
+						if (( v.theWea.astralarms ))  {
+						v.monkdie = function (n) { return n < 5 ? 4 : n < 11 ? 6 : n < 17 ? 8 : 10; }(classes.known.monk.level);
+
+						fields.Description += (fields.Description ? '; ' : '') + 'When summoned, Dex save or 2d' + v.monkdie + ' Force damage to all in 10ft of my choice';
+					};
+					}
+				]},
+			extraname : "Way of the Astral Self 3",
+			"astral arms" : {
+				name : "Astral Arms",
+				source : ["T", 1],
+				description : desc([
+					"As a bonus action, I can summon my astral arms for 10 minutes; I choose their appearance",
+					"While they are summoned, I can use Wisdom instead of Strength for Strength checks/saves",
+					"Can use the arms for unarmed strike with +5 ft reach and can use Wis instead of Str/Dex",
+					"When I summon the arms, all creatures of my choice within 10ft take 2 M.A force damage",
+					"Attacks made with the arms deal force damage",
+				]),
+				additional : levels.map(function (n) {
+					return n < 3 ? "" : "1 ki point"
+				})
+			},
+			autoSelectExtrachoices : [{ extrachoice : "astral arms" }]
+		},
+		"subclassfeature6" : {
+			name : "Visage of the Astral Self",
+			source : ["T", 1],
+			minlevel : 6,
+			description : "\n   I can now also summon the visage of my astral self; See third page notes section",
+			action : [["bonus action", "Summon Astral Arms and/or Visage", "Summon Astral Arms"]],
+			extraname : "Way of the Astral Self 6",
+			"astral visage" : {
+				name : "Astral Visage",
+				source : ["T", 1],
+				description : " [1 ki point]" + desc([
+					"As a bonus action (or when summoning my astral arms), I can summon my astral visage",
+					"It covers my face like a helmet or mask and choose its appearance; It lasts for 10 minutes",
+					"It grants adv. on Insight \u0026 Intimidation, and the ability to see 120 ft in (magical) darkness",
+					"When I speak, I can choose to be heard only by one creature in 60ft, or by all in 300ft"
+				])
+			},
+			autoSelectExtrachoices : [{ extrachoice : "astral visage" }]
+		},
+		"subclassfeature11" : {
+			name : "Body of the Astral Self",
+			source : ["T", 1],
+			minlevel : 11,
+			description : "\n   I can cause my astral body to join my arms and visage; see third page notes",
+			action : [["bonus action", "Summon Astral Arms, Visage, or Complete", "Summon Astral Arms and/or Visage"]],
+			extraname : "Way of the Astral Self 11",
+			"deflect energy" : {
+				name : "Deflect Energy",
+				source : ["T", 1],
+				description : " [if astral body present]" + desc([
+					"As a reaction when I take acid, cold, fire, force, thunder or lightning damage, I can deflect it",
+					"By doing so, the damage is reduced by 1d10 + my Wisdom modifier"
+				])
+			},
+			"empowered arms" : {
+				name : "Empowered Arms",
+				source : ["T", 1],
+				description : " [if astral body present]" + desc([
+					"Once per turn when I hit an astral arms attack, I can add a martial arts die to its damage"
+				])
+			},
+			autoSelectExtrachoices : [
+				{ extrachoice : "deflect energy" },
+				{ extrachoice : "empowered arms" },
+			]
+		},
+		"subclassfeature17" : {
+			name : "Awakened Astral Self",
+			source : ["T", 1],
+			minlevel : 17,
+			description : desc([
+				"I can now summon my complete astral self; See third page notes section"
+			]),
+			action : [["bonus action","Summon Awakened Astral Self"]],
+			extraname : "Way of the Astral Self 17",
+			"awakened astral self" : {
+				name : "Awakened Astral Self",
+				source : ["T", 1],
+				description : " [5 ki points]" + desc([
+					"As a bonus action, I can summon the arms, visage, and body of my astral self for 10 min",
+					"In this awakened state, I have +2 bonus to AC while not incapacitated, and",
+					"When I take the Attack action I can choose to make 3 attacks with my astral arms instead",
+				])
+			},
+			autoSelectExtrachoices : [{ extrachoice : "awakened astral self" }]
+		}
+	}
+});
+
 // Paladin Optional Class Features
 
 AddFeatureChoice(ClassList.paladin.features.spellcasting, true, "Additional Paladin Spells", {
@@ -5177,6 +3475,147 @@ AddFeatureChoice(ClassList.paladin.features["fighting style"], true, "Martial Ve
 	source:["T", 53],
 	description:desc(["When I reach a level that grants the ASI feature I can replace a Fighting Style I know with another one available to paladins"])},
 	"Optional Class Features");
+
+
+AddSubClass("paladin", "oath of glory", {
+    regExpSearch : /^(((?=.*(glory|destined))(((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper))))))).*$/i,
+    subname : "Oath of Glory",
+    source : ["T", 53],
+    features : {
+        "subclassfeature3" : {
+            name : "Channel Divinity: Peerless Athlete",
+            source : ["T", 54],
+            minlevel : 3,
+            description : desc([
+                "As a bonus action, I can gain the following benefits for 10 minutes:",
+                "\u2022 Advantage on my Dex (Acrobatics) and Str (Athletics) checks",
+                "\u2022 I can carry/push/drag/lift twice as much as normal and I add 10ft to long/high jumps"
+            ]),
+            action : ["bonus action", ""],
+            spellcastingExtra : ["guiding bolt", "heroism", "enhance ability", "magic weapon", "haste", "protection from energy", "compulsion", "freedom of movement", "commune", "flame strike"]
+        },
+        "subclassfeature3.1" : {
+            name : "Channel Divinity: Inspiring Smite",
+            source : ["T", 54],
+            minlevel : 3,
+            description : desc([
+                "I can use a bonus action after dealing damage with Divine Strike to grant temporary HP",
+                "I divide 2d8 + paladin level temporary HP across creatures within 30ft, including me"
+            ]),
+            additional : levels.map(function (n) {
+                if (n < 3) return "";
+                return "2d8 + " + n + " temporary HP";
+            }),
+            action : ["bonus action", ""]
+        },
+        "subclassfeature7" : {
+            name : "Aura of Alacrity",
+            source : ["T", 54],
+            minlevel : 7,
+            description : desc([
+                "If I'm not incapacitated, allies starting within range get extra movement for their turn"
+            ]),
+            changeeval : function (v) {
+                var alacritySpd = '+' + (v[1] < 7 ? 0 : 10);
+                SetProf('speed', alacritySpd !== '+0', {allModes : alacritySpd}, "Oath of Glory: Aura of Alacrity");
+            },
+            additional : levels.map(function (n) {
+                if (n < 7) return "";
+                return (n < 18 ? 5 : 10) + "-foot aura; +10ft movement";
+            })
+        },
+        "subclassfeature15" : {
+            name : "Glorious Defense",
+            source : ["T", 54],
+            minlevel : 15,
+            description : desc([
+                "When I or a creature I can see within 10ft is hit, I can use a reaction to give it bonus AC",
+                "The bonus AC is equal to my Charisma modifier (min 1)",
+                "If the attack misses, I can also attack the attacker as long as it's within weapon range"
+            ]),
+            usages : "Charisma modifier per ",
+            usagescalc : "event.value = Math.max(1, What('Cha Mod'));",
+            action : ["reaction", ""],
+            recovery : "long rest"
+        },
+        "subclassfeature20" : {
+            name : "Living Legend",
+            source : ["T", 54],
+            minlevel : 20,
+            description : desc([
+                "As a bonus action, I can gain the following benefits for 1 minute:",
+                "\u2022 I have advantage on Charisma checks",
+                "\u2022 Once per turn, I can cause a missed weapon attack I make to hit instead",
+                "\u2022 If I fail a saving throw, I can use my reaction to reroll it; I must use the new roll"
+            ]),
+            recovery : "long rest",
+            usages : 1,
+            action : ["bonus action", ""],
+            altresource : "SS 5"
+        }
+    }
+});
+AddSubClass("paladin", "oath of the watchers", {
+	regExpSearch : /^(?=.*watchers)((?=.*paladin)|((?=.*(exalted|sacred|holy|divine))(?=.*(knight|fighter|warrior|warlord|trooper)))).*$/i,
+	subname : "Oath of the Watchers",
+	source : [["T", 3]],
+	features : {
+		"subclassfeature3" : {
+			name : "Channel Divinity: Watcher's Will",
+			source : [["T", 4]],
+			minlevel : 3,
+			description : "\n   As an action, Cha mod of creatures I see in 30 ft plus me adv. on Int/Wis/Cha saves for 1 min",
+			action : [["action", ""]],
+			spellcastingExtra : [ "alarm", "detect magic", "see invisibility", "moonbeam", "counterspell", "nondetection", "aura of purity", "banishment", "hold monster", "scrying"]
+		},
+		"subclassfeature3.1" : {
+			name : "Channel Divinity: Abjure the Extraplanar",
+			source : [["T", 4]],
+			minlevel : 3,
+			description : desc([
+				"As an action, celestials, elementals, fey, fiends, and aberrations within 30 ft make a Wis save",
+				"Succeeds if it can't hear me; On fail, turned for 1 minute or until it takes any damage",
+				"Turned: move away, never within 30 ft of me, no reactions or actions other than Dash",
+				"Turned: may Dodge instead of Dash when nowhere to move and unable to escape bonds"
+			]),
+			action : [["action", ""]]
+		},
+		"subclassfeature7" : {
+			name : "Aura of the Sentinel",
+			source : [["T", 4]],
+			minlevel : 7,
+			description : "\n   If I'm not incapacitated, chosen creatures in range and I add my proficiency to Initiative",
+			additional : levels.map(function (n) { return n < 7 ? "" : (n < 18 ? 10 : 30) + "-foot aura"; }),
+			addMod : [{ type : "skill", field : "Init", mod : "Prof", text : "I can add my Proficiency Bonus to initiative rolls." }]
+		},
+		"subclassfeature15" : {
+			name : "Vigilant Rebuke",
+			source : [["T", 4]],
+			minlevel : 15,
+			description : desc([
+				"As a reaction when I or another I can see makes an int/wis/cha save, I can damage the source",
+				"Has to succeed save within 30 ft of me vs. unwanted spell; 2d8 + Cha mod force damage"
+			]),
+			action : [["reaction", ""]]
+		},
+		"subclassfeature20" : {
+			name : "Mortal Bulwark",
+			source : [["T", 4]],
+			minlevel : 20,
+			description : desc([
+				"As a bonus action, I can gain the following benefits for 1 minute: (recharge lvl 5 spell slot)",
+				" \u2022 Truesight out to 120 ft and adv. on attacks vs. celestials, elementals, fey, fiends, aberrations",
+				" \u2022 I can force creatures I hit and damage with an attack to make a Charisma save",
+				"   If failed, the target is banished to its native plane of existence if it's not currently there",
+				"   If successful, the creature can't be banished by this feature for 24 hours"
+			]),
+			recovery : "long rest",
+			usages : 1,
+			action : [["bonus action", ""]],
+			altresource : "SS 5+"
+		}
+	}
+});
 
 // Ranger Optional Class Features
 /*
@@ -5425,259 +3864,382 @@ CreateClassFeatureVariant("ranger", "hide in plain sight", "Nature's Veil", {
 });
 //Beast Master Companions PLACEHOLDER
 if (ClassSubList["ranger-beast master"]) {
-	AddFeatureChoice(ClassSubList["ranger-beast master"].features["subclassfeature3"], true, "Beast of the Land/Sea/Sky", {
-		name : "Beast of the Land/Sea/Sky",
-		source : ["T", 61],
-		description : desc([
-			"My ranger's companion can be a primal beast whose lineage stretches back to the beginning",
-			"This beast of the air or earth takes the form of a regular animal, but has different abilities",
-			"In combat the beast acts during my turn, it can move and use its Reaction on its own",
-			"It can only dodge, unless as a bonus action I  command it to take another action",
-			"I can sacrifice my Attack to make the beast take the Attack Action",
-			"If it dies, I can revive it within 1 hour as an action where I expend a spell slot and touch it",
-			"It then returns to life with all its hit points after 1 minute"
-		]),
-		action : [["bonus action", "Command: Beast of the Land/Sea/Sky"], ["action", "Revive: Beast of the Land/Sea/Sky"]["action", "Attack: Beast of the Land/Sea/Sky"]]
-	}, "Optional Class Features");
+//Add special Beastmaster companions, Beast of Land, Sea, and Sky
+CreatureList["beast of the land"] = {
+	name : "Beast of the Land",
+	source : ["T", 61],
+	size : 3,
+	type : "Beast",
+	subtype : "",
+	alignment : "Unaligned",
+	ac : 13,
+	hp : 5,
+	hd : [1, 8],
+	speed : "40 ft, climb 40 ft",
+	scores : [14, 14, 15, 8, 14, 11],
+	saves : ["", "", "", "", "", ""],
+	senses : "Darkvision 60 ft",
+	passivePerception : 14,
+	languages : "understands the languages of its master (me)",
+	challengeRating : "1/4",
+	proficiencyBonus : 2,
+	attacksAction : 1,
+	attacks : [{
+		name : "Maul",
+		ability : 1,
+		damage : [1, 6, "slashing"],
+		range : "Melee (5 ft)",
+		description : "If used after moving 20 ft straight in the same round, see Charge trait"
+	}],
+	features : [{
+		name : "Primal Rebirth",
+		description : "If the beast has died within the last hour, I can use my action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored."
+	}],
+	traits : [{
+		name : "Charge",
+		description : "If the beast moves at least 20 ft straight toward a target and then hits it with a maul attack on the same turn, the target takes an extra 1d6 slashing damage. If the target is a creature, it must succeed on a Strength saving throw against my spell save DC or be knocked prone."
+	}, {
+		name : "Primal Bond",
+		description : "I can add my proficiency bonus to any ability check or saving throw that the beast makes."
+	}],
+	eval : function(prefix) {
+		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "event.value = (classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1) * 5 + 5;");
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1;");
+	},
+	removeeval : function(prefix) {
+		if (!prefix) return;
+		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "");
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "");
+	}
+};
+CreatureList["beast of the sea"] = {
+	name : "Beast of the Sea",
+	source : ["T", 61],
+	size : 3,
+	type : "Beast",
+	subtype : "",
+	alignment : "Unaligned",
+	ac : 13,
+	hp : 5,
+	hd : [1, 8],
+	speed : "5 ft, swim 60 ft",
+	scores : [14, 14, 15, 8, 14, 11],
+	saves : ["", "", "", "", "", ""],
+	senses : "Darkvision 60 ft",
+	passivePerception : 12,
+	languages : "understands the languages of its master (me)",
+	challengeRating : "1/4",
+	proficiencyBonus : 2,
+	attacksAction : 1,
+	attacks : [{
+		name : "Binding Strike",
+		ability : 1,
+		damage : [1, 6, "pierc./bludgeon"],
+		range : "Melee (5 ft)",
+		description : "On hit, target is grappled (escape DC is spell DC) and beast can't use attack on other target"
+	}],
+	features : [{
+		name : "Primal Rebirth",
+		description : "If the beast has died within the last hour, I can use my action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored."
+	}],
+	traits : [{
+        name : "Amphibious",
+        description : "The beast can breathe both air and water."
+	}, {
+		name : "Primal Bond",
+		description : "I can add my proficiency bonus to any ability check or saving throw that the beast makes."
+	}],
+	eval : function(prefix) {
+		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "event.value = (classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1) * 5 + 5;");
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1;");
+	},
+	removeeval : function(prefix) {
+		if (!prefix) return;
+		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "");
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "");
+	}
+};
+CreatureList["beast of the sky"] = {
+	name : "Beast of the Sky",
+	source : ["T", 61],
+	size : 4,
+	type : "Beast",
+	subtype : "",
+	alignment : "Unaligned",
+	ac : 13,
+	hp : 5,
+	hd : [1, 6],
+	speed : "10 ft, fly 60 ft",
+	scores : [6, 16, 13, 8, 14, 11],
+	saves : ["", "", "", "", "", ""],
+	senses : "Darkvision 60 ft",
+	passivePerception : 12,
+	languages : "understands the languages of its master (me)",
+	challengeRating : "1/4",
+	proficiencyBonus : 2,
+	attacksAction : 1,
+	attacks : [{
+		name : "Shred",
+		ability : 2,
+		damage : [1, 6, "slashing"],
+        range : "Melee (5 ft)"
+	}],
+	features : [{
+		name : "Primal Rebirth",
+		description : "If the beast has died within the last hour, I can use my action to touch it and expend a spell slot of 1st level or higher. The beast returns to life after 1 minute with all its hit points restored."
+	}],
+	traits : [{
+		name : "Flyby",
+		description : "The beast doesn't provoke opportunity attacks when it flies out of an enemy's reach."
+	}, {
+		name : "Primal Bond",
+		description : "I can add my proficiency bonus to any ability check or saving throw that the beast makes."
+	}],
+	eval : function(prefix) {
+		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "event.value = (classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1) * 5 + 5;");
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "event.value = classes.known.ranger ? classes.known.ranger.level : classes.known.rangerua ? classes.known.rangerua.level : 1;");
+	},
+	removeeval : function(prefix) {
+		if (!prefix) return;
+		tDoc.getField(prefix + "Comp.Use.HP.Max").setAction("Calculate", "");
+		tDoc.getField(prefix + "Comp.Use.HD.Level").setAction("Calculate", "");
+	}
+};
 }
 // Add the Ranger alternative class features also to the Revised Ranger, if it exists
 if (ClassList["rangerua"]) {
-	// Make natural explorer into a choice (can't be done by automation because of extrachoices) and add "Deft Explorer" variant option
-	var origNatExpl = ClassList.rangerua.features["natural explorer"];
-	var origNatExplNm = "\x1B[original] " + origNatExpl.name;
-	origNatExpl.choices = [origNatExplNm];
-	origNatExpl.defaultChoice = origNatExplNm.toLowerCase();
-	origNatExpl[origNatExplNm.toLowerCase()] = {
-		name : origNatExpl.name,
-		source : origNatExpl.source,
-		description : origNatExpl.description,
-		extraname : origNatExpl.extraname
-	};
-	origNatExpl.description = '\n   Select ' + origNatExpl.name + ' or a variant using the "Choose Feature" button above';
-	origNatExpl.name = origNatExpl.name + " or a Variant";
-	origNatExpl.resetNatExplExtrachoices = function () {
-		var extraSel = GetFeatureChoice("classes", "rangerua", "natural explorer", true);
-		for (var i = 0; i < extraSel.length; i++) {
-			ClassFeatureOptions(['rangerua', 'natural explorer', extraSel[i], 'extra'], "remove");
-		};
-	};
-	AddFeatureChoice(origNatExpl, false, "Deft Explorer", {
-		name : "Deft Explorer",
-		source : ["UA:CFV", 7],
-		description : '\n   Use the "Choose Feature" button above to add a deft explorer benefit to the third page',
-		eval : function() {
-			var natExplFea = ClassList.rangerua.features["natural explorer"];
-			natExplFea.resetNatExplExtrachoices();
-			natExplFea.extraname = natExplFea["deft explorer"].extraname;
-			natExplFea.extrachoices = natExplFea["deft explorer"].extrachoices;
-			natExplFea.extraTimes = natExplFea["deft explorer"].extraTimes;
-		},
-		removeeval : function(lvlA, choiceA) {
-			var natExplFea = ClassList.rangerua.features["natural explorer"];
-			var newChoice = choiceA[1];
-			natExplFea.resetNatExplExtrachoices();
-			if (newChoice && natExplFea[newChoice]) {
-				natExplFea.extraname = natExplFea[newChoice].extraname ? natExplFea[newChoice].extraname : "";
-				natExplFea.extrachoices = natExplFea[newChoice].extrachoices ? natExplFea[newChoice].extrachoices : "";
-				natExplFea.extraTimes = natExplFea[newChoice].extraTimes ? natExplFea[newChoice].extraTimes : "";
-				if (newChoice.indexOf("\x1B[original]") !== -1) {
-					ClassFeatureOptions(['rangerua', 'natural explorer', "travel benefits", 'extra']);
-				}
-			}
-		},
-		additional : levels.map(function (n) {
-			return n < 6 ? "1 benefit" : (n < 10 ? 2 : 3) + " benefits";
-		}),
-		extraTimes : levels.map(function (n) {
-			return n < 6 ? 1 : n < 10 ? 2 : 3;
-		}),
-		extraname : "Deft Explorer Benefit",
-		extrachoices : ["Canny", "Roving", "Tireless"]
-	});
-	origNatExpl.canny = {
-		name : "Canny",
-		source : ["UA:CFV", 7],
-		description : desc([
-			"I learn two language of my choice, and proficiency and expertise with one skill of my choice",
-			"The skill I have to choose from: Animal Handling, Athletics, History, Insight, Investigation,",
-			"Medicine, Nature, Perception, Stealth, or Survival"
-		]),
-		languageProfs : [2],
-		skillstxt : "Proficiency and expertise with one from Animal Handling, Athletics, History, Insight, Investigation, Medicine, Nature, Perception, Stealth, or Survival"
-	};
-	origNatExpl.roving = {
-		name : "Roving",
-		source : ["UA:CFV", 7],
-		description : "\n   I gain +5 ft walking speed and climbing and swimming speed equal to my walking speed",
-		speed : {
-			walk : { spd : "+5", enc : "+5" },
-			climb : { spd : "walk", enc : "walk" },
-			swim : { spd : "walk", enc : "walk" }
-		}
-	};
-	origNatExpl.tireless = {
-		name : "Tireless",
-		source : ["UA:CFV", 7],
-		description : desc([
-			"Whenever I finish a short or long rest, I reduce my exhaustion level, if any, by 1",
-			"As an action a number of times per day, I can give myself temp HP of 1d10 + Wis mod"
-		]),
-		action : [["action", ""]],
-		usages : "Wisdom modifier per ",
-		usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-		recovery : "long rest"
-	};
-	// Now set the extraname and extrachoices to the current selection
-	var origNatExplCurSel = GetFeatureChoice("classes", "rangerua", "natural explorer", false);
-	if (origNatExplCurSel) {
-		origNatExpl.extraname = origNatExpl[origNatExplCurSel].extraname ? origNatExpl[origNatExplCurSel].extraname : "";
-		origNatExpl.extrachoices = origNatExpl[origNatExplCurSel].extrachoices ? origNatExpl[origNatExplCurSel].extrachoices : "";
-		origNatExpl.extraTimes = origNatExpl[origNatExplCurSel].extraTimes ? origNatExpl[origNatExplCurSel].extraTimes : "";
-	}
-
-	// Make favored enemy into a choice (can't be done by automation because of choices) and add "Favored Foe" variant option
-	var origFavoredEnemy = ClassList.rangerua.features["favored enemy"];
-	// Move some attributes from the main object to the favored enemy choice objects
-	var moveOrigFavoredEnemyAttributes = function () {
-		var attr = ['additional', 'languageProfs', 'calcChanges'];
-		for (var j = 0; j < attr.length; j++) {
-			// Move the attribute to each of the choices
-			for (var i = 0; i < origFavoredEnemy.choices.length; i++) {
-				var aCh = origFavoredEnemy[origFavoredEnemy.choices[i].toLowerCase()];
-				aCh[attr[j]] = origFavoredEnemy[attr[j]];
-			}
-			// Now delete the attributes from the parent object
-			delete origFavoredEnemy[attr[j]];
-		}
-	}();
-	// Now add the alternative class feature as another choice
-	AddFeatureChoice(origFavoredEnemy, false, "[alternative feature] Favored Foe", {
-		name : "Favored Foe",
-		source : ["UA:CFV", 7],
-		description : desc([
-			"I know Hunter's Mark and it doesn't count against the number of spells I can know",
-			"I can cast it a number of times without using a spell slot or requiring concentration",
-			"I can also use a spell slot to cast it as normal, but then it does require concentration"
-		]),
-		spellcastingBonus : {
-			name : "Favored Foe",
-			spells : ["hunter's mark"],
-			selection : ["hunter's mark"],
-			firstCol : "Sp"
-		},
-		usages : "Wisdom modifier per ",
-		usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
-		recovery : "long rest",
-		calcChanges : {
-			spellList : [
-				function(spList, spName, spType) {
-					if (spName == "uaranger" && spType.indexOf("bonus") == -1) {
-						if (!spList.notspells) spList.notspells = [];
-						spList.notspells = spList.notspells.concat(["hunter's mark"]);
-					}
-				}
-			]
-		}
-	});
-
-	// The enhancement option for fighting styles has to be added to each class separately
-	AddFeatureChoice(ClassList.rangerua.features["fighting style"], true, "Martial Versatility", {
-		name : "Martial Versatility",
-		source : ["UA:CFV", 12],
-		description : "\n   Whenever I gain a ranger level, I can swap a fighting style I know for another I'm allowed"
-	}, "Fighting Style Enhancement");
-	AddFeatureChoice(ClassList.rangerua.features.spellcasting, true, "Expanded Spell List", {
-		name : "Expanded Ranger Spell List",
-		source : ["UA:CFV", 7],
-		description : "",
-		calcChanges : {
-			spellList : [
-				function(spList, spName, spType) {
-					// Stop this is not the class' spell list or if this is for a bonus spell entry
-					if (spName !== "rangerua" || spType.indexOf("bonus") !== -1) return;
-					spList.extraspells = spList.extraspells.concat(["aid", "entangle", "searing smite", "gust of wind", "magic weapon", "enhance ability", "warding bond", "blinding smite", "meld into stone", "revivify", "tongues", "death ward", "dominate beast", "awaken", "greater restoration"]);
-				},
-				"This alternative class feature enhancement expands the spells list of the ranger class."
-			]
-		}
-	}, "Ranger Spellcasting Enhancement");
-	AddFeatureChoice(ClassList.rangerua.features.spellcasting, true, "Spell Versatility", {
-		name : "Spell Versatility",
-		source : ["UA:CFV", 8],
-		description : "\n   When I finish a long rest, I can replace a ranger spell I know with another of the same level"
-	}, "Ranger Spellcasting Enhancement");
-	AddFeatureChoice(ClassList.rangerua.features.spellcasting, true, "Spellcasting Focus", {
-		name : "Spellcasting Focus",
-		source : ["UA:CFV", 8],
-		description : "\n   I can use a druidic focus as a spellcasting focus for my ranger spells"
-	}, "Ranger Spellcasting Enhancement");
-	CreateClassFeatureVariant("rangerua", "primeval awareness", "Primal Awareness (bonus spells)", {
-		name : "Primal Awareness",
-		source : ["UA:CFV", 8],
-		description : desc([
-			"I get bonus spells known, which do not count against the number of spells I can know",
-			"In addition, I can cast each once per long rest without expending a spell slot"
-		]),
-		calcChanges : {
-			spellAdd : [
-				function (spellKey, spellObj, spName) {
-					var bonusSpells = ["detect magic", "speak with animals", "beast sense", "locate animals or plants", "speak with plants", "locate creature", "commune with nature"];
-					if (spName == "rangerua" && bonusSpells.indexOf(spellKey) != -1) {
-						spellObj.firstCol = "oncelr";
-						return true;
-					};
-				},
-				"I can cast these spells each once per long rest without expending a spell slot, but also as normal by expending a spell slot."
-			],
-			spellList : [
-				function(spList, spName, spType) {
-					// Remove the bonus spells from the normally selectable list
-					if (spName == "rangerua") {
-						if (!spList.notspells) spList.notspells = [];
-						spList.notspells = spList.notspells.concat(["detect magic", "speak with animals", "beast sense", "locate animals or plants", "speak with plants", "locate creature", "commune with nature"]);
-					}
-				},
-				"I know the following spells, without them counting towards the maximum number of spells I can know: Detect Magic, Speak with Animals, Beast Sense, Locate Animals or Plants, Speak with Plants, Locate Creature, and Commune with Nature."
-			]
-		},
-		changeeval : function() {
-			// as another subclass might override the 'extra' attribute in the CurrentSpells object, add it through an eval
-			if (!CurrentSpells.rangerua) return;
-			var bonusSpells = ["detect magic", "speak with animals", "beast sense", "locate animals or plants", "speak with plants", "locate creature", "commune with nature"];
-			if (!CurrentSpells.rangerua.extra) CurrentSpells.rangerua.extra = [];
-			if (CurrentSpells.rangerua.extra.toString().indexOf(bonusSpells.toString()) == -1) {
-				var newExtra = [];
-				for (var i = 0; i < CurrentSpells.rangerua.extra.length; i++) {
-					var anExtra = CurrentSpells.rangerua.extra[i];
-					if (anExtra && anExtra !== "AddToKnown" && bonusSpells.indexOf(anExtra) == -1) newExtra.push(anExtra);
-				}
-				CurrentSpells.rangerua.extra = newExtra.concat(bonusSpells);
-				CurrentSpells.rangerua.extra[100] = "AddToKnown";
-			}
-		},
-		removeeval : function() {
-			// remove the extra spells
-			if (!CurrentSpells.rangerua || !CurrentSpells.rangerua.extra) return;
-			var bonusSpells = ["detect magic", "speak with animals", "beast sense", "locate animals or plants", "speak with plants", "locate creature", "commune with nature"];
-			if (CurrentSpells.rangerua.extra.toString().indexOf(bonusSpells.toString()) !== -1) {
-				var newExtra = CurrentSpells.rangerua.extra.join("##").replace(bonusSpells.join("##"), "").replace("AddToKnown", "").replace(/#+$/, '');
-				CurrentSpells.rangerua.extra = newExtra.split("##");
-				CurrentSpells.rangerua.extra[100] = "AddToKnown";
-			}
-		}
-	});
-	CreateClassFeatureVariant("rangerua", "hide in plain sight", "Fade Away", {
-		name : "Fade Away",
-		source : ["UA:CFV", 8],
-		description : desc([
-			"As a bonus action, I can become invisible along with any equipment I'm wearing/carrying",
-			"This invisibility lasts until the start of my next turn"
-		]),
-		action : [["bonus action", ""]],
-		usages : 1,
-		recovery : "short rest"
-	});
 }
+
+AddSubClass("ranger", "fey wanderer", {
+	regExpSearch : /^(?=.*fey)(?=.*wanderer).*$/i,
+	subname : "Fey Wanderer",
+	source : ["T", 59],
+	fullname : "Fey Wanderer",
+	features : {
+		"subclassfeature3" : {
+			name : "Dreadful Strikes",
+			source : ["T", 59],
+			minlevel : 3,
+			description : desc(["Once per turn, I can deal extra psychic damage to a creature I hit with a weapon attack"]),
+			additional : levels.map(function (n) {
+				if (n < 3) return "";
+				return "+" + (n < 11 ? "1d4 psychic damage" : "1d6 psychic damage");
+			}),
+			calcChanges : {
+							atkAdd : [
+								function (fields, v) {
+									if (classes.known.ranger && classes.known.ranger.level > 2 && !v.isSpell) {
+										fields.Description += (fields.Description ? '; ' : '') + 'Once per turn +' + (classes.known.ranger.level < 11 ? "1d4 psychic damage" : "1d6 psychic damage");
+									}
+								},
+								"Once per turn, I can have one of my weapon attacks that hit do extra psychic damage."
+							]
+						}
+		},
+		"subclassfeature3.1" : {
+			name : "Fey Wanderer Magic",
+			source : ["T", 59],
+			minlevel : 3,
+			description : desc([
+				"I add a spell to my known spells at level 3, 5, 9, 13, and 17",
+				"These count as ranger spells, but do not count against the number of spells I can know"
+			]),
+			spellcastingExtra : ["charm person", "misty step", "dispel magic", "dimension door", "mislead"],
+			spellcastingExtraApplyNonconform : true
+		},
+		"subclassfeature3.2" : {
+			name : "Otherworldly Glamour",
+			source : ["T", 59],
+			minlevel : 3,
+			description : desc([
+				"I add my Wisdom modifier (minimum of +1) to any Charisma check I make",
+				"I also gain proficiency my choice of Deception, Performance, or Persuasion"
+			]),
+			extraname : "Otherwordly Glamour",
+			extrachoices : ["Deception Proficiency", "Performance Proficiency", "Persuasion Proficiency"],
+			extraTimes : 1,
+				"deception proficiency" : {
+					name : "Deception Proficiency", description : "",
+					source : [["SRD", 13], ["P", 54]],
+					prereqeval : function(v) { return v.skillProfs.indexOf("Deception") !== 0; },
+					skills : ["Deception"]
+				},
+				"performance proficiency" : {
+					name : "Performance Proficiency", description : "",
+					source : [["SRD", 13], ["P", 54]],
+					prereqeval : function(v) { return v.skillProfs.indexOf("Performance") !== 0; },
+					skills : ["Performance"]
+				},
+				"persuasion proficiency" : {
+					name : "Persuasion Proficiency", description : "",
+					source : [["SRD", 13], ["P", 54]],
+					prereqeval : function(v) { return v.skillProfs.indexOf("Persuasion") !== 0; },
+					skills : ["Persuasion"]
+				},
+			addMod :[
+				{type : "skill", field : ["Persuasion"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
+				{type : "skill", field : ["Deception"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
+				{type : "skill", field : ["Performance"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"},
+				{type : "skill", field : ["Intimidation"], mod : "max(Wis|1)", text : "I can add my Wisdom modifier to any Charisma checks"}          
+			],
+		},
+		"subclassfeature7" : {
+			name : "Beguiling Twist",
+			source : ["T", 59],
+			minlevel : 7,
+			description : desc([
+				"I have advantage on saves against being charmed or frightened",
+				"When me or a creature within 120 ft passes a save vs charm / frighten I can use my reaction",
+				"When I do this, I target another creature within 120 ft and force it to make a Wisdom save",
+				"The save is against my spell save DC, and if it fail it's charmed or frightened (my choice)",
+				"This lasts a minute, or until it repeats the save at the end of its turn and succeed"
+			]),
+			savetxt : { adv_vs : ["charmed", "frightened"] },
+			action : [["reaction", ""]],
+		},
+		"subclassfeature11" : {
+			minlevel : 11,
+			name : "Fey Reinforcements",
+			source : ["T", 59],
+			description : desc([
+				"I learn Summon Fey, can cast it once a long rest for free, and without material components",
+				"When I cast the spell, whether with or without using a spell slot, I can choose to change it",
+				"When I do, its duration changes to 1 minute, but it no-longer requires concentration"
+			]),
+			action : [["action", "Fey Reinforcements"]],
+			usages : 1,
+			recovery : "long rest",
+			spellcastingBonus : {
+				name : "Fey Reinforcements",
+				spellcastingAbility : 5,
+				spells : ["summon fey"],
+				selection : ["summon fey"]
+			},
+			spellChanges : {
+				"summon fey" : {
+					components : "V,S",
+					compMaterial : "Using Fey Reinforcements, I can cast Summon Fey without requiring material components.",
+					description : "Summon choice of Fey Spirit; obeys commands after my turn; dissapears at 0 hp",
+					descriptionFull : "You call forth a fey spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Fey Spirit stat block. When you cast the spell, choose a mood: Fuming, Mirthful, or Tricksy. The creature resembles a fey creature of your choice marked by the chosen mood, which determines one of the traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends." + "\n   " + "The creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger." + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the stat block.",
+					changes : "Using Fey Reinforcements, I can cast Summon Fey without requiring material components.",
+				}
+			},
+		},
+		"subclassfeature15" : {
+			name : "Misty Wanderer",
+			source : ["T", 59],
+			minlevel : 15,
+			description : desc([
+				"I can cast Misty Step Wis mod times per long rest without using a spell slot",
+				"Also, whenever I cast Misty Step I can choose to bring a willing creature within 5 ft with me"
+			]),
+			action : [["bonus action", ""]],
+			usages : "Wisdom modifier per ",
+			usagescalc : "event.value = Math.max(1, What('Wis Mod'));",
+			recovery : "long rest",
+		},
+	}
+});
+AddSubClass("ranger", "swarmkeeper", {
+	regExpSearch : /swarmkeeper/i,
+	subname : "Swarmkeeper",
+	source : ["T", 59],
+	attacks : [1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+	fullname : "Swarmkeeper",
+	features : {
+		"subclassfeature3" : {
+			name : "Swarmkeeper Magic",
+			source : ["T", 60],
+			minlevel : 3,
+			description : desc([
+				"I learn Mage Hand; When I cast it, the hand takes the form of swarming nature spirits",
+				"I get bonus spells known, which do not count against the number of spells I can know"
+			]),
+			spellcastingBonus : {
+				name : "Swarmkeeper Magic",
+				spells : ["mage hand"],
+				selection : ["mage hand"],
+				firstCol : "atwill"
+			},
+			spellcastingExtra : ["faerie fire", "web", "gaseous form", "arcane eye", "insect plague"],
+			spellcastingExtraApplyNonconform : true
+		},
+		"subclassfeature3.1" : {
+			name : "Gathered Swarm",
+			source : ["T", 60],
+			minlevel : 3,
+			description : desc([
+				"I constantly have a swarm of fey spirits crawling in my space, see 3rd page for effects"
+			]),
+			additional : levels.map(function (n) {
+				return n < 3 ? "" : "+1" + (n < 11 ? "d6" : "d8") + " piercing dmg";
+			}),
+			extraname : "Swarmkeeper 3",
+			"gathered swarm" : {
+				name : "Gathered Swarm",
+				source : ["T", 60],
+				minlevel : 3,
+				description : desc([
+					"Once per turn when I hit a creature with an attack, choose one effect:",
+					"The swarm causes the target to takes extra piercing damage, starting at 1d6",
+					"The target makes a Str. save or is moved by the swarm 15ft horizontally in any direction",
+					"The swarm moves me 5ft horizontally in any direction"
+				])
+			},
+			autoSelectExtrachoices : [{
+				extrachoice : "gathered swarm",
+				minlevel : 14
+			}],
+			calcChanges : {
+				atkAdd : [
+					function (fields, v) {
+						if (( classes.known.ranger && classes.known.ranger.level > 2 && !v.isDC ))  {
+							v.extradie = function (n) { return n < 11 ? "1d6" : "1d8"; }(classes.known.ranger.level);
+						fields.Description += (fields.Description ? '; ' : '') + 'Once per turn, +' + v.extradie + ' piercing damage ';
+					};
+					}
+				]}
+		},
+		"subclassfeature7" : {
+			name : "Writhing Tide",
+			source : ["T", 60],
+			minlevel : 7,
+			description : desc([
+				"I can condense my swarm into a mass that lifts me up.",
+				"As a bonus action, I gain a 10 ft fly speed and I can hover",
+			]),
+			action : [["bonus action", ""]],
+			usages : "Proficiency Bonus per ",
+			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
+			recovery : "long rest",
+		},
+		"subclassfeature11" : {
+			name : "Mighty Swarm",
+			source : ["T", 60],
+			minlevel : 11,
+			description : desc([
+				"My Gathered Swarm grows mightier in the following ways:",
+				"The damage from gathered swarm increases to 1d8",
+				"I can also cause a creature that fails its save against being moved to fall prone",
+				"When I am moved by the swarm, I gain half cover until the start of my next turn"
+			])
+		},
+		"subclassfeature15" : {
+			name : "Swarming Dispersal",
+			source : ["T", 60],
+			minlevel : 15,
+			description : desc([
+				"I can discorporate into my swarm, avoiding danger:",
+				"As a reaction to taking damage, I can vanish into the swarm and teleport 30ft",
+				"to an unoccupied space I can see, and I gain resistance to the triggering damage"
+			]),
+			action : [["reaction", ""]],
+			usages : "Proficiency Bonus per ",
+			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
+			recovery : "long rest",
+		}
+	}
+});
 
 // Rogue Optional Class Features
 AddFeatureChoice(ClassList.rogue.features["cunning action"], true, "Steady Aim", {
@@ -5691,6 +4253,225 @@ AddFeatureChoice(ClassList.rogue.features["cunning action"], true, "Steady Aim",
 	action : [["bonus action", ""]],
 					  
 }, "Optional Class Features");
+
+AddSubClass("rogue", "phantom", {
+	regExpSearch : /^(?=.*rogue)(?=.*phantom).*$/i,
+	subname : "Phantom",
+	source : ["T",62],
+	features : {
+		"subclassfeature3" : {
+			name : "Whispers of the Dead",
+			source : ["T", 62],
+			minlevel : 3,
+			description : desc([
+			"Whenever I finish a short or long rest, I gain one skill or tool proficiency of my choice.",
+			"This proficiency lasts until I use this feature again"
+			])
+		},
+		"subclassfeature3.1" : {
+			name : "Wails from the Grave",
+			source : ["T",62],
+			minlevel : 3,
+			description : desc([
+			"Immediately after I deal Sneak Attack damage on my turn, I can target a second",
+			"creature that I can see within 30 ft of the first creature.  I roll half the number of",
+			"Sneak Attack dice for my level \(round up\). and the second creature takes psychic",
+			"damage equal to the roll's total.",
+			"I can use this feature a number of times equal to my proficiency bonus and regain",
+			"all expended uses when I finish a long rest."
+			]),
+			usages : "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus');",
+			recovery : "long rest"
+		},
+		"subclassfeature9" : {
+			name : "Tokens of the Departed",
+			source : ["T", 63],
+			minlevel : 9,
+			description : desc([
+			"As a reaction when a creature I can see dies within 30 ft of me, I get a Tiny trinket,",
+			"a soul trinket. DM chooses the trinket's form or have me roll on the Trinkets table",
+			"in the Player's Handbook.",
+			"I can have a max number of soul trinkets equal to my proficiency bonus, and I cannot",
+			"create a new one while at my max.",			
+			"While the soul trinket is on my person, I have advantage on death saving throws", 
+			"and Constitution saving throws.",
+			"When I deal Sneak Attack damage on my turn, I can destroy a soul trinket and",
+			"immediately use Wail of the Grave feature without expending a use of that feature.",
+			"As an action, I can destroy one of my soul trinkets, no matter where it's located.",
+			"When I do, I can ask the spirit associated with the trinket one question.  The spirit",
+			"appears and answers in a language it knew in life.  It doesn't have to be truthful and",
+			"it answers as concisely as possible before departing. It knows only what it knew in life."
+			]),
+			action : [["reaction","create a soul trinket"],["action","destroy a soul trinket"]]
+		},
+		"subclassfeature13" : {
+			name : "Ghost Walk",
+			source : ["T", 63],
+			minlevel : 13,
+			description : desc([
+			"As a bonus action, I assume a spectral form.  While in this form, I have a fly speed",
+			"of 10 ft, can hover, and attack rolls have disadvantage against me. I can move through",
+			"creatures and objects as if difficult terrain; I take 1d10 force damage if I end my",
+			"turn inside a creature or an object.",
+			"I stay in this form for 10 minutes or until I end it as a bonus action. To use this",
+			"feature again, I must finish a long rest or destroy a soul trinket as part of the",
+			"bonus action to activate Ghost Walk."
+			]),
+			usages : "destroy soul trinket or 1x per ",
+			recovery : "long rest",
+			action : ["bonus action","begin/end Ghost Walk"]
+		},
+		"subclassfeature17" : {
+			name : "Death's Friend",
+			source : ["T",63],
+			minlevel : 17,
+			description : desc([
+			"\u25C6 When I use my Wails from the Grave feature, I can now deal the psychic damage",
+			"to both the first and second creature.",
+			"\u25C6 I get a soul trinket at the end of a long rest as spirits of the dead are",
+			"drawn to me."
+			])
+		}
+	}
+});
+AddSubClass( // this is the function you will be calling to add the variant
+
+	"rogue", // Parent Class object name; Required; This has to be the exact name of the class of which you are adding a subclass. Look for the name of the class in the ClassList variable. For the default 12 classes these names are: "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", and "wizard"
+
+	"soulknife", // Object name; Required; The name the entry in the ClassSubList will have. This can be anything, it is just something that the sheet uses to reference the new entry and it will never be printed anywhere
+
+	{ // don't forget this opening bracket
+
+		regExpSearch : /^(?=.*soul)(?=.*knife).*$/i, //required; regular expression of what to look for (i.e. now it looks for any entry that has both the words "special" and "me" in it, disregarding capitalization). If this looks too complicated, just write: /specialme/i
+
+		subname : "Soulknife", //required; the name of the subclass
+
+		source : ["T", 63], //required; the source and the page number. "HB" stands for homebrew. See the "Complete SourceList" for an overview of sources that are already defined. Or define a new source using the "Homebrew Syntax - SourceList.js". // This can be an array of arrays to indicate the things appears in multiple sources. For example, if something appears on page 7 of the Elemental Evil Player's Companion and on page 115 of the Sword Coast Adventure Guide, use the following: [["E", 7], ["S", 115]]
+
+		// after defining the above three, you don't need to define anything more, but you can. Defining more stuff will overwrite the entries as they are given in the ClassList. So if you do not need something to be different than the basics of the class (for example, you subclass uses the same spellcasting ability), then you don't need to define it again.
+		// For the syntax of how to define more stuff, look at the ClassList (see "Homebrew Syntax - ClassList.js"). You can define all the same stuff in the same way. The below are a couple of examples:
+
+		fullname : "Soulknife Rogue", //if no fullname is defined it will be automatically generated as "Class Name (Subclass name)". In this example that would be: "MyClass (Path of SpecialMe)"
+
+		abilitySave : 2, //overwrites the abilitySave that was defined in the ClassList
+		abilitySaveAlt : 4,//overwrites the abilitySaveAlt that was defined in the ClassList
+		spellcastingFactor : 6, //overwrites the spellcastingFactor that was defined in the ClassList
+
+		features : { //unlike the other entries, "features" will not delete all the features from the ClassList, but will add to the features in the ClassList. For this to work properly, the feature object has to be named "subclassfeatureX" and not something appropriate for the feature. The below are the features of the purple Dragon Knight
+
+			"subclassfeature3" : { // has to start with "subclassfeature" followed by a number. Note that the name has to be unique for this subclass, but it can be the same name as one of the features of the class in the ClassList variable. If you use the same name as a feature in the ClassList variable, it will be overwritten with this entry
+				name : "Psionic Power",
+				source : ["T", 64],
+				minlevel : 3,
+                description : desc([ 
+                                        "I have twice my proficiency bonus of Psionic Energy dice that start as d6's.They fuel",
+                                        "various psionic powers, and I can't use a power that needs a psionic die if I don't",
+                                        "have any left. The die goes up as you gain levels: at 5th (d8), 11th (d10), 17th (d12).",
+                                        "Psi-Bolstered Knack. If I fail an ability check using a skill or tool that I'm",
+                                        "proficient with, roll one Psionic Energy die and add the number to the check.",
+                                        "You expend the die only if the roll succeeds.",
+                                        "Psychic Whispers. Establish a telepathic link between yourself and others. As an action",
+                                        "choose one or more creatures you can see, up to a number of creatures equal to your",
+                                        "proficiency bonus. Roll one Psionic energy die for a number of hours equal to the",
+                                        "number rolled, you can telepathically speak to each other. Sending or recieving a msg",
+                                        "(no action needed) requires you to be within 1 mile of each other. The connection can",
+                                        "be ended at any time by any member. No action req.",
+                                        "The first time you use this power after each long rest, you don't expend the Energy die",
+                                        "All other times you use the power, you expend the die."
+                                        ]),
+				additional : ["", "", "d6", "d6", "d8", "d8", "d8", "d8", "d8", "d9", "d10", "d10", "d10", "d10", "d10", "d10", "d12", "d12", "d12", "d12"],
+				action : ["action", "Psychic Whispers"],
+			},
+			"subclassfeature3.1" : {
+				name : "Psychic Blades",
+				source : ["T", 64],
+				minlevel : 3,
+                description :  desc([
+                                        "You manifest a Psychic Blade in your free hand and make an attack with that blade.",
+                                        "It is a simple melee weapon with finesse and thrown properties; 60ft thrown range,", 
+                                        "and no long range. On a hit it deals 1d6 + STR/DEX. The blade vanishes after it hits",
+                                        "or misses its target when thrown and leaves no mark on its target if it deals damage."
+                                        
+                                    ]),
+            weaponprofs : [true, false, ["psychic blade", "psychic blade bonus"]],
+            weaponsAdd : ["Psychic Blade", "Psychic Blade Bonus"],
+			weaponOptions : [{
+				regExpSearch : /^(?=.*psychic)(?=.*blade).*$/i,
+				name : "Psychic Blade",
+				ability : 2,
+				type : "Simple",
+				damage : [1, 6, "psychic"],
+				range : "Melee, 60/0 ft",
+				description : "Finesse, light, thrown",
+				abilitytodamage : true,
+				isSoulknifePsychicBlade : true
+            }],
+            },
+            "subclassfeature3.2" : {
+				name : "Psychic Blades Bonus",
+				source : ["T", 64],
+                minlevel : 3,
+                description : desc([
+                    "After you attack with the blade, you can make a melee or ranged attack with a second",
+                    "psychic blade as a bonus action on the same turn, provided your other hand is free to",
+                    "create it. The damage die of this bonus attack is 1d4, instead of 1d6."
+				]),
+				action : ["bonus action", "Psychic Blades Offhand"],
+			    weaponOptions : [{
+				regExpSearch : /^(?=.*psychic)(?=.*blade)(?=.*bonus).*$/i,
+				name : "Psychic Blade Bonus",
+				ability : 2,
+				type : "Simple",
+				damage : [1, 4, "psychic"],
+				range : "Melee, 60/0 ft",
+				description : "Finesse, light, thrown",
+				abilitytodamage : true,
+				isSoulknifePsychicBlade : true
+            }],
+			},
+			"subclassfeature9" : {
+				name : "Soul Blades",
+				source : ["T", 65],
+				minlevel : 9,
+                description : desc([
+                              "You have the following powers that use your Psionic Energy dice.", 
+                              "Homing Strikes. If you maiss an attack with Psychic Blades, you can roll one Psionic",
+                              "Energy and add the number to the attack roll. You only expend the die if the attack hits.",
+                              "Psychic Teleportation. As a bonus action, manifest a Psychic Blade, expend one Psionic",
+                              "Energy die. Throw the blade at an unoccupied space up to a number of feet away",
+                              "equal to 10 times the number rolled to teleport to that space, and the blade vanishes."
+							]),
+							action : ["bonus action", "Psychic Teleportation"],
+			},
+			"subclassfeature13" : {
+				name : "Psychic Veil",
+				source : ["T", 65],
+				minlevel : 13,
+                description : desc([
+                              "As an action, you any anything you are wearing or carrying becomes invisible, for 1 hr", 
+                              "or until you dismiss this effect (no action required). This invisiblity ends immediately",
+                              "after you deal damage to a creature or you force a creature to make a saving throw.",
+                              "Once you use this feature, you can't do so again until you finish a long rest, unless you",
+                              "expend a Psionic Energy die to use this feature again."
+							  ]),
+							  action : ["action", "Psychic Veil"],
+            },
+            "subclassfeature17" : {
+				name : "Rend Mind",
+				source : ["T", 65],
+				minlevel : 17,
+                description : desc([
+                              "When you use your Psychic Blades to deal Sneak Attack damage to a creature, you can", 
+                              "force the target to make a WIS save (DC 8 + prof + DEX). The target is stunned for",
+                              "1 min on a failed save. The save can be repeated at the end of each of their turns.",
+                              "Once you use this feature, you can't do so again until you finish a long rest, unless you",
+                              "expend a Psionic Energy die to use this feature again."
+                              ]),
+			},
+		}
+	}
+);
 
 // Sorcerer Optional Class Features
 AddFeatureChoice(ClassList.sorcerer.features.spellcasting, true, "Additional Sorcerer Spells", {
@@ -5735,6 +4516,204 @@ AddFeatureChoice(ClassList.sorcerer.features["metamagic"], true, "Magical Guidan
 	])
 });
 
+AddSubClass("sorcerer", "aberrant mind", { //incomplete - psionic spells needs work
+	regExpSearch : /^(?=.*aberrant)(?=.*mind).*$/i,
+	subname : "Aberrant Mind",
+	source : ["T", 1],
+	features : {
+		"subclassfeature1" : {
+			name : "Telepathic Speech",
+			source : ["T", 1],
+			minlevel : 1,
+			description : desc([
+				"As a bonus action, I can telepathic link myself with a creature within 30 ft that I can see",
+				"The target and I can telepathically communicate; We must share a language to be understood",
+				"and to communicate we must be within a number of miles equal to my Cha mod (min 1 mile)",
+				"The communication ends early if I am incapacitated, I die or if I use this feature again"
+			]),
+			action : [["bonus action", ""]],
+			additional : levels.map(function (n) {
+				return (n) + " minutes";
+			})
+		},
+		"subclassfeature1.1" : {
+			name : "Psionic Spells",
+			source : ["T", 1],
+			minlevel : 1,
+			description : desc([
+				"I learn additional spells, which do not count towards the number of spell I can know",
+				"When I level up I can replace one of these spells with another of the same level",
+				"and from the div. or ench. schools from the wizard, sorcerer or warlock lists."
+			]),
+			spellcastingBonus : { // Need to find a way to add the base psionic spells to the spells from the class and school list
+				name : "Psionic Spells",
+				extraspells : ["mind sliver", "arms of hadar", "dissonant whispers", "calm emotions", "detect thoughts", "hunger of hadar", "sending", "evard's black tentacles", "summon abberation", "rary's telepathic bond", "telekinesis"],
+				"class" : ["sorcerer", "warlock", "wizard"],
+				school : ["Ench", "Div"],
+				selection : ["mind sliver", "arms of hadar", "dissonant whispers", "calm emotions", "detect thoughts", "hunger of hadar", "sending", "evard's black tentacles", "summon abberation", "rary's telepathic bond", "telekinesis"],
+				firstCol : "SP",
+				level : [0,5],
+				times : [3,3,5,5,7,7,9,9,11,11,11,11,11,11,11,11,11,11,11,11]
+			}
+		},
+		"subclassfeature6" : {
+			name : "Psionic Sorcery",
+			source : ["T", 2],
+			minlevel : 6,
+			description : desc([
+				"I can expend sorcery points instead of a spell slot to cast a spell from my Psionic Spells",
+				"This costs the spell's level in sorcery points, but the spell requires no other components",
+				"unless the material components are consumed by the spell."
+			])
+		},
+		"subclassfeature6.1" : {
+			name : "Psychic Defenses",
+			source : ["T", 2],
+			minlevel : 6,
+			description : "\n   I gain resistance to psychic damage and adv. on saves vs. being charmed or frightened",
+			dmgres : ["Psychic"],
+			savetxt : { adv_vs : ["charmed", "frightened"] }
+		},
+		"subclassfeature14" : {
+			name : "Revelation in Flesh",
+			source : ["T", 2],
+			minlevel : 14,
+			description : desc([
+				"As a bonus action, I can expend 1 or more sorcery points to transform for 10 minutes",
+				"For each sorcery point used, I gain one of the following benefits of my choice:",
+				"\u2022 I gain a swimming speed equal to my walking speed and the ability to breathe water",
+				"\u2022 I gain a flying speed equal to my walking speed and I can hover",
+				"\u2022 I can move, with equipment, through any space as narrow as 1 inch without squeezing",
+				"  I can spend 5 ft of movement to escape form a grapple or from nonmagical restraints",
+				"\u2022 I can see any invisible creatures within 60 ft of me not behind total cover"
+			]),
+			action : [["bonus action", ""]],
+			additional : "1+ sorcery points"
+		},
+		"subclassfeature18" : {
+			name : "Warping Implosion",
+			source : ["T", 2],
+			minlevel : 18,
+			description : desc([
+				"As an action, I can teleport to an unoccupied space i can see within 120ft",
+				"Creatures within 30ft of the space I left must make a strength save or take",
+				"3d10 force damage and be pulled to the nearest unoccupied space from where I left",
+				"On a successful save, a creature takes half damage and isn't pulled"
+			]),
+			action : [["action", ""]],
+			recovery : "long rest",
+			usages : 1,
+			altResource : "5 SP"
+		}
+	}
+});
+AddSubClass("sorcerer", "clockwork soul", { //incomplete - clockwork magic needs work
+	regExpSearch : /^((?=.*(sorcerer|witch))(?=.*mechanus)|(?=.*clockwork)(?=.*soul)).*$/i,
+	subname : "Clockwork Soul",
+	source : [["T", 4]],
+	fullname : "Clockwork Soul",
+	features : {
+		"subclassfeature1" : {
+			name : "Clockwork Magic",
+			source : [["T", 4]],
+			minlevel : 1,
+			description : desc([
+				"I learn additional spells, which do not count towards the number of spell I can know",
+				"When I level up I can replace one of these spells with another of the same level",
+				"and from the abj. or trans. schools from the wizard, sorcerer or warlock lists."
+			]),
+			spellcastingBonus : { // Need to find a way to add the base clockwork spells to the spells from the class and school list
+				name : "Clockwork Magic",
+				extraspells : ["alarm", "protection from evil and good", "aid", "lesser restoration", "dispel magic", "protection from energy", "freedom of movement", "summon construct", "greater restoration", "wall of force"],
+				"class" : ["sorcerer", "warlock", "wizard"],
+				school : ["Abjur", "Trans"],
+				selection : ["alarm", "protection from evil and good", "aid", "lesser restoration", "dispel magic", "protection from energy", "freedom of movement", "summon construct", "greater restoration", "wall of force"],
+				firstCol : "markedbox",
+				level : [1,5],
+				times : [2,2,4,4,6,6,8,8,10,10,10,10,10,10,10,10,10,10,10,10]
+			}
+		},
+		"subclassfeature1.1" : {
+			name : "Restore Balance",
+			source : [["T", 4]],
+			minlevel : 1,
+			description : desc([
+				"As a reaction when a creature I can see in 60 ft is about to roll a d20 with adv./disadv.,",
+				"I can prevent that roll from being affected by advantage and disadvantage."
+			]),
+			usages : "Charisma modifier per ",
+			usagescalc : "event.value = Number(What('Proficiency Bonus'));",
+			recovery : "long rest",
+			action : [["reaction", ""]],
+
+			extraLimitedFeatures : [{
+				name : "Restore Balance",
+				usages : "Proficiency Bonus per ",
+				recovery : "long rest",
+				usagescalc : "event.value = Number(What('Proficiency Bonus'));"
+			}]
+		},
+		"subclassfeature6" : {
+			name : "Bulwark of Law",
+			source : [["T", 4]],
+			minlevel : 6,
+			description : desc([
+				"As an action, I can imbue a creature I can see within 30 ft with a magical ward",
+				"I grant it a number of d8s equal to the number of sorcery points I expend when I do this",
+				"When it takes damage, it can use its reaction to spend and roll any number of those dice",
+				"The dice roll reduces the damage; The ward lasts until I finish a long rest or do this again"
+			]),
+			additional : "1-5 sorcery points; 1d8 per point",
+			action : [["action", ""]]
+		},
+		"subclassfeature14" : {
+			name : "Trance of Order",
+			source : [["T", 4]],
+			minlevel : 14,
+			description : desc([
+				"As a bonus action, I can enter a state of clockwork consciousness for 1 minute",
+				"While in this state, attack rolls against me can't benefit from advantage",
+				"Also, I can then treat a d20 roll below 9 as a 10 for my attack rolls, checks, and saves",
+				"I can do this once per long rest, or by expending a 5 sorcery points (5 SP)"
+			]),
+			action : [["bonus action", ""]],
+			usages : 1,
+			recovery : "long rest",
+			altResource : "5 SP",
+
+			extraLimitedFeatures : [{
+				name : "Trance of Order",
+				usages : 1,
+				recovery : "long rest",
+			}]
+		},
+		"subclassfeature18" : {
+			name : "Clockwork Cavalcade",
+			source : [["T", 5]],
+			minlevel : 18,
+			description : desc([
+				"As an action, I can call spirits to bring balance in a 30-ft cube originating from me",
+				"Inside the cube, the intangible spirits do all the following before vanishing:",
+				" \u2022 Restore up to 100 HP, divided among the creatures in the cube as I choose",
+				" \u2022 Repair all damaged objects entirely in the cube",
+				" \u2022 End spells of my choice of 6th-level or lower on objects or creatures in the cube",
+				"I can do this once per long rest, or by expending a 7 sorcery points (7 SP)"
+			]),
+			action : [["action", ""]],
+			usages : 1,
+			recovery : "long rest",
+			altResource : "7 SP",
+
+			extraLimitedFeatures : [{
+				name : "Clockwork Cavalcade",
+				usages : 1,
+				recovery : "long rest",
+			}]
+
+		}
+	}
+});
+
 // Warlock Optional Class Features
 AddFeatureChoice(ClassList.warlock.features["pact magic"], true, "Additional Warlock Spells", {
 	name : "Additional Warlock Spells",
@@ -5749,11 +4728,6 @@ AddFeatureChoice(ClassList.warlock.features["pact magic"], true, "Additional War
 			},
 			"This optional class feature expands the spells list of the warlock class." ] } },
 		"Optional Class Features");
-AddFeatureChoice(ClassList.warlock.features.spellcasting,true,"Eldritch Versatility",{
-	name:"Eldritch Versatility",
-	source:["T",70],
-	description:desc(["When I reach a level that grants the ASI feature I can do one of the following","• Replace one cantrip I learned from this class's Spellcasting feature with another cantrip from the sorcerer spell list","• Replace the Pact Boon options I chose with a different one available to me"],"• If I am 12th or higher I can replace one spell from my Mystic Arcanum with another warlock spell of the same level")},
-	"Optional Class Features");
 AddFeatureChoice(ClassList.warlock.features["pact boon"], false, "pact of the talisman", {
 	name : "Pact of the Talisman",
 	source : ["T",70],
@@ -5766,6 +4740,11 @@ AddFeatureChoice(ClassList.warlock.features["pact boon"], false, "pact of the ta
 		"This ceremony destroys the previous amulet and can be done during a short or long rest"
 	])
 });
+AddFeatureChoice(ClassList.warlock.features.spellcasting,true,"Eldritch Versatility",{
+	name:"Eldritch Versatility",
+	source:["T",70],
+	description:desc(["When I reach a level that grants the ASI feature I can do one of the following","• Replace one cantrip I learned from this class's Spellcasting feature with another cantrip from the sorcerer spell list","• Replace the Pact Boon options I chose with a different one available to me"],"• If I am 12th or higher I can replace one spell from my Mystic Arcanum with another warlock spell of the same level")},
+	"Optional Class Features");
 AddFeatureChoice(ClassList.warlock.features["eldritch invocations"], true, "Bond of the Talisman (prereq: level 12 warlock, Pact of the Talisman)", {
 	name : "Bond of the Talisman",
 	source : ["T",70],
@@ -5909,6 +4888,296 @@ AddFeatureChoice(ClassList.warlock.features["eldritch invocations"], true, "Undy
 
 });
 
+AddSubClass("warlock", "the fathomless", {
+	regExpSearch : /^(?=.*warlock)(?=.*fathomless).*$/i,
+	subname : "The Fathomless",
+	source : ["T",72],
+	features : {
+		"subclassfeature1" : {
+			name : "Tentacle of the Deep",
+			source : ["T",72],
+			minlevel : 1,
+			description : desc([
+			"Bonus action to create a 10 foot-long tentacle within 60 feet.",
+			"Can attack with it when created and when I use a bonus action to move it 30'",
+			"Melee spell attack that does 1d8 cold dmg and -10 to its speed.",
+			"Tentacle lasts for 1 minute and can be summoned a number of times equal to my","Proficiency bonus per long rest"
+			]),
+			action : ["bonus action","summon/move tentacle"],
+			usages : "Prof. Bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus');",
+			recovery : "long rest"
+		},
+		"subclassfeature1.1" : {
+			name : "Expanded Spell List",
+			source : ["T",72],
+			minlevel : 1,
+			spellcastingExtra : ["create or destroy water", "thunderwave", "gust of wind", "silence", "lightning bolt", "sleet storm", "control water", "summon elemental", "bigby's hand", "cone of cold"],
+			description : desc([
+			"My patron grants me extra spells I can choose from. Water only for",
+			"Summon Elemental and Bigby's Hand appears as a tentacle."
+			]),
+		},
+		"subclassfeature1.2" : {
+			name : "Gift of the Sea",
+			source : ["T",72],
+			minlevel : 1,
+			description : desc([
+			"I gain a swim speed of 40' and can breathe underwater."
+			]),
+		},
+		"subclassfeature6" : {
+			name : "Oceanic Soul",
+			minlevel : 6,
+			source : ["T",73],
+			description : desc ([
+			"I gain resistance to cold damage.  In addition, while completely",
+			"submerged under water, othe submerged creatures understand me."
+			]),
+			dmgres : ["Cold"]
+		},
+		"subclassfeature6.1" : {
+			name : "Guardian Coil",
+			minlevel : 6,
+			source : ["T",73],
+			description : desc([
+			"With Tentacle of the Deep summoned, reaction when me or any",
+			"creature that I see within 10 feet of it to reduce dmg by 1d8",
+			"This increases to 2d8 at level 10."
+			]),
+			/* action : ["reaction","reduce dmg by 1d8"], */
+		},
+		"subclassfeature10" : {
+			name : "Grasping Tentacles",
+			source : ["T",73],
+			minlevel : 10,
+			description : desc([
+			"I learn Evard's Black Tentacles spell, it counts as a Warlock spell",
+			"but doesn't count against number of spells known.  Can cast it once",
+			"per long rest without using a spell slot",
+			"I gain temporary hit points equal to my Warlock level and damage",
+			"doesn't break concentration on this spell"
+			]),
+			spellcastingBonus : {
+			name: "Grasping Tentacles",
+			spells: ["evard's black tentacles"],
+			selection: ["evard's black tentacles"],
+			firstCol: "oncelr"
+			},
+			usages : "1x per ",
+			recovery : "long rest"
+		},
+		"subclassfeature14" : {
+			name : "Fathomless Plunge",
+			source : ["T",73],
+			minlevel : 14,
+			description : desc ([
+			"As an action, I teleport myself and up to 5 willing creatures up to 1 mile to a body",
+			"of water I've seen (pond or larger) or within 30 feet of it, appearing within 30'",
+			"of each other. Must finish short or long rest to use again."
+			]),
+			action : ["action",""],
+			usages : "1x per ",
+			recovery : "short rest"
+		}
+	}
+});
+AddSubClass("warlock", "the genie", {
+	regExpSearch : /^(?=.*warlock)((?=.*genie)|(?=.*dao)(?=.*djinni)(?=.*efreeti)(?=.*marid)).*$/i,
+	subname : "The Genie",
+	source : ["T", 2],
+	features : {
+		"subclassfeature1" : {
+			name : "Choose your patron",
+			source : ["T", 2],
+			minlevel : 1,
+			description : "\n   " + "Use the \"Choose Feature\" button above to choose your Genie Patron",
+			extraname : "Genie Kind",
+			choices : ["dao", "djinni", "efreeti", "marid"],
+			"dao" : {
+				name : "Dao",
+				source : ["T", 2],
+				spellcastingExtra : ["detect evil and good", "sanctuary", "phantasmal force", "spike growth", "create food and water", "meld into stone", "phantasmal killer", "creation", "stone shape", "wall of stone", "wish"],
+				description : "\n   " + "My Genie patron is a Dao, associated with Earth"
+			},
+			"djinni" : {
+				name : "Djinni",
+				source : ["T", 2],
+				spellcastingExtra : ["detect evil and good", "thunderwave", "phantasmal force", "gust of wind", "create food and water", "wind wall", "phantasmal killer", "greater invisibility", "creation", "seeming", "wish"],
+				description : "\n   " + "My Genie patron is a Djinni, associated with Air"
+			},
+			"efreeti" : {
+				name : "Efreeti",
+				source : ["T", 2],
+				spellcastingExtra : ["detect evil and good", "burning hands", "phantasmal force", "scorching ray", "create food and water", "fireball", "phantasmal killer", "fire shield", "creation", "flame strike", "wish"],
+				description : "\n   " + "My Genie patron is an Efreeti, associated with Fire"
+			},
+			"marid" : {
+				name : "Marid",
+				source : ["T", 2],
+				spellcastingExtra : ["detect evil and good", "fog cloud", "phantasmal force", "blur", "create food and water", "sleet storm", "phantasmal killer", "control water", "creation", "cone of cold", "wish"],
+				description : "\n   " + "My Genie patron is a Marid, associated with Water"
+			},
+			choiceDependencies : [{
+				feature : "subclassfeature6"
+			}, {
+				feature : "subclassfeature1.2"
+			}]
+		},
+		"subclassfeature1.1" : {
+			name : "Expanded Spell List",
+			source : ["T", 3],
+			minlevel : 1,
+/*			description : "\n   " + "I gain additional spells which I can choose from when selecting my Warlock spells" + "\n   " + "These additional spells are determined by my Genie patron.",*/
+			calcChanges : {
+				spellList : [
+					function(spList, spName, spType) {
+					// don't add if this is not a class or a list of spells is already given
+					if (!ClassList[spName] || spList.spells || spList.psionic) return;
+					// if this is an 'extra spell', also test if it uses the class' spell list or not
+					if (spType.indexOf("bonus") !== -1 && (spList.school || !spList["class"] || (spList["class"].indexOf(spName) === -1 && spName !== "fighter"))) return;
+					spList.extraspells = spList.extraspells.concat(["wish"]);
+					},
+				"The Genie Patron adds Wish as a spell available as a 9th level Mystic Arcanum."
+				]
+			},
+		},
+		"subclassfeature1.2" : {
+			name : "Genie's Vessel",
+			source : ["T", 3],
+			minlevel : 1,
+			description : desc([
+			"My patron gifts me a magical vessel that grants me a measure of my patron's power.",
+			"Tiny object; spellcasting focus for my Warlock spells",
+			"While I am touching the vessel, I can use Bottled Respite or Genie's Wrath \(See Notes.\).",
+			"The Vessel's AC equals my spell save DC. Its hit points equal my Warlock level plus my",
+			"prof. bonus, and it is immune to poison and psychic damage.",
+			"If destroyed, I can perform a 1 hour ritual to reclaim. It vanishes when I die."
+			]),
+			"dao" : {
+				name : "Genie's Vessel",
+				additional : "Genie's Wrath: bludgeoning"
+			},
+			"djinni" : {
+				name : "Genie's Vessel",
+				additional : "Genie's Wrath: thunder"
+			},
+			"efreeti" : {
+				name : "Genie's Vessel",
+				additional : "Genie's Wrath: fire"
+			},
+			"marid" : {
+				name : "Genie's Vessel",
+				additional : "Genie's Wrath: cold"
+			},
+			toNotesPage : [{
+				name : "Genie's Vessel",
+				source : ["T",3],
+				popupName : "Genie's Vessel",
+				note : [
+				"Bottled Respite",
+				"As an action, I can magically vanish and enter my vessel, which remains in the space I left.",
+				"The interior of the vessel is an extradimensional space in the shape of a 20-foot-radius",
+				"cylinder, 20 feet high, and resembles my vessel. The interior is comfortably appointed with",
+				"cushions and low tables and is a comfortable temperature. While inside, I can hear the area",
+				"around my vessel as if I were in its space. I can remain inside the vessel up to a number of",
+				"hours equal to twice my proficiency bonus. I exit the vessel early if I use a bonus action",
+				"to leave, if I die, or if the vessel is destroyed. When I exit the vessel, I appear in the",
+				"unoccupied space closest to it. Any objects left in the vessel remain there until carried",
+				"out, and if the vessel is destroyed, every object stored there harmlessly appears in the",
+				"unoccupied spaces closest to the vessel’s former space. Once I enter the vessel, I can’t",
+				"enter again until I finish a long rest.",
+				"Genie's Wrath",
+				"Once during each of my turns when I hit with an attack roll, I can deal extra damage to", 
+				"the target equal to my proficiency bonus. The type of this damage is determined by",
+				"my patron: bludgeoning \(dao\), thunder \(djinni\), fire \(efreeti\), or cold \(marid\)."
+				]
+			}],
+			action :["action","Bottled Respite"],
+			usages : "Enter 1x per ",
+			recovery : "long rest"
+		},
+		"subclassfeature6" : {
+			name : "Elemental Gift",
+			minlevel : 6,
+			"dao" : {
+				name : "Elemental Gift",
+				source : ["T", 3],
+				description : desc ([
+					"I gain resistance to bludgeoning damage. Bonus action to gain a fly speed of 30 ft",
+					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
+					"times equal to my prof. bonus and I regain all uses after a long rest.",
+				]),
+				dmgres : "Bludgeoning"
+			},
+			"djinni" : {
+				name : "Elemental Gift",
+				source : ["T", 3],
+				description : desc ([
+					"I gain resistance to thunder damage. Bonus action to gain a fly speed of 30 ft",
+					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
+					"times equal to my prof. bonus and I regain all uses after a long rest.",
+				]),
+				dmgres : ["Thunder"]
+			},
+			"efreeti" : {
+				name : "Elemental Gift",
+				source : ["US:SR0512",3],
+				description : desc ([
+					"I gain resistance to fire damage. Bonus action to gain a fly speed of 30 ft",
+					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
+					"times equal to my prof. bonus and I regain all uses after a long rest.",
+				]),
+				dmgres : ["Fire"]
+			},
+			"marid" : {
+				name : "Elemental Gift",
+				source : ["T",3],
+				description : desc ([
+					"I gain resistance to cold damage. Bonus action to gain a fly speed of 30 ft",
+					"which lasts for 10 min and I can hover. I can use this bonus action as number of",
+					"times equal to my prof. bonus and I regain all uses after a long rest.",
+				]),
+				dmgres : ["Cold"]
+			},
+			action : ["bonus action","30 ft Fly Speed"],
+			usages : "Prof. Bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus');",
+			recovery : "long rest"
+		},
+		"subclassfeature10" : {
+			name : "Sanctuary Vessel",
+			source : ["T", 3],
+			minlevel : 10,
+			description : desc([
+			"When I enter my Genie’s Vessel via the Bottled Respite feature, I can now choose up to",
+			"five willing creatures that I can see within 30 feet of me, and the chosen creatures are",
+			"drawn into the vessel with me. As a bonus action, I can eject any number of creatures",
+			"from the vessel, and everyone is ejected if I leave or the vessel is destroyed.",
+			"In addition, anyone (including me) who remains within the vessel for at least 10 minutes",
+			"gains the benefit of finishing a short rest, and anyone can add my proficiency bonus",
+			"to the number hit points they regain if they spend Hit Dice as part of a short rest there."
+			])
+		},
+		"subclassfeature14" : {
+			name : "Limited Wish",
+			source : ["T", 4],
+			minlevel : 14,
+			description : desc ([
+			"I entreat my patron to grant me a small wish. As an action, I can speak my desire to my",
+			"Genie’s Vessel, requesting the effect of one spell that is 6th level or lower and has a",
+			"casting time of 1 action. The spell can be from any class’s spell list, and I don’t need to",
+			"meet the requirements in that spell, including costly components; the spell simply takes",
+			"effect as part of this action.",
+			"Once I use this feature, I can’t use it again until I finish 1d4 long rests."
+			]),
+			action : ["action",""],
+			usages : "1d4 ",
+			recovery : "long rest"
+		}
+	}
+});
+
 // Wizard Optional Class Features
 AddFeatureChoice(ClassList.wizard.features.spellcasting, true, "Additional Wizard Spells", {
 	name : "Additional Wizard Spells",
@@ -5931,6 +5200,193 @@ AddFeatureChoice(ClassList.wizard.features.spellcasting, true, "Cantrip Formulas
 	minlevel : 3,
 	description : "\n	I have scripted a set of arcane formulas in my spellbook that I can use to formulate a cantrip in my mind. Whenever I finish a long rest and consult those formulas in my spellbook, I can replace on wizard cantrip I know with another cantrip from the wizard spell list"
 }, "Wizard Spellcasting Enhancement");
+
+
+AddSubClass("wizard", "bladesinging", {
+	regExpSearch : /(bladesinging|bladesinger)/i,
+	subname : "Tradition of Bladesinging",
+	fullname : "Bladesinger",
+	attacks : [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+	source : ["T", 76],
+	features : {
+		"subclassfeature2" : {
+			name : "Training in War and Song",
+			source : ["T", 76],
+			minlevel : 2,
+			description : "\n   " + "I gain proficiency with light armor, a one-handed melee weapon, and Performance",
+			armor : [true, false, false, false],
+			skills : ["Performance"],
+			skillstxt : "\n\n" + toUni("Bladesinger") + ": Performance"
+		},
+		"subclassfeature2.1" : {
+			name : "Bladesong",
+			source : ["T", 76],
+			minlevel : 2,
+			description: desc([
+			"As a bonus action, I can start the bladesong for 1 minute; I can dismiss it at any time",
+			"It stops when I wear a shield, medium or heavy armor, or attack with two hands",
+			"While the bladesong is active I have the following benefits:",
+			" \u2022 " + "Armor Class bonus equal to my Intelligence modifier (minimum of 1)",
+			" \u2022 " + "My base walking speed increases by 10 feet",
+			" \u2022 " + "Advantage on Dexterity (Acrobatics) checks",
+			" \u2022 " + "Intelligence modifier bonus (minimum of 1) to Constitution saving throws to maintain concentration"
+			]),
+			action : ["bonus action", " (start)"],
+			usages: "Proficiency bonus per ",
+			usagescalc : "event.value = What('Proficiency Bonus')",
+			recovery: "long rest",
+		},
+		"subclassfeature6" : {
+			name : "Extra Attack",
+			source : ["T", 77],
+			minlevel : 6,
+			description: desc([
+				"I can attack twice instead of once when I take the Attack action on my turn",
+				"Moreover, I can cast one of my cantrips in place of one of those attacks."
+			]),
+		},
+		"subclassfeature10" : {
+			name : "Song of Defense",
+			source : ["T", 77],
+			minlevel : 10,
+			description : "\n   " + "As a reaction while my bladesong is active, I can expand a spell slot to reduce damage" + "\n   " + "The damage I take is reduced by 5 for every level of the spell slot I expand",
+			action : ["reaction", " (in bladesong)"]
+
+		},
+		"subclassfeature14" : {
+			name : "Song of Victory",
+			source : ["T", 77],
+			minlevel : 14,
+			description : "\n   " + "While my bladesong is active, I can add my Int mod to melee weapon attack damage",
+			calcChanges : {
+				atkCalc : ["if (classes.known.wizard && classes.known.wizard.level > 13 && isMeleeWeapon && (/blade.?song/i).test(WeaponText)) { output.extraDmg += What('Int Mod'); }; ", "If I include the word 'Bladesong' in the name or description of a melee weapon, it gets my Intelligence modifier added to its Damage."]
+			}
+		}
+	}
+});
+AddSubClass("wizard","order of scribes", {
+	regExpSearch : /(scribe|scrivener)/i,
+	subname : "Order of Scribes",
+	fullname : "Scrivener",
+	source : ["T",77],
+	features : {
+		"subclassfeature2" : {
+			name : "Wizardly Quill",
+			source : ["T",77],
+			minlevel : 2,
+			description : desc([
+				"As a bonus action, I can magically create a Tiny quill with the following properties:",
+				"\u2022 It doesn't require ink; when writing, produces ink of any color",
+				"\u2022 Time to transcribe spells is 2 minutes per spell level",
+				"\u2022 As a bonus action, I can erase its writing; must be within 5 ft"
+			]),
+			action : [["bonus action"," (create/erase)"]]
+		},
+		"subclassfeature2.1" : {
+			name : "Awakened Spellbook",
+			source :["T",77],
+			minlevel : 2,
+			description : desc ([
+				"My spellbook gains sentience, granting the following benefits while held:",
+				"\u2022 I can use the book as a spellcasting focus for my wizard spells",
+				"\u2022 I can change the damage type of wizard spells I cast that use spell slots",
+				"    The type must be from a spell in my spellbook with the same level as the spell slot",
+				"    This effect only applies to a single instance of casting the spell",
+				"\u2022 Once per long rest, I can ritual cast a wizard spell using its normal casting time",
+				"I can replace the spellbook over a short rest; transferring spells and sentience",
+				"\u2022 I do so by writing arcane sigils in a mundane spellbook/attuned magical spellbook",
+				"\u2022 Spells vanish from the previous awakened spellbook, if it exists"
+			]),
+			extraLimitedFeatures : [{
+				name : "Awakened Spellbook (cast ritual)",
+				usages : 1,
+				recovery : "long rest"
+			}]
+		},
+		"subclassfeature6" : {
+			name : "Manifest Mind",
+			source : ["T",78],
+			minlevel : 6,
+			description : desc([
+				"As a bonus action, I can cause the mind of my spellbook to manifest as a Tiny object",
+				"I can do this once per long rest, or by expending a spell slot (SS 1+) to manifest it again",
+			]),
+			additional : "See 3rd Page Notes",
+			toNotesPage : [{
+				name : "Manifest Mind",
+				source : ["T",78],
+				popupName : "Manifest Mind",
+				page3notes : true,
+				note : desc ([
+					"As a bonus action, I can cause the mind of my spellbook to manifest as a Tiny object",
+					"It appears hovering in an unoccupied space within 60ft",
+					"While manifested, the spectral mind has the following properties:",
+					"\u2022 It's intangible and doesn't occupy its space; can pass though creatures, but not objects",
+					"\u2022 It sheds dim light in a 10 ft radius",
+					"\u2022 It appears as my choice of: ghostly tome, cascade of text, or a scholar from my past",
+					"\u2022 It can see and hear, and it has darkvision with a range of 60 ft",
+					"\u2022 It can telepathically share with you what it sees and hears, no action required",
+					"\u2022 I can cast a spell a wizard spell from its space, using its senses",
+					"\u2022 As a bonus action, I can cause it to hover 30 ft to a seen, unoccupied space",
+					"The mind stops manifesting if:",
+					"\u2022 It is more than 300 ft away from me; someone casts dispel magic on it",
+					"\u2022 If the Awakened Spellbook is destroyed; I die",
+					"\u2022 I dismiss it as a bonus action"
+				])
+			}],
+			action : [["bonus action"," (conjure/move/dismiss)"]],
+			extraLimitedFeatures : [{
+				name : "Manifest Mind",
+				usages : 1,
+				recovery : "long rest",
+				altResource : "SS 1+"
+			},{
+				name : "Manifest Mind: Cast Spell",
+				usages : "Prof. Bonus per ",
+				recovery : "long rest",
+				usagescalc : "event.value = What('Proficiency Bonus');",
+			}]
+		},
+		"subclassfeature10" : {
+			name : "Master Scrivener",
+			source : ["T",79],
+			minlevel : 10,
+			description : desc([
+				"After a long rest, I can create one spell scroll; See 3rd Page Notes",
+				"Using my Wizardly Quill, the gold and time spent to craft spell scrolls is halved"
+			]),
+			action : ["action", " (cast scroll)"],
+			toNotesPage : [{
+			name : "Master Scrivener",
+			source : ["T",79],
+			popupName : "Master Scrivener",
+			page3notes : true,
+			note : desc ([
+				"After a long rest, I can create one spell scroll; spell is from my Awakened Spellbook",
+				"To do so, I touch my Wizardly Quill to paper/parchment; spellbook must be within 5 ft",
+				"The spell must be of 1st or 2nd level and have a casting time of 1 action",
+				"Once in the scroll, the spell's level increases by 1 and is unintelligle to anyone else",
+				"The spell vanishes from the scroll when it is cast or after my next long rest"
+			])
+		}]
+		},
+		"subclassfeature14" : {
+			name : "One with the Word",
+			source : ["T",79],
+			minlevel : 14,
+			description : desc([
+				"I have advantage on Arcana checks while my Awakened Spellbook is on my person",
+				"If damaged while my spellbook is manifested, I can use a reaction to dismiss it",
+				"If I do, I prevent all of the damage taken",
+				"I temporarily lose spells with a combined level of 3d6 from my Awakened Spellbook",
+				"If I do not have enough spells to cover the number rolled, I drop to 0 HP",
+				"The spells vanish from the spellbook, reappearing after 1d6 long rests",
+				"Spells lost this way cannot be cast, even if found on a scroll or another spellbook"
+			]),
+			action : ["reaction"," (when damaged)"]
+		}
+	}
+});
 
 // Add Feats
 FeatsList["artificer initiate"] = {
@@ -6330,136 +5786,7 @@ FeatsList["telepathic"] = {
     }
 };
 
-// Add Fighting Styles (5):
-AddFightingStyle(["fighter"], "Blind Fighting", {
-	name : "Blind Fighting",
-	source : ["T", 41],
-	description : "\n   " + "Blindsight in a 10-ft range. And you can see invisible creatures in that range, unless they hide from you successfully.",
-	vision : [["Blindsight", 10],["See Invisible Creatures", 10] ] 
-}); // blind fighting
-AddFightingStyle(["fighter"], "Interception", {
-	name : "Interception",
-	source : ["T", 41],
-	description : "\n   " + "As a reaction, reduce the damage the target within 5-ft takes by 1d10 + PB. I must be wearing a shield or using a simple/martial weapon.",
-	action : ["reaction", "Intercept 1d10+PB"]
-}); // interception
-AddFightingStyle(["fighter"], "Superior Technique", {
-	name : "Superior Technique",
-	source : ["T", 41],
-	description : " [1 maneuver; d6, 1\xD7 per short rest]" + desc([
-		"I gain one superiority die (d6) that I can expend to fuel a special Maneuver",
-		"I can only use one Maneuver per attack; DCs are 8 + Prof B. + Str/Dex mod, my choice",
-		'Use the "Choose Feature" button above to add a Maneuver to the third page'
-	]),
-	//Unlock Battle Master Maneuver options
-	eval : function () {
-		AddFeature('Combat Superiority ', 1, '(d6)', 'short rest', 'Fighter: Superior Technique Fighting Style', 'bonus');
-		DontPrint("Class Features Menu");
-	},
-	removeeval : function () {
-		RemoveFeature('Combat Superiority ', 1);
-		if (!MakeClassMenu()) Hide("Class Features Menu");
-	}
-}); // superior technique
-AddFightingStyle(["fighter"], "Thrown Weapon Fighting", {
-	name : "Thrown Weapon Fighting",
-	source : ["T", 42],
-	description : "\n   " + "I may draw a weapon that has the thrown property as part of the attack I make with the weapon. When I hit with a ranged attack using a thrown weapon, I gain +2 bonus to the damage roll.",
-	calcChanges : {
-		atkCalc : [
-			function (fields, v, output) {
-				if (v.isRangedWeapon) output.extraDmg += 2;
-				//I am limited by the technology of my time, there is no variable attribute for v.isThrownWeapon yet
-			},
-			"My thrown weapons gain a +2 bonus to the damage roll."
-		]
-	}
-}); // thrown weapon
-AddFightingStyle(["fighter"], "Unarmed Fighting", {
-	name : "Unarmed Fighting",
-	source : ["T", 42],
-	description : "\n   " + "My unarmed strikes deal Bludgeoning damage equal to 1d6 + Str Mod on hit. If I am not wielding a weapon or shield during the attack, this becomes d8." + "\n   " + "At the start of a turn, I deal 1d4 bludgeoning damage to one creature I am grappling.",
-	calcChanges : {
-		atkAdd : [
-			function (fields, v) {
-				if (v.baseWeaponName == "unarmed strike") {
-					if (fields.Damage_Die == 1 || fields.Damage_Die == "1d4") fields.Damage_Die = '1d6';
-					fields.Description += (fields.Description ? '; ' : '') + 'Versatile (d8)';
-				};
-			},
-			"My unarmed strikes deal 1d6 damage instead of 1, which increases to 1d8 if I am not wielding a weapon or a shield during the attack."
-		]
-	}
-});
-// Add New Maneuver options (7) :
-if (ClassSubList["fighter-battle master"]) { 
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Ambush", {
-		name : "Ambush",
-		source : ["T", 42],
-		description : "\n   When I make an initiative roll or a Dex (Stealth) check, I can add a superiority die to it"
-	});
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Bait and Switch", {
-		name : "Bait and Switch",
-		source : ["T", 42],
-		description : desc([
-			"On my turn, I can expend a superiority die to swap places with an ally within 5 ft",
-			"Doing this costs me 5 ft of movement, but this doesn't provoke opportunity attacks",
-			"The ally then adds the superiority die to its AC until the start of my next turn"
-		])
-	});
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Brace", {
-		name : "Brace",
-		source : ["T", 42],
-		description : desc([
-			"As a reaction when a creature I can see moves within 5 of me, I can attack it",
-			"I expend a superiority die and make one weapon attack, adding the die to the damage"
-		]),
-		action : [["reaction", ""]]
-	});
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Commanding Presence", {
-		name : "Commanding Presence",
-		source : ["T", 42],
-		description : "\n   When I make a Cha (Intimidation) or Cha (Performance) check, I can add a superiority die to it"
-	});
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Grappling Strike", {
-		name : "Grappling Strike",
-		source : ["T", 42],
-		description : desc([
-			"Immediately after hitting a creature, expend one superiority die and attempt to grapple as a bonus action.",
-			"Add the superiority die to the Str (Athletics) check."
-		]),
-		action : [["bonus action", ""]]
-	});
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Quick Toss", {
-		name : "Quick Toss",
-		source : ["T", 42],
-		description : desc([
-			"As a bonus action, I can expend a superiority die and make a ranged attack with a thrown weapon.",
-			"If I hit, add the superiority die to the weapon's damage roll."
-		]),
-		action : [["bonus action", ""]]
-	});
-	AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature3.maneuvers"], true, "Tactical Assessment", {
-		name : "Studious Eye",
-		source : ["T", 42],
-		description : "\n   When I make an Int (Investigation), Int (History), or Wis (Insight) check, I can add a superiority die to it"
-	});
-}
 
-// Add Spells
-SpellsList["blade of disaster"] = { 
-	name : "Blade of Disaster", 
-	classes : ["sorcerer", "warlock", "wizard"], 
-	source : ["T", 106], 
-	level : 9, 
-	school : "Conj", 
-	time : "1 bns", 
-	range : "60 ft", 
-	components : "V,S", 
-	duration : "Conc, 1 min", 
-	description : "Create weapon; spell attack 4d12 force; crit 18+; 3 * crit damage; bns to move 30ft 2 attacks", 
-	descriptionFull : "You create a blade-shaped planar rift about 3 feet long in an unoccupied space you can see within range. The blade lasts for the duration. When you cast this spell, you can make up to two melee spell attacks with the blade, each one against a creature, loose object, or structure within 5 feet of the blade. On a hit, the target takes 4d12 force damage. This attack scores a critical hit if the number on the d20 is 18 or higher. On a critical hit, the blade deals an extra 8d12 force damage (for a total of 12d12 force damage)." + "\n   " + "As a bonus action on your turn, you can move the blade up to 30 feet to an unoccupied space you can see and then make up to two melee spell attacks with it again." + "\n   " + "The blade can harmlessly pass through any barrier, including a wall of force.", 
-};
 SpellsList["booming blade-tcoe"] = {
 	name : "Booming Blade",
 	classes : ["artificer", "sorcerer", "warlock", "wizard"],
@@ -6474,20 +5801,6 @@ SpellsList["booming blade-tcoe"] = {
 	description : "Melee wea atk with cast; hit: 0d8 Thunder dmg, if it moves next rnd +1d8; +1d8 at CL5, 11, \u0026 17",
 	descriptionCantripDie : "Melee wea atk with cast; if hit: `CD-1`d8 Thunder dmg and if it moves next round +`CD`d8 Thunder dmg",
 	descriptionFull : "You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects and then becomes sheathed in booming energy until the start of your next turn. If the target willingly moves 5 feet or more before then, the target takes 1d8 thunder damage, and the spell ends.\n   This spell's damage increases when you reach higher levels. At 5th level, the melee attack deals an extra 1d8 thunder damage to the target, and the damage the target takes for moving increases to 2d8. Both damage rolls increase by 1d8 at 11th level and 17th level."
-};
-SpellsList["dream of the blue veil"] = {
-	name : "Dream of the Blue Veil",
-	classes : ["bard", "sorcerer", "warlock", "wizard"],
-	source : ["T", 106],
-	level : 7,
-	school : "Conj",
-	time : "10 min",
-	range : "20 feet",
-	components : "V,S,M",
-	compMaterial : "A magic item or a willing creature from the destination world",
-	duration : "6 hours",
-	description : "9 willing crea unconscious; if spell concludes, travel to the material component's origin material plane",
-	descriptionFull : "You and up to eight willing creatures within range fall unconscious for the spell's duration and experience visions of another world on the Material Plane, such as Oerth, Toril, Krynn, or Eberron. If the spell reaches its full duration, the visions conclude with each of you encountering and pulling back a mysterious blue curtain. The spell then ends with you mentally and physically transported to the world that was in the visions." + "\n   " + "To cast this spell, you must have a magic item that originated on the world you wish to reach, and you must be aware of the world's existence, even if you don't know the world's name. Your destination in the other world is a safe location within 1 mile of where the magic item was created. Alternatively, you can cast the spell if one of the affected creatures was born on the other world, which causes your destination to be a safe location within 1 mile of where that creature was born."  + "\n   " + "The spell ends early on a creature if that creature takes any damage, and the creature isn't transported. If you take any damage, the spell ends for you and all the other creatures, with none of you being transported."
 };
 SpellsList["green-flame blade-tcoe"] = {
 	name : "Green-Flame Blade",
@@ -6504,19 +5817,6 @@ SpellsList["green-flame blade-tcoe"] = {
 	descriptionCantripDie : "Melee wea atk with cast; if hit, atk does +`CD-1`d8 Fire dmg, 1 crea in 5 ft `CD-1`d8+spellcasting ability modifier Fire dmg",
 	descriptionFull : "You brandish the weapon used in the spell's casting and make a melee attack with it against one creature within 5 feet of you. On a hit, the target suffers the weapon attack's normal effects, and you can cause green fire to leap from the target to a different creature of your choice that you can see within 5 feet of it. The second creature takes fire damage equal to your spellcasting ability modifier.\n   This spell's damage increases when you reach higher levels. At 5th level, the melee attack deals an extra 1d8 fire damage to the target, and the fire damage to the second creature increases to 1d8 + your spellcasting ability modifier. Both damage rolls increase by 1d8 at 11th level and 17th level."
 };
-SpellsList["intellect fortress"] = {
-	name : "Intellect Fortress",
-	classes : ["artificer", "bard", "sorcerer", "warlock", "wizard"],
-	source : ["T", 107],
-	level : 3,
-	school : "Abjur",
-	time : "1 a",
-	range : "30 feet",
-	components : "V",
-	duration : "Conc, 1 h",
-	description : "1+1/SL creatures resistant to psychic and advantage on Int, Wis, and Cha saves",
-	descriptionFull : "For the duration, you or one willing creature you can see within range has resistance to psychic damage, as well as advantage on Intelligence, Wisdom, and Charisma saving throws."  + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd. The creatures must be within 30 feet of each other when you target them."
-};
 SpellsList["lightning lure-tcoe"] = {
 	name : "Lightning Lure",
 	classes : ["artificer", "sorcerer", "warlock", "wizard"], // Artificer
@@ -6532,6 +5832,63 @@ SpellsList["lightning lure-tcoe"] = {
 	descriptionCantripDie : "1 crea I see save or pulled 10 ft to me; if it end in 5 ft, `CD`d8 Lightning dmg",
 	descriptionFull : "You create a lash of lightning energy that strikes at one creature of your choice that you can see within range. The target must succeed on a Strength saving throw or be pulled up to 10 feet in a straight line toward you and then take 1d8 lightning damage if it is within 5 feet of you." + "\n   " + "This spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8)."
 };
+SpellsList["sword burst-tcoe"] = {
+	name : "Sword Burst",
+	classes : ["artificer", "sorcerer", "warlock", "wizard"],
+	source : ["T", 115],
+	level : 0,
+	school : "Conj",
+	time : "1 a",
+	range : "5-ft rad",
+	components : "V",
+	duration : "Instantaneous",
+	save : "Dex",
+	description : "All crea in range save or 1d6 Force damage; +1d6 at CL 5, 11, and 17",
+	descriptionCantripDie : "All crea in range save or `CD`d6 Force damage",
+	descriptionFull : "You create a momentary circle of spectral blades that sweep around you. All other creatures within 5 feet of you must succeed on a Dexterity saving throw or take 1d6 force damage" + "\n   " + "This spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6)."
+};
+
+// Add Spells
+SpellsList["blade of disaster"] = { 
+	name : "Blade of Disaster", 
+	classes : ["sorcerer", "warlock", "wizard"], 
+	source : ["T", 106], 
+	level : 9, 
+	school : "Conj", 
+	time : "1 bns", 
+	range : "60 ft", 
+	components : "V,S", 
+	duration : "Conc, 1 min", 
+	description : "Create weapon; spell attack 4d12 force; crit 18+; 3 * crit damage; bns to move 30ft 2 attacks", 
+	descriptionFull : "You create a blade-shaped planar rift about 3 feet long in an unoccupied space you can see within range. The blade lasts for the duration. When you cast this spell, you can make up to two melee spell attacks with the blade, each one against a creature, loose object, or structure within 5 feet of the blade. On a hit, the target takes 4d12 force damage. This attack scores a critical hit if the number on the d20 is 18 or higher. On a critical hit, the blade deals an extra 8d12 force damage (for a total of 12d12 force damage)." + "\n   " + "As a bonus action on your turn, you can move the blade up to 30 feet to an unoccupied space you can see and then make up to two melee spell attacks with it again." + "\n   " + "The blade can harmlessly pass through any barrier, including a wall of force.", 
+};
+SpellsList["dream of the blue veil"] = {
+	name : "Dream of the Blue Veil",
+	classes : ["bard", "sorcerer", "warlock", "wizard"],
+	source : ["T", 106],
+	level : 7,
+	school : "Conj",
+	time : "10 min",
+	range : "20 feet",
+	components : "V,S,M",
+	compMaterial : "A magic item or a willing creature from the destination world",
+	duration : "6 hours",
+	description : "9 willing crea unconscious; if spell concludes, travel to the material component's origin material plane",
+	descriptionFull : "You and up to eight willing creatures within range fall unconscious for the spell's duration and experience visions of another world on the Material Plane, such as Oerth, Toril, Krynn, or Eberron. If the spell reaches its full duration, the visions conclude with each of you encountering and pulling back a mysterious blue curtain. The spell then ends with you mentally and physically transported to the world that was in the visions." + "\n   " + "To cast this spell, you must have a magic item that originated on the world you wish to reach, and you must be aware of the world's existence, even if you don't know the world's name. Your destination in the other world is a safe location within 1 mile of where the magic item was created. Alternatively, you can cast the spell if one of the affected creatures was born on the other world, which causes your destination to be a safe location within 1 mile of where that creature was born."  + "\n   " + "The spell ends early on a creature if that creature takes any damage, and the creature isn't transported. If you take any damage, the spell ends for you and all the other creatures, with none of you being transported."
+};
+SpellsList["intellect fortress"] = {
+	name : "Intellect Fortress",
+	classes : ["artificer", "bard", "sorcerer", "warlock", "wizard"],
+	source : ["T", 107],
+	level : 3,
+	school : "Abjur",
+	time : "1 a",
+	range : "30 feet",
+	components : "V",
+	duration : "Conc, 1 h",
+	description : "1+1/SL creatures resistant to psychic and advantage on Int, Wis, and Cha saves",
+	descriptionFull : "For the duration, you or one willing creature you can see within range has resistance to psychic damage, as well as advantage on Intelligence, Wisdom, and Charisma saving throws."  + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd. The creatures must be within 30 feet of each other when you target them."
+};
 SpellsList["mind sliver"] = {
 	name : "Mind Sliver",
 	classes : ["sorcerer", "warlock", "wizard"],
@@ -6546,6 +5903,19 @@ SpellsList["mind sliver"] = {
     description : "1 crea I see save or -1d4 from next save and 1d6 Psychic dmg; +1d6 at CL 5, 11, and 17",
     descriptionCantripDie : "1 crea I see save or -1d4 from next save and `CD`d6 Psychic dmg",
 	descriptionFull : "You drive a disorienting spike of psychic energy into the mind of one creature you can see within range. The target must succeed on an Intelligence saving throw or take 1d6 psychic damage and subtract 1d4 from the next saving throw it makes before the end of your next turn." + "\n   " + "This spell's damage increases by 1d6 when you reach certain levels: 5th level (2d6), 11th level (3d6), and 17th level (4d6)."
+};
+WeaponsList["mind sliver"] = {
+	regExpSearch : /mind sliver/i,
+	name : "Mind Sliver",
+	source : ["T", 108],
+	list : "spell",
+	ability : 6,
+	type : "Cantrip",
+	damage : ["C", 6, "psychic"],
+	range : "60 ft",
+	description : "Int save, success = no damage, fail = also -1d4 from next save.",
+	abilitytodamage : false,
+	dc : true
 };
 SpellsList["spirit shroud"] = {
 	name : "Spirit Shroud",
@@ -6686,21 +6056,6 @@ SpellsList["summon undead"] = {
     description : "Summon choice of Undead Spirit; obeys commands after my turn; dissapears at 0 hp (300gp)",
 	descriptionFull : "You call forth an undead spirit. It manifests in an unoccupied space that you can see within range. This corporeal form uses the Undead Spirit stat block. When you cast the spell, choose the creature's form: Ghostly, Putrid, or Skeletal. The spirit resembles an undead creature with the chosen form, which determines certain traits in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends." + "\n   " + "The creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the Dodge action and uses its move to avoid danger." + "\n   " + AtHigherLevels + "When you cast this spell using a spell slot of 5th level or higher, use the higher level wherever the spell's level appears in the stat block."
 };
-SpellsList["sword burst-tcoe"] = {
-	name : "Sword Burst",
-	classes : ["artificer", "sorcerer", "warlock", "wizard"],
-	source : ["T", 115],
-	level : 0,
-	school : "Conj",
-	time : "1 a",
-	range : "5-ft rad",
-	components : "V",
-	duration : "Instantaneous",
-	save : "Dex",
-	description : "All crea in range save or 1d6 Force damage; +1d6 at CL 5, 11, and 17",
-	descriptionCantripDie : "All crea in range save or `CD`d6 Force damage",
-	descriptionFull : "You create a momentary circle of spectral blades that sweep around you. All other creatures within 5 feet of you must succeed on a Dexterity saving throw or take 1d6 force damage" + "\n   " + "This spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6)."
-};
 SpellsList["tasha's caustic brew"] = {
     name : "Tasha's Caustic Brew",
     nameAlt : "Caustic Brew",
@@ -6747,17 +6102,4 @@ SpellsList["tasha's otherwordly guise"] = {
 	duration : "Conc, 1 min",
     description : "Fire+Poison+Poisoned or Radiant+Necrotic+Charm immune; 40ft fly; +2 ac; extra atk (500gp)",
     descriptionFull : "Uttering an incantation, you draw on the magic of the Lower Planes or Upper Planes (your choice) to transform yourself. You gain the following benefits until the spell ends:" + "\n \u2022 " + "You are immune to fire and poison damage (Lower Planes) or radiant and necrotic damage (Upper Planes)." + "\n \u2022 " + "You are immune to the poisoned condition (Lower Planes) or the charmed condition (Upper Planes)." + "\n \u2022 " + "Spectral wings appear on your back, giving you a flying speed of 40 feet." + "\n \u2022 " + "You have a +2 bonus to AC." + "\n \u2022 " + "All your weapon attacks are magical, and when you make a weapon attack, you can use your spellcasting ability modifier, instead of Strength or Dexterity, for the attack and damage rolls." + "\n \u2022 " + "You can attack twice, instead of once, when you take the Attack action on your turn. You ignore this benefit if you already have a feature, like Extra Attack, that lets you attack more than once when you take the Attack action on your turn."
-};
-WeaponsList["mind sliver"] = {
-	regExpSearch : /mind sliver/i,
-	name : "Mind Sliver",
-	source : ["T", 108],
-	list : "spell",
-	ability : 6,
-	type : "Cantrip",
-	damage : ["C", 6, "psychic"],
-	range : "60 ft",
-	description : "Int save, success = no damage, fail = also -1d4 from next save.",
-	abilitytodamage : false,
-	dc : true
 };
