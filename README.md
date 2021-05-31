@@ -12,7 +12,7 @@ The files contained here are **fan-made** js files of the following WotC content
 
 This collection is based on the previous compiling efforts of [@smashman](https://github.com/Smashman) and @Nod_Hero#2046. All I (Metacomet10) did was collect the stuff that they had collected together. The hard part, the coding, was done by a bunch of other folks. They deserve all the credit.
 
-The last MPMB content release was February 2020, which was UA Subclasses Part 3. A content freeze was in place after that so that v13 stable could be finalized. Version 13 stable was released October 12th, with v13.0.5 being released October 28th. Shortly after this, MPMB decided to take a sabbatical for personal reasons. There is no ETA for when the sabbatical will be over, however, he has not abandoned the project and will return eventually.
+The last MPMB content release was February 2020, which was UA Subclasses Part 3. A content freeze was in place after that so that v13 stable could be finalized. Version 13 stable was released October 12th, with v13.0.5 being released October 28th. Shortly after this, MPMB decided to take a sabbatical for personal reasons. He is now back from his sabbatical and will be releasing a new version of the sheet with TCoE and MOT content Soon(tm).
 
 Please join the mpmb Discord to help out, or if you have questions: https://discord.gg/Qjq9Z5Q
 
@@ -49,7 +49,3 @@ Please use v13 syntax for any contributions.
 3. Ensure that descriptions follow formatting guidelines (details below).
 4. Submit a new pull request.
 5. If feedback is received, repeat.
-
-## Description formatting guidelines
-
-// TODO
