@@ -249,7 +249,7 @@ MagicItemsList["arcane grimoire"] = {
         }
     }
 }
-MagicItemsList["Astral Shard"] = {
+MagicItemsList["astral shard"] = {
     name : "Astral Shard",
     source : ["TCoE", 120],
     type : "wondrous item",
@@ -263,7 +263,7 @@ MagicItemsList["Astral Shard"] = {
     }
 }
 
-MagicItemsList["Astromancy Archive"] = {
+MagicItemsList["astromancy archive"] = {
     name : "Astromancy Archive",
     source : ["TCoE", 120],
     type : "wondrous item",
@@ -322,7 +322,7 @@ MagicItemsList["Astromancy Archive"] = {
     }]
 }
 
-MagicItemsList["Atlas of Endless Horizons"] = {
+MagicItemsList["atlas of endless horizons"] = {
     name : "Atlas of Endless Horizons",
     source : ["TCoE", 120],
     type : "wondrous item",
