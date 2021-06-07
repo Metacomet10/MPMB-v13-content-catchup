@@ -262,6 +262,7 @@ MagicItemsList["Astral Shard"] = {
         return v.isSpellcaster && classes.known.sorcerer ? true : false;
     }
 }
+
 MagicItemsList["Astromancy Archive"] = {
     name : "Astromancy Archive",
     source : ["TCoE", 120],
@@ -319,4 +320,82 @@ MagicItemsList["Astromancy Archive"] = {
         allowUpCasting : true,
         spellcastingAbility : 4
     }]
+}
+
+MagicItemsList["Atlas of Endless Horizons"] = {
+    name : "Atlas of Endless Horizons",
+    source : ["TCoE", 120],
+    type : "wondrous item",
+    rarity : "rare",
+    attunement : true,
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "While I hold this book, I can expend a charge to replace one of my prepared spells with one from the atlas. When I am hit by an attack, I can use my reactionto teleport up to 10 feet to an unoccupied space I can see. If out of range of the attack, it misses.",
+    descriptionFull : "This thick book is bound in dark leather, criss-crossed with inlaid silver lines suggesting a map or chart. When found, the book contains the following spells, which are wizard spells for you while you are attuned to the book: arcane gate, dimension door, gate, misty step, plane shift, teleportation circle, and word of recall. It functions as a spellbook for you.\n  While you are holding the book, you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the conjuration school.\n  When you are hit by an attack you can use your reaction to expend 1 charge to teleport up to 10 feet to an unoccupied space you can see. If your new position is out of range of the attack, it misses you.",
+    usages : 3,
+	recovery : "dawn",
+    spellcastingBonus : [{
+        name : "Arcane Gate",
+        spells : ["arcane gate"],
+        selection : ["arcane gate"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Dimension door",
+        spells : ["dimension door"],
+        selection : ["dimension door"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Gate",
+        spells : ["gate"],
+        selection : ["gate"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Misty step",
+        spells : ["misty step"],
+        selection : ["misty step"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Plane Shift",
+        spells : ["plane shift"],
+        selection : ["plane shift"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Teleportation Circle",
+        spells : ["teleportation circle"],
+        selection : ["teleportation circle"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Word of Recall",
+        spells : ["word of recall"],
+        selection : ["word of recall"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    }]
+}
+
+MagicItemsList["baba yaga's mortar and pestle"] = {
+    name : "Baba Yaga's Mortar and Pestle",
+    source : ["TCoE", 121],
+    type : "wondrous item",
+    rarity : "artifact",
+    description : "I can make the mortar expand to fit up to a Large creature. I can extend the pestle to the size of a quarterstaff or shrink it back at will. I can expend up to 3 charges when hitting with a melee attack and add 1d8 force for each charge. While holding both I can fill the mortar with any nonmagical plant, fluid or mineral  worth up to 10 gp by speaking its name.",
+    descriptionFull : "The creations of the immortal Bab Yaga defy the laws of mortal magic. Among the notorious implements that cement her legend on countless worlds are the artifacts that propel her through the planes: Baba Yaga's Mortar and Pestle. These signature tools of Baba Yaga are a single artifact for purposes of attunement. Should the two objects become separated, the pestle appears next to the mortar at the next dawn.\n  Random Properties. This artifact has the following random properties, which you can determine by rolling on the teables in the \"Artifacts\" section of the Dungeon Master's Guide:\n  2 minor beneficial properties\n  1 major beneficial property\n  1 minor detrimental property\n  Properties of the Mortar. The mortar is a Tiny wooden bowl. However, the mortar increases in size to accommodate anything you place inside, expanding--if there's enough space--up to Large size, meaning it can hold even a Large creature.\n  Properties of the Pestle. The pestle is a 6-inch-long, worn wooden tool. Once during your turn while you are holding the pestle, you can extend it into a quarterstaff or shrink it back into a pestle (no action required). As a quarterstaff, the pestle is a magic weapon that grants a +3 bonus to attack and damage rolls made with it.\n  The pestle has 12 charges. When you hit with a melee attack using the pestle, you can expend up to 3 of its charges to deal an extra 1d8 force damage for each charge expended. The pestle regains all expended charges daily at dawn.\n  Perfect Tools. While holding the mortar and pestle, you can use your action to say the name of any nonmagical plant, mineral, or fluid worth 10 gp or less. The mortar instantly fills with the desired amount of that material. Once you use this action you can't do so again until you finish a short or long rest.\n  You can also use the artifact as alchemist's supplies, brewer's supplies, cook's utensils, an herbalism kit, and a poisoner's kit. You have advantage on any check you make using the artifact as one of these tools.\n  Primal Parts. As an action while the pestle and the mortar is within 5 geet of you, you can command the pestle to grind. For the next minute, or until you use your action to verbally command it to stop, the pestle moves on its own, grinding the contents of the mortar into a mush or fine powder that's equally useful for cooking or alchemy. At the start of each of your turns, whatever is in the mortar takes 4d10 force damage. If this reduces the target's hit points to 0, the target is reduce to powder, pulp, or paste, as appropriate. Only magic items are unaffected. If you wish, when the pestle stops, you can have the mortar separate its contents--like powdered bone, crushed herbs, pulped organs--into separate piles.\n  Traverse the Night. If you are holding the pestle while you are inside the mortar, you can use your action to verbally command the mortar to travel to a specific place or creature. You don't need to know where your destination is, but it must be a specific destination--not just the nearest river or a red dragon's lair. If the stated destination is within 1,000 miles of you, the mortar lifts into the air and vanishes. You and any creatures in the mortar travel through a dreamlike sky, with hazy reflections of the world passing by below. Creatures might see images of you streaking through the sky between your point of origin and the destination. You arrive at the location 1 hour later or, if it is night, 1 minute later.\n  Bones Know Their Home. When you command the mortar to travel, you can instead throw out the dust or paste of something ground by the mortar and name a location on a different plane of existence or a different world on the Material Plane. If that material came from a creature native to the named plane or world, the mortar travels through an empty night sky to an unoccupied space at that destination, arriving in 1 minute.\n  Destroying the Mortar and Pestle. The mortar and pestle are destroyed if they are crushed underfoot by the Dancing Hut of Baba Yaga or by Baba Yaga herself.",
+    attunement : true,
+    usages : 12,
+    recovery : "dawn"
 }
