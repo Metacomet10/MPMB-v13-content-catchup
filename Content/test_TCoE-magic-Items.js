@@ -10,13 +10,77 @@ SourceList["TCoE"] = {
 	date : "2020/11/17"
 };
 
-MagicItemsList["testing testy"] = {
-    name : "Testing testy",
-    source : ["TCoE", 1],
+MagicItemsList["absorbing tattoo"] = {
+    name : "Absorbing Tattoo",
+    source : ["TCoE",119],
     type : "wondrous item",
-    rarity : "common",
-    description : "This is a test",
-    descriptionFull : "This is a longer test"
+    rarity : "very rare",
+    description : "This magic tattoo features designs that emphasize one color.",
+    descriptionFull : "Produced by a special needle, this magic tattoo features designs that emphasize one color.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Damage Resistance. While the tattoo is on your skin, you have resistance to a type of damage associated with that color, as shown on the table below. The DM chooses the color or determines it randomly.\n  1 : Acid : Green\n  2 : Cold : Blue\n  3 : Fire : Red\n  4 : Force : White\n  5 : Lightning : Yellow\n  6 : Necrotic : Black\n  7 : Poison : Violet\n  8 : Psychic : Silver\n  9 : Radiant : Gold\n  10 : Thunder : Orange\n  Damage Absorption. When you take damage of the chosen type, you can use your reaction to gain immunity against that instance of the damage, and you regain a number of hit points equal to half the damage you would have taken. Once this reactino is used, it can't be used again until the next dawn.",
+    attunement : true,
+    usages : "1",
+    recovery : "dawn",
+    choices : ["acid", "cold", "fire", "force", "lightning", "necrotic", "poison", "psychic", "radiant", "thunder"],
+    "acid" : {        
+        name : "Acid Absorbing Tattoo",
+        action : ["reaction", "Acid Immunity"],
+        description : "This magic tattoo features designs that emphasize the color green.  While on my skin, this tattoo gives me resistance to acid damage. I can use my reaction when hit with acid damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Acid"]
+    },
+    "cold" : {        
+        name : "Cold Absorbing Tattoo",
+        action : ["reaction", "Cold Immunity"],
+        description : "This magic tattoo features designs that emphasize the color blue.  While on my skin, this tattoo gives me resistance to cold damage. I can use my reaction when hit with cold damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Cold"]
+    },
+    "fire" : {        
+        name : "Fire Absorbing Tattoo",
+        action : ["reaction", "Fire Immunity"],
+        description : "This magic tattoo features designs that emphasize the color red.  While on my skin, this tattoo gives me resistance to fire damage. I can use my reaction when hit with fire damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Fire"]
+    },
+    "force" : {        
+        name : "Force Absorbing Tattoo",
+        action : ["reaction", "Force Immunity"],
+        description : "This magic tattoo features designs that emphasize the color white.  While on my skin, this tattoo gives me resistance to force damage. I can use my reaction when hit with force damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Acid"]
+    },
+    "lightning" : {        
+        name : "Lightning Absorbing Tattoo",
+        action : ["reaction", "Lightning Immunity"],
+        description : "This magic tattoo features designs that emphasize the color yellow.  While on my skin, this tattoo gives me resistance to lightning damage. I can use my reaction when hit with lightning damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Lightning"]
+    },
+    "necrotic" : {        
+        name : "Necrotic Absorbing Tattoo",
+        action : ["reaction", "Necrotic Immunity"],
+        description : "This magic tattoo features designs that emphasize the color black.  While on my skin, this tattoo gives me resistance to necrotic damage. I can use my reaction when hit with necrotic damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Necrotic"]
+    },
+    "poison" : {        
+        name : "Poison Absorbing Tattoo",
+        action : ["reaction", "Poison Immunity"],
+        description : "This magic tattoo features designs that emphasize the color violet.  While on my skin, this tattoo gives me resistance to poison damage. I can use my reaction when hit with poison damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Poison"]
+    },
+    "psychic" : {        
+        name : "Psychic Absorbing Tattoo",
+        action : ["reaction", "Psychic Immunity"],
+        description : "This magic tattoo features designs that emphasize the color silver.  While on my skin, this tattoo gives me resistance to psychic damage. I can use my reaction when hit with psychic damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Psychic"]
+    },
+    "radiant" : {        
+        name : "Radiant Absorbing Tattoo",
+        action : ["reaction", "Radiant Immunity"],
+        description : "This magic tattoo features designs that emphasize the color gold.  While on my skin, this tattoo gives me resistance to radiant damage. I can use my reaction when hit with radiant damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Radiant"]
+    },
+    "thunder" : {        
+        name : "Thunder Absorbing Tattoo",
+        action : ["reaction", "Thunder Immunity"],
+        description : "This magic tattoo features designs that emphasize the color orange.  While on my skin, this tattoo gives me resistance to thunder damage. I can use my reaction when hit with thunder damage to gain immunity against it and recover half the damage as HP.",
+        dmgres : ["Thunder"]
+    }
 }
 
 MagicItemsList["alchemical compendium"] = {
@@ -393,9 +457,57 @@ MagicItemsList["baba yaga's mortar and pestle"] = {
     source : ["TCoE", 121],
     type : "wondrous item",
     rarity : "artifact",
-    description : "I can make the mortar expand to fit up to a Large creature. I can extend the pestle to the size of a quarterstaff or shrink it back at will. I can expend up to 3 charges when hitting with a melee attack and add 1d8 force for each charge. While holding both I can fill the mortar with any nonmagical plant, fluid or mineral  worth up to 10 gp by speaking its name.",
+    description : "I can expand the mortar to fit up to a Large creature. I can make the pestle a quarterstaff and back at will. When hitting with a melee attack I can add 1d8 force for each charge expended up to 3. Holding both, I can fill the mortar with any nonmagical plant, fluid or mineral worth 10 gp by speaking its name.",
     descriptionFull : "The creations of the immortal Bab Yaga defy the laws of mortal magic. Among the notorious implements that cement her legend on countless worlds are the artifacts that propel her through the planes: Baba Yaga's Mortar and Pestle. These signature tools of Baba Yaga are a single artifact for purposes of attunement. Should the two objects become separated, the pestle appears next to the mortar at the next dawn.\n  Random Properties. This artifact has the following random properties, which you can determine by rolling on the teables in the \"Artifacts\" section of the Dungeon Master's Guide:\n  2 minor beneficial properties\n  1 major beneficial property\n  1 minor detrimental property\n  Properties of the Mortar. The mortar is a Tiny wooden bowl. However, the mortar increases in size to accommodate anything you place inside, expanding--if there's enough space--up to Large size, meaning it can hold even a Large creature.\n  Properties of the Pestle. The pestle is a 6-inch-long, worn wooden tool. Once during your turn while you are holding the pestle, you can extend it into a quarterstaff or shrink it back into a pestle (no action required). As a quarterstaff, the pestle is a magic weapon that grants a +3 bonus to attack and damage rolls made with it.\n  The pestle has 12 charges. When you hit with a melee attack using the pestle, you can expend up to 3 of its charges to deal an extra 1d8 force damage for each charge expended. The pestle regains all expended charges daily at dawn.\n  Perfect Tools. While holding the mortar and pestle, you can use your action to say the name of any nonmagical plant, mineral, or fluid worth 10 gp or less. The mortar instantly fills with the desired amount of that material. Once you use this action you can't do so again until you finish a short or long rest.\n  You can also use the artifact as alchemist's supplies, brewer's supplies, cook's utensils, an herbalism kit, and a poisoner's kit. You have advantage on any check you make using the artifact as one of these tools.\n  Primal Parts. As an action while the pestle and the mortar is within 5 geet of you, you can command the pestle to grind. For the next minute, or until you use your action to verbally command it to stop, the pestle moves on its own, grinding the contents of the mortar into a mush or fine powder that's equally useful for cooking or alchemy. At the start of each of your turns, whatever is in the mortar takes 4d10 force damage. If this reduces the target's hit points to 0, the target is reduce to powder, pulp, or paste, as appropriate. Only magic items are unaffected. If you wish, when the pestle stops, you can have the mortar separate its contents--like powdered bone, crushed herbs, pulped organs--into separate piles.\n  Traverse the Night. If you are holding the pestle while you are inside the mortar, you can use your action to verbally command the mortar to travel to a specific place or creature. You don't need to know where your destination is, but it must be a specific destination--not just the nearest river or a red dragon's lair. If the stated destination is within 1,000 miles of you, the mortar lifts into the air and vanishes. You and any creatures in the mortar travel through a dreamlike sky, with hazy reflections of the world passing by below. Creatures might see images of you streaking through the sky between your point of origin and the destination. You arrive at the location 1 hour later or, if it is night, 1 minute later.\n  Bones Know Their Home. When you command the mortar to travel, you can instead throw out the dust or paste of something ground by the mortar and name a location on a different plane of existence or a different world on the Material Plane. If that material came from a creature native to the named plane or world, the mortar travels through an empty night sky to an unoccupied space at that destination, arriving in 1 minute.\n  Destroying the Mortar and Pestle. The mortar and pestle are destroyed if they are crushed underfoot by the Dancing Hut of Baba Yaga or by Baba Yaga herself.",
     attunement : true,
     usages : 12,
     recovery : "dawn"
+}
+
+MagicItemsList["barrier tattoo"] = {
+    name : "Barrier Tattoo",
+    source : ["TCoE",122],
+    type : "wondrous item",
+    description : "This magic tattoo depicts protective imagery and uses ink that resembles liquid metal.",
+    descriptionFull : "Produced by a special needle, this magic tatoo depicts protective imagery and uses ink that resembles liquid metal.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Protection. While you aren't wearing armor, the tattoo grants you an Armor Class depending on the tattoo's rarity, as shown below. You can use a shield and still gain this benefit.\n  Uncommon : 12 + your Dexterity modifier\n  Rare : 15 + your Dexterity modifier (maximum of +2)\n  Very Rare : 18",
+    attunement : true,
+    choices : ["uncommon", "rare", "very rare"],
+    "uncommon" : {
+        rarity : "uncommon",
+        name : "Barrier Tattoo (uncommon)",
+        description : "This magic tattoo depicts protective imagery and uses ink that resembles liquid metal. While not wearing any armor, this tattoo grants me an Armor Class of 12 plus my Dexterity Modifier.",
+        addArmor : "Barrier Tattoo (uncommon)",
+        armorOptions : {
+            regExpSearch : /^(?=.*barrier)(?=.*(tattoo)).*$/i,
+            name : "Barrier Tattoo (uncommon)",
+            source : ["TCoE",122],
+            ac : 12
+        }
+    },
+    "rare" : {
+        rarity : "rare",
+        name : "Barrier Tattoo (rare)",
+        description : "This magic tattoo depicts protective imagery and uses ink that resembles liquid metal. While not wearing any armor, this tattoo grants me an Armor Class of 15 plus my Dexterity Modifier (maximum of 2).",
+        addArmor : "Barrier Tattoo (rare)",
+        armorOptions : {
+            regExpSearch : /^(?=.*barrier)(?=.*(tattoo)).*$/i,
+            name : "Barrier Tattoo (rare)",
+            source : ["TCoE",122],
+            ac : 15,
+            dex : 2
+        }
+    },
+    "very rare" : {
+        rarity : "very rare",
+        name : "Barrier Tattoo (very rare)",
+        description : "This magic tattoo depicts protective imagery and uses ink that resembles liquid metal. While not wearing any armor, this tattoo grants me an Armor Class of 18.",
+        addArmor : "Barrier Tattoo (very are)",
+        armorOptions : {
+            regExpSearch : /^(?=.*barrier)(?=.*(tattoo)).*$/i,
+            name : "Barrier Tattoo (very rare)",
+            source : ["TCoE",122],
+            ac : 18,
+            dex : -10
+        }
+    }
 }
