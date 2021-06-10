@@ -511,3 +511,29 @@ MagicItemsList["barrier tattoo"] = {
         }
     }
 }
+
+MagicItemsList["bell branch"] = {
+    name : "Bell Branch",
+    source : ["TCoE", 122],
+    type : "wondrous item",
+    rarity : "rare",
+    prerequisite : "Requires attunement by a druid or warlock",
+	prereqeval : function(v) {
+		return v.isSpellcaster && (classes.known.druid ? true : false || classes.known.warlock ? true : false);
+	},
+    description : "This silver implement is shaped like a tree branch and is strung with small golden bells. As a bonus action I can expend 1 charge to detect the presence of aberrations, celestials, constructs, elementals, fey, fiends, or undead within 60 feet. As an action I can expend 1 charge to cast protection from evil and good.",
+    descriptionFull : "This silver implement is shaped like a tree branch and is strung with small golden bells. The branch is a spellcasting focus for your spells while you hold it.\n  The branch has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it.\n  As a bonus action, you can expend 1 charge to detect the presence of aberrations, celestials, constructs, elementals, fey, fiends, or undead within 60 feet of you. If such creatures are present and don't have total cover from you, the bells ring softly, their tone indicating the creature types present.\n  As an action, you can expend 1 charge to cast protection from evil and good.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    action : [
+        ["bonus action", "Detect Presence"],
+        ["action","Cast Protection from Evil/Good"]
+    ],
+    spellcastingBonus : [{
+        name : "Protection from Evil/Good",
+        spells : ["protection from evil and good"],
+        selection : ["protection from evil and good"],
+        spellcastingAbility : "class"
+    }]
+}
