@@ -537,3 +537,70 @@ MagicItemsList["bell branch"] = {
         spellcastingAbility : "class"
     }]
 }
+
+MagicItemsList["blood fury tattoo"] = {
+    name : "Blood Fury Tattoo",
+    source : ["TCoE",122],
+    type : "wondrous item",
+    rarity : "legendary",
+    description : "When I hit with a weapon attack I can expend a charge to add 4d6 necrotic damage and regain HP equal to the necrotic damage dealt. When I am damaged by a creature I can see, I can expend a charge and use my reation to make a melee attack against that creature with advantage.",
+    descriptionFull : "Produced by a special needle, this magic tatoo evokes fury in its form and colors.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Bloodthirsty Strikes. The tattoo has 10 charges, and it regains all expended charges daily at dawn. While this tattoo is on your skin, you gain the following benefits:\n  When you hit a creature with a weapon attack, you can expend a charge to deal an extra 4d6 necrotic damage to the target, and you regain a number of hit points equal to the necrotic damage dealt.\n  When a creature you can see damages you, you can expend a charge and use your reaction to make a melee attack against that creature with advantage on your attack roll.",
+    attunement : true,
+    usages : 10,
+    recovery : "dawn",
+    action : ["reaction", "Melee Attack w/adv (1 chg)"]
+}
+
+MagicItemsList["bloodwell vial"] = {
+    name : "Bloodwell Vial",
+    source : ["TCoE",122],
+    type : "wondrous item",
+    attunement : true,
+    description : "While I hold this vial, I gain a bonus to my spell attack rolls and the saving throw DCs of my sorcerer spells. When I roll any Hit Dice to recover hit points I can gain 5 sorcery points once per day.",
+    descriptionFull : "To attune this vial, you must place a few drops of your blood in it. The vial can't be opened while your attunement to it lasts. If your attunement to the vial ends, the contained blood turns to ash. You can use the vial as a spellcasting focus for your spells while wearing or holding it, and you gain a bonus to spell attack rolls and to the saving throw DCs of your sorcerer spells. The bonus is determined by the vial's rarity.\n  In addition, when you roll any Hit Dice to recover hit points while you are carrying the vial, you can regain 5 sorcery points. This property of the vial can't be used again until the next dawn.",
+    usages : "1",
+    recovery : "dawn",
+    choices : ["+1 vial (uncommon)", "+2 vial (rare)", "+3 vial (very rare)"],
+    "+1 vial (uncommon)" : {
+        name : "Bloodwell Vial +1",
+        rarity : "uncommon",
+        magicItemTable : "F",
+        description : "While I hold this vial, I gain a +1 bonus to my spell attack rolls and the saving throw DCs of my sorcerer spells. When I roll any Hit Dice to recover hit points I can regain 5 sorcery points once per day.",
+        calcChanges : {
+            spellCalc : [
+                function (type, spellcasters, ability) {
+					if (type != "prepare" && ((/sorcerer/).test(spellcasters)|ability == 6)) return 1;
+				},
+				"I gain a +1 bonus to spell attack rolls and to the saving throw DCs of my spells."
+            ]
+        }
+    },
+    "+2 vial (rare)" : {
+        name : "Bloodwell Vial +2",
+        rarity : "rare",
+        magicItemTable : "G",
+        description : "While I hold this vial, I gain a +2 bonus to my spell attack rolls and the saving throw DCs of my sorcerer spells. When I roll any Hit Dice to recover hit points I can regain 5 sorcery points once per day.",
+        calcChanges : {
+            spellCalc : [
+                function (type, spellcasters, ability) {
+					if (type != "prepare" && ((/sorcerer/).test(spellcasters)|ability == 6)) return 2;
+				},
+				"I gain a +2 bonus to spell attack rolls and to the saving throw DCs of my spells."
+            ]
+        }
+    },
+    "+3 vial (very rare)" : {
+        name : "Bloodwell Vial +3",
+        rarity : "very rare",
+        magicItemTable : "G",
+        description : "While I hold this vial, I gain a +3 bonus to my spell attack rolls and the saving throw DCs of my sorcerer spells. When I roll any Hit Dice to recover hit points I can regain 5 sorcery points once per day.",
+        calcChanges : {
+            spellCalc : [
+                function (type, spellcasters, ability) {
+					if (type != "prepare" && ((/sorcerer/).test(spellcasters)|ability == 6)) return 3;
+				},
+				"I gain a +3 bonus to spell attack rolls and to the saving throw DCs of my spells."
+            ]
+        }
+    }
+}
