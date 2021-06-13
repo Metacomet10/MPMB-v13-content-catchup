@@ -449,7 +449,9 @@ MagicItemsList["atlas of endless horizons"] = {
         firstCol : "checkbox",
         allowUpCasting : true,
         spellcastingAbility : 4
-    }]
+    }],
+    action : ["reaction", "Teleport 10ft (1 charge)"]
+
 }
 
 MagicItemsList["baba yaga's mortar and pestle"] = {
@@ -461,7 +463,26 @@ MagicItemsList["baba yaga's mortar and pestle"] = {
     descriptionFull : "The creations of the immortal Bab Yaga defy the laws of mortal magic. Among the notorious implements that cement her legend on countless worlds are the artifacts that propel her through the planes: Baba Yaga's Mortar and Pestle. These signature tools of Baba Yaga are a single artifact for purposes of attunement. Should the two objects become separated, the pestle appears next to the mortar at the next dawn.\n  Random Properties. This artifact has the following random properties, which you can determine by rolling on the teables in the \"Artifacts\" section of the Dungeon Master's Guide:\n  2 minor beneficial properties\n  1 major beneficial property\n  1 minor detrimental property\n  Properties of the Mortar. The mortar is a Tiny wooden bowl. However, the mortar increases in size to accommodate anything you place inside, expanding--if there's enough space--up to Large size, meaning it can hold even a Large creature.\n  Properties of the Pestle. The pestle is a 6-inch-long, worn wooden tool. Once during your turn while you are holding the pestle, you can extend it into a quarterstaff or shrink it back into a pestle (no action required). As a quarterstaff, the pestle is a magic weapon that grants a +3 bonus to attack and damage rolls made with it.\n  The pestle has 12 charges. When you hit with a melee attack using the pestle, you can expend up to 3 of its charges to deal an extra 1d8 force damage for each charge expended. The pestle regains all expended charges daily at dawn.\n  Perfect Tools. While holding the mortar and pestle, you can use your action to say the name of any nonmagical plant, mineral, or fluid worth 10 gp or less. The mortar instantly fills with the desired amount of that material. Once you use this action you can't do so again until you finish a short or long rest.\n  You can also use the artifact as alchemist's supplies, brewer's supplies, cook's utensils, an herbalism kit, and a poisoner's kit. You have advantage on any check you make using the artifact as one of these tools.\n  Primal Parts. As an action while the pestle and the mortar is within 5 geet of you, you can command the pestle to grind. For the next minute, or until you use your action to verbally command it to stop, the pestle moves on its own, grinding the contents of the mortar into a mush or fine powder that's equally useful for cooking or alchemy. At the start of each of your turns, whatever is in the mortar takes 4d10 force damage. If this reduces the target's hit points to 0, the target is reduce to powder, pulp, or paste, as appropriate. Only magic items are unaffected. If you wish, when the pestle stops, you can have the mortar separate its contents--like powdered bone, crushed herbs, pulped organs--into separate piles.\n  Traverse the Night. If you are holding the pestle while you are inside the mortar, you can use your action to verbally command the mortar to travel to a specific place or creature. You don't need to know where your destination is, but it must be a specific destination--not just the nearest river or a red dragon's lair. If the stated destination is within 1,000 miles of you, the mortar lifts into the air and vanishes. You and any creatures in the mortar travel through a dreamlike sky, with hazy reflections of the world passing by below. Creatures might see images of you streaking through the sky between your point of origin and the destination. You arrive at the location 1 hour later or, if it is night, 1 minute later.\n  Bones Know Their Home. When you command the mortar to travel, you can instead throw out the dust or paste of something ground by the mortar and name a location on a different plane of existence or a different world on the Material Plane. If that material came from a creature native to the named plane or world, the mortar travels through an empty night sky to an unoccupied space at that destination, arriving in 1 minute.\n  Destroying the Mortar and Pestle. The mortar and pestle are destroyed if they are crushed underfoot by the Dancing Hut of Baba Yaga or by Baba Yaga herself.",
     attunement : true,
     usages : 12,
-    recovery : "dawn"
+    recovery : "dawn",
+    action : [
+        ["action", "Traverse the Night"],
+        ["action", "Primal Parts"],
+        ["action", "Perfect Tools"]
+    ],
+    weaponOptions : [{
+        name : "Baba Yaga's Pestle",
+        source : ["TCoE", 121],
+        regExpSearch : /^(?=.*pestle)(?=.*yaga's)(?=.*baba).*$/i,
+        description : "Versatile (1d8); 1-3 charges per attack add 1d8 force damage per charge",
+        modifiers : [3,3],
+        type: "simple",
+        ability : 1,
+        abilitytodamage : true,
+        damage : [1, 6, "bludgeoning"],
+        range : "Melee",
+        tooltip : "I have to expand Baba Yaga's Pestle into a quarterstaff before I may use it as a weapon.",
+        defaultExcluded : true
+    }]
 }
 
 MagicItemsList["barrier tattoo"] = {
@@ -560,6 +581,11 @@ MagicItemsList["bloodwell vial"] = {
     descriptionFull : "To attune this vial, you must place a few drops of your blood in it. The vial can't be opened while your attunement to it lasts. If your attunement to the vial ends, the contained blood turns to ash. You can use the vial as a spellcasting focus for your spells while wearing or holding it, and you gain a bonus to spell attack rolls and to the saving throw DCs of your sorcerer spells. The bonus is determined by the vial's rarity.\n  In addition, when you roll any Hit Dice to recover hit points while you are carrying the vial, you can regain 5 sorcery points. This property of the vial can't be used again until the next dawn.",
     usages : "1",
     recovery : "dawn",
+    prerequisite : "Requires attunement by a sorcerer",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.sorcerer ? true : false;
+    },
+    limfeaname : "Roll Hit Dice Recover 5 SP",
     choices : ["+1 vial (uncommon)", "+2 vial (rare)", "+3 vial (very rare)"],
     "+1 vial (uncommon)" : {
         name : "Bloodwell Vial +1",
@@ -602,5 +628,26 @@ MagicItemsList["bloodwell vial"] = {
 				"I gain a +3 bonus to spell attack rolls and to the saving throw DCs of my spells."
             ]
         }
-    }
+    },
+}
+
+MagicItemsList["cauldron of rebirth"] = {
+    name : "Cauldron of Rebirth",
+    source : ["TCoE",122],
+    type : "wondrous item",
+    rarity : "very rare",
+    description : "make a potion, grow/shrink, raise dead",
+    descriptionFull : "This Tiny pot bears relief scenes of heroes on its cast iron sides. You can use the cauldron as a spellcasting focus for your druid spells, and it functions as a suitable component for the scrying spell. When you finish a long rest, you can use the cauldron to create a potion of greater healing. The potion lasts for 24 hours, the loses its magix if not consumed.\n  As an action you can use the cauldron to grow large enough for a Medium creature to crouch within. You can revert the cauldron to its normal size as an action, harmlessly shuntin anything that can't fit inside to the neares unoccupied space.\n  If you place the corpse of a humanoid into the cauldron and cover the corpse with 200 pounds of salt (which costs 10 gp) for at least 8 hours, the salt is consumed and the creature returns to life as if by raise dead at the next dawn. Once used, this property can't be used again for 7 days.",
+    attunement : true,
+    prerequisite : "Requires attunement by a druid or warlock",
+    prereqeval : function(v) {
+        return v.isSpellcaster && (classes.known.druid ? true : false || classes.known.warlock ? true : false);
+    },
+    action : ["action", "Cauldron of Rebirth grow/shrink"],
+    limfeaname : "CoR: Grow/Shrink",
+    extraLimitedFeatures : [{
+        name : "Cauldron of Rebirth: Rebirth",
+        usages : "1",
+        recovery : "7 days"
+    }]
 }
