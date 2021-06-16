@@ -737,3 +737,93 @@ MagicItemsList["crook of rao"] = {
     }]
 }
 
+MagicItemsList["crystalline chronicle"] = {
+    name : "Crystalline Chronicle",
+    source : ["TCoE", 124],
+    type : "wondrous item",
+    rarity : "very rare",
+    attunement : true,
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "While I am holding the crystal, I can use it as a spellcasting focus. I know the cantrips mage hand, mind sliver, and message if I don't already know them.",
+    descriptionFull : "An etched crystal sphere the size of a grapefruit hums faintly and pulses with irregular flares of inner light. While you are touching the crystal, you can retrieve and store information and spells within the crystal at the same rate as reading and writing. When found the crystal contains the following spells: detect thoughts, intellect fortress, Rary's telepathic bond, sending, telekinesis, Tasha's mind whip, and Tenser's floating disk. It functions as a spellbook for you, with its spells and other writing psychically encoded within it.\n  While you are holding the crystal, you can use it as a spellcasting focus for your wizard spells, and you know the mage hand, mind sliver and message cantrips if you don't already know them.\n  The crystal has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the information within the crystal, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book.\n  When you cast a wizard spell, you can expend 1 charge to cast the spell without verbal, somatic, or material components of up to 100 gp value.",
+    usages : 3,
+	recovery : "dawn",
+    spellcastingBonus : [{
+        name : "Detect Thoughts",
+        spells : ["detect thoughts"],
+        selection : ["detect thoughts"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Intellect Fortress",
+        spells : ["intellect fortress"],
+        selection : ["intellect fortress"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Mage Hand",
+        spells : ["mage hand"],
+        selection : ["mage hand"],
+        firstCol : "atwill",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Message",
+        spells : ["message"],
+        selection : ["message"],
+        firstCol : "atwill",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Mind Sliver",
+        spells : ["mind sliver"],
+        selection : ["mind sliver"],
+        firstCol : "atwill",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Rary's Telepathic Bond",
+        spells : ["rary's telepathic bond"],
+        selection : ["rary's telepathic bond"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Sending",
+        spells : ["sending"],
+        selection : ["sending"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Telekineses",
+        spells : ["telekineses"],
+        selection : ["telekineses"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Tasha's Mind Whip",
+        spells : ["tasha's mind whip"],
+        selection : ["tasha's mind whip"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Tenser's Floating Disk",
+        spells : ["tenser's floating disk"],
+        selection : ["tenser's floating disk"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    }],
+    action : [
+        ["action", "Swap Prepared Spell"],
+        ["action", "Cast Without Components"]
+    ]
+}
