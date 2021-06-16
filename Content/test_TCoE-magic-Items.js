@@ -97,6 +97,7 @@ MagicItemsList["alchemical compendium"] = {
 	descriptionFull : "Acrid odors cling to this stained, heavy volume. The book's metal fittings are copper, iron, lead, silver, and gold, some frozen mid-transition from one metal to another. When found, the book contains the following spells: enlarge/reduce, feather fall, flesh to stone, gaseous form, magic weapon, and polymorph. It functions as a spellbook for you.\n  While you are holding the book, you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the transmutation school.\n  As an action, you can touch a nonmagical object that isn't being worn or carried and spend a number of charges to transform the target into another object. For 1 charge, the object can be no larger than 1 foot on a side. You can spend additional charges to increase the maximum dimensions by 2 feet per charge. The new object must have a gold value equal to or less than the original.",
 	usages : 3,
 	recovery : "dawn",
+    action : ["action", "Transform Non-magic Object (1+ charge)"],
     spellcastingBonus : [{
         name : "Enlarge/Reduce",
         spells: ["enlarge/reduce"],
@@ -156,6 +157,7 @@ MagicItemsList["all-purpose tool"] = {
     choices : ["+1 tool (uncommon)", "+2 tool (rare)", "+3 tool (very rare)"],
     usages : 1,
     recovery : "dawn",
+    action : ["action", "Choose Unknown Cantrip (8 hours)"],
     "+1 tool (uncommon)" : {
         name : "All-Purpose Tool +1",
         rarity : "uncommon",
@@ -341,6 +343,7 @@ MagicItemsList["astromancy archive"] = {
     descriptionFull : "This brass disc of articulated concentric rings unfolds into an armillary sphere. As a bonus action, you can unfold it into the sphere or back into a disc. When found, it contains the following spells, which are wizard spells for you while you are attuned to it: augury, divination, find the path, foresight, locate creature, and locate object. It functions as a spellbook for you, with spells encoded on the rings.\n  While you are holding the archive, you can use it as a spellcasting foucs for your wizard spells\n  The archive has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the archive, you can expend 1 charge to replace one of your prepeared wizard spells with a different spell in the archive. The new spell must be of the divination school.\n  When a creature you can see within 30 feet of you makes an attack roll, an ability check or a saving throw, you can use your reaction to expend 1 charge and force the creature to roll a d4 and apply the number rolled as a bonus or penalty (your choice) to the original roll. You can do this after you see the roll but before its effects are applied.",
     usages : 3,
 	recovery : "dawn",
+    action : ["reaction", "+/- 1d4 to atk/save/skill (1 chg)"],
     spellcastingBonus : [{
         name : "Augury",
         spells : ["augury"],
@@ -451,7 +454,6 @@ MagicItemsList["atlas of endless horizons"] = {
         spellcastingAbility : 4
     }],
     action : ["reaction", "Teleport 10ft (1 charge)"]
-
 }
 
 MagicItemsList["baba yaga's mortar and pestle"] = {
@@ -636,8 +638,8 @@ MagicItemsList["cauldron of rebirth"] = {
     source : ["TCoE",122],
     type : "wondrous item",
     rarity : "very rare",
-    description : "make a potion, grow/shrink, raise dead",
-    descriptionFull : "This Tiny pot bears relief scenes of heroes on its cast iron sides. You can use the cauldron as a spellcasting focus for your druid spells, and it functions as a suitable component for the scrying spell. When you finish a long rest, you can use the cauldron to create a potion of greater healing. The potion lasts for 24 hours, the loses its magix if not consumed.\n  As an action you can use the cauldron to grow large enough for a Medium creature to crouch within. You can revert the cauldron to its normal size as an action, harmlessly shuntin anything that can't fit inside to the neares unoccupied space.\n  If you place the corpse of a humanoid into the cauldron and cover the corpse with 200 pounds of salt (which costs 10 gp) for at least 8 hours, the salt is consumed and the creature returns to life as if by raise dead at the next dawn. Once used, this property can't be used again for 7 days.",
+    description : "After a long rest, I can make a potion of greater healing that lasts up to 24 hours. As an action I can make the cauldron grow large enough for a Medium creature to crouch in. I can place a dead creature inside with 200 pounds of salt for 8 hours to raise dead.",
+    descriptionFull : "This Tiny pot bears relief scenes of heroes on its cast iron sides. You can use the cauldron as a spellcasting focus for your druid spells, and it functions as a suitable component for the scrying spell. When you finish a long rest, you can use the cauldron to create a potion of greater healing. The potion lasts for 24 hours, the loses its magic if not consumed.\n  As an action you can use the cauldron to grow large enough for a Medium creature to crouch within. You can revert the cauldron to its normal size as an action, harmlessly shuntin anything that can't fit inside to the neares unoccupied space.\n  If you place the corpse of a humanoid into the cauldron and cover the corpse with 200 pounds of salt (which costs 10 gp) for at least 8 hours, the salt is consumed and the creature returns to life as if by raise dead at the next dawn. Once used, this property can't be used again for 7 days.",
     attunement : true,
     prerequisite : "Requires attunement by a druid or warlock",
     prereqeval : function(v) {
@@ -651,3 +653,87 @@ MagicItemsList["cauldron of rebirth"] = {
         recovery : "7 days"
     }]
 }
+
+MagicItemsList["coiling grasp tattoo"] = {
+    name : "Coiling Grasp Tattoo",
+    source : ["TCoE",123],
+    type : "wondrous item",
+    rarity : "uncommon",
+    description : "As an action, I can cause this tattoo to extrude inky tendrils and grapple a creature within 15 feet of me.\n  The creature takes 3d6 force damage and are grappled if they fail a DC 14 Strength save.",
+    descriptionFull : "Produced by a special needle, this magic tatoo has long intertwining designs.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Grasping Tendrils. While the tattoo is on your skin, you can, as an action, cause the tattoo to extrude into inky tendrils, which reach for a creature you can see within 15 feet of you. The creature must succeed on a DC 14 Strength saving throw or take 3d6 force damage and be grappled by you. As an action, the creature can escape the grapple by succeeding on a DC 14 Strength (Athletics) or Dexterity (Acrobatics) check. The grapple also ends if you halt it (no action requred), if the creature is ever more than 15 feet away from you, or if you use this tattoo on a different creature.",
+    attunement : true,
+    usages : 10,
+    recovery : "dawn",
+    action : ["action", "Grasping Tendrils"]
+}
+
+MagicItemsList["crook of rao"] = {
+    name : "Crook of Rao",
+    source : ["TCoE",123],
+    type : "wondrous item",
+    rarity : "artifact",
+    description : "While holding the crook, I can expend 1 or more charges to cast one of its spells. I can spend 10 minutes to banish all fiends below CR 19 within 1 mile to their home plane for 100 years.",
+    descriptionFull : "Ages ago, the serene god Rao created a tool to shield his fledgling faithful against the evils of the Lower Planes. Yet, as eons passed, mortals developed their own methods of dealing with existential threats, and the crook was largely forgotten. In recent ages, though, the Crook of Rao was rediscovered and leveraged against the rising power of the Witch Queen Iggwilv (one of the names of the wizard Tasha). Although she was defeated, Iggwilv managed to damage the crook during the battle, infecting it with an insidious curse--and the potential for future victory. In the aftermath, the crook was again lost. Occasionally it reappears, but the famed artifact is not what it was. Whether or not the artifact's bearers realize its full threat, few risk using the Crook of Rao--potentially for the final time.\n  Random Properties. The artifact has the following random properties, which you can determine by reolling on the tables in the \"Arifacts\" section of the Dungeon Master's Guide:\n  2 minor beneficial properties\n  1 major beneficial property\n  1 minor detrimental property\n  Spells. The crook has 6 charges. While holding it, you can use an action to expend 1 or more of its charges to cast one of the following spells (save DC 18) from it: aura of life (2 charges), aura of purity (2 charges), banishment (1 charge), beacon of hope (1 charge), mass cure wounds (3 charges). The crook regains 1d6 expended charges daily at dawn.\n  Absolute Banishment. While you are attuned to the crook and holding it, you can spend 10 minutes to banish all but the mightiest fiends within 1 mile of you. Any fiend with a challenge rating of 19 or higher is unaffected. Each banished fiend is sent back to its home plane and can't return to the plane the Crook of Rao banished it from for 100 years.\n\nSee the Notes section for further information.",
+    toNotesPage : [{
+        name : "Crook of Rao",
+        note : [
+            "\nFailing Matrix",
+            "Whenvever the Crook of Rao's Absolute Banishment property is used, or when its last charge is expended, roll on the Extraplanar Reversal table. Any creature conjured as a result of this effect appear in random unoccupied spaces within 60 feet of you and are not under your control.",
+            "\nExtraplanar Reversal",
+            " d100   Effect",
+            "01-25   A portal to a random plane opens. The portal closes after 5 mintues.",
+            "26-45   2d4 imps and 2d4 quasits appear.",
+            "46-60   1d8 succubi/incubi appear.",
+            "61-70   1d10 barbed devils and 1d10 vrocks appear.",
+            "71-80   1 arcanoloth, 1 night hag, and 1 rakshasa appear.",
+            "81-85   1 ice devil and 1 marilith appear.",
+            "86-90   1 balor and 1 pit fiend appear. At the DM's discretion, a portal opens\n       into the presence of a archdevil or demon lord instead, then closes\n       after 5 minutes.",
+            "91-00   Iggwilv's Curse (see the Iggwilv's Curse property).",
+            "\nIggwilv's Curse",
+            "When the Crook was last used against Iggwilv, the Witch Queen lashed out at the artifact, infecting its magical matrix. Over the years, this curse has spread within the crook, threatening to violently pervert its ancient magic. If this occurs, the Crook of Rao, as it is currently known, is destroyed, its magical matrix inverting and exploding into a 50-foot diameter portal. This portal functions as a permanent gate spell cast by Iggwilv. The gate then, once per round on an initiateve count 20, audibly speaks a fiend's name in Iggwilv's voice, doing so until the gate calls on every fiend ever banished by the Crook of Rao. If the fiend still exists, it is drawn through the gate. This process takes eighteen years to complete, at the end of which the gate becomes a permanent portal to Pazunia, the first layer of the Abyss.",
+            "\nDestroying or Repairing the Crook",
+            "The Crook of Rao can either be destroyed or repaired by journeying to Mount Celestiaand obtaining a tear from the eternally serene god Rao. One way to make the emontionless god cry would be to reunite Rao with the spirit of his first worshipper who sought revelations byond the multiverse long ago. The Crook dissolves if immersed in teh god's tear for a year and a day. If washed in the tear daily for 30 days the Crook loses its Failing Matrix Property.",
+        ]
+    }],
+    attunement : true,
+    usages : 6,
+    recovery : "dawn",
+    action : ["action", "Absolute Banishment"],
+    spellcastingBonus : [{
+        name : "Aura of Life",
+        spells : ["aura of life"],
+        selection : ["aura of life"],
+        firstCol : "2c",
+        allowUpCasting : true,
+        fixedDC : 18,
+    },{
+        name : "Aura of Purity",
+        spells : ["aura of purity"],
+        selection : ["aura of purity"],
+        firstCol : "2c",
+        allowUpCasting : true,
+        fixedDC : 18,
+    },{
+        name : "Banishment",
+        spells : ["banishment"],
+        selection : ["banishment"],
+        firstCol : "1c",
+        allowUpCasting : true,
+        fixedDC : 18,
+    },{
+        name : "Beacon of Hope",
+        spells : ["beacon of hope"],
+        selection : ["beacon of hope"],
+        firstCol : "1c",
+        allowUpCasting : true,
+        fixedDC : 18,
+    },{
+        name : "Mass Cure Wounds",
+        spells : ["mass cure wounds"],
+        selection : ["mass cure wounds"],
+        firstCol : "3c",
+        allowUpCasting : true,
+        fixedDC : 18,
+    }]
+}
+
