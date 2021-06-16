@@ -26,6 +26,7 @@ Please join the mpmb Discord to help out, or if you have questions: https://disc
 
 ### Adventure Books
 * Icewind Dale: Rime of the Frostmaiden (`pub_20200915_IDRotF.js`)
+* Candlekeep Mysteries (`pub_20210316_CM.js`)
 
 ### Unearthed Arcana
 * Spells and Magic Tattoos (`ua_20200326_Spells-and-Magic-Tattoos.js`)
