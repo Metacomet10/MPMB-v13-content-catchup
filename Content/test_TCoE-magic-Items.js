@@ -801,9 +801,9 @@ MagicItemsList["crystalline chronicle"] = {
         allowUpCasting : true,
         spellcastingAbility : 4
     },{
-        name : "Telekineses",
-        spells : ["telekineses"],
-        selection : ["telekineses"],
+        name : "Telekinesis",
+        spells : ["telekinesis"],
+        selection : ["telekinesis"],
         firstCol : "checkbox",
         allowUpCasting : true,
         spellcastingAbility : 4
@@ -827,3 +827,4 @@ MagicItemsList["crystalline chronicle"] = {
         ["action", "Cast Without Components"]
     ]
 }
+
