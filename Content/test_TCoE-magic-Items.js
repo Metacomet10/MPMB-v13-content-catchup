@@ -491,7 +491,7 @@ MagicItemsList["barrier tattoo"] = {
     name : "Barrier Tattoo",
     source : ["TCoE",122],
     type : "wondrous item",
-    description : "This magic tattoo depicts protective imagery and uses ink that resembles liquid metal.",
+    description : "This magic tattoo depicts protective imagery and uses ink that resembles liquid metal. While not wearing armor, this tatoo grants me an Armor Class related to the rarity of the tattoo.",
     descriptionFull : "Produced by a special needle, this magic tatoo depicts protective imagery and uses ink that resembles liquid metal.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Protection. While you aren't wearing armor, the tattoo grants you an Armor Class depending on the tattoo's rarity, as shown below. You can use a shield and still gain this benefit.\n  Uncommon : 12 + your Dexterity modifier\n  Rare : 15 + your Dexterity modifier (maximum of +2)\n  Very Rare : 18",
     attunement : true,
     choices : ["uncommon", "rare", "very rare"],
@@ -828,3 +828,71 @@ MagicItemsList["crystalline chronicle"] = {
     ]
 }
 
+MagicItemsList["demonomicon of iggwilv"] = {
+    name : "Demonomicon of Iggwilv",
+    source : ["TCoE",125],
+    type : "wondrous item",
+    rarity : "artifact",
+    description : "While holding the Demonomicon, when I make an Intelligence check regarding demons or a Wisdom check related to the Abyss I can add double my proficiency bonus to the check. When I make a spell damage roll against a fiend I apply the maximum damage.",
+    descriptionFull : "An expansive treatise documenting the Abyss's infinite layers and inhabitants, the Demonomicon of Iggwilv is the most thorough and blasphemous tome of demonology in the multiverse. The tome recounts both the oldest and most current profanities of the Abyss and demons. Demons have attempted to censor the text, and while sections have been ripped from the book's spine, the general chapters remain, ever revealing demonic secrets. And the book holds more than blasphemies. Caged behind lines of script roils a secret piece of the Abyss itself, which keeps the book up-to-date, no matter how many pages are removed, and it longs to be more than mere reference material.\n  Random Properties. The artifact has the following random properties, which you can determine by rolling on the tables in the \"Artifacts\" section of the Dungeon Master's Guide:\n  2 minor beneficial properties\n  1 minor detrimental property\n  1 major detrimental property\n  Spells. The book has 8 charges. It regains 1d8 expended charges daily at dawn. While holding it, you can use an action to cast Tasha's hideous laughter from it or to expend 1 or more of its charges to cast one of the following spells (save DC 20) from it: magic circle (1 charge), magic jar (2 charges), planar ally (3 charges), planar binding (2 charges), plane shift (to layers of the Abyss only; 3 charges), summon fiend (3 charges).\n  Abyssal Reference. You can reference the Demonomicon whenever you make an Intelligence check to discern information about demons or a Wisdom (Survival) check related to the Abyss. When you do so, you can add double your proficiency bonus to the check.\n\nSee the Notes section for further information.",
+    attunement : true,
+    toNotesPage : [{
+        name : "Demonomicon of Iggwilv",
+        note : [
+            "\nFiendish Scourging",
+            "Your magic causes pain to fiends. While carrying the book, when you make a damage roll for a spell you cast against a fiend, you use the maximum possible result instead of rolling.",
+            "\nEnsnarement",
+            "While carrying the book, whenever you cast the magic circle spell naming only fiends, or the planar binding spell targeting a fiend, the spell is cast at 9th level, regardless of what level spell slot you used, if any. Additionally, the fiend has disadvantage on its saving throw against the spell.",
+            "\nContainment",
+            "The first 10 pages of the Demonomicon are blank. As an action while holding the book, you can target a fiend that you can see that is trapped within a magic circle. The fiend must succeed on a DC 20 Charisma saving throw with disadvantage or become trapped within one of the Demonomicon's empty blank pages, which fills with writing detailing the trapped creature's widely known name and depravities. Once Used, this action can't be used again until the next dawn.\n  When you finish a long rest, if you and the Demonomicon are on the same plan of existence, the trapped creature of the highest challenge rating within the book can attempt to possess you. You must make a DC 20 Charisma saving throw. On a failure, you are possessed by the creature, which controls you like a puppet. The possessing creature can release you as an action, appearing in the closest unoccupied space. On a successful save, the fiend can't try to possess you again for 7 days.\n  When the tome is discovered it has 1d4 fiends occupying its pages, typically an assortment of demons.",
+            "\nDestroying the Demonomicon",
+            "To destroy the book, six different demon lords must each tear out a sixth of the book's pages. If this occurs, the pages reappear after 24 hours. Before all those hours pass, anyone who opens the book's remaining binding is transported to a nascent layer of the Abyss that lies hidden within the book. At the heart of this dadly, semi-sentient domain lies a long-lost artifact, Fraz-Urb'luu's Staff. If the staff is dragged from the pocket plane, the tome is reduced to a mundane and quite out-of-date copy of the Tome of Zyx, the work that served as the foundation for the Demonomicon. Once the staff emerges, the demon lord Fraz-Urb'luu instantly knows.",
+        ]
+    }],
+    usages : 8,
+    recovery : "dawn",
+    action : ["action", "Containment"],
+    spellcastingBonus : [{
+        name : "Magic Circle",
+        spells : ["magic circle"],
+        selection : ["magic circle"],
+        firstCol : "1c",
+        allowUpCasting : true,
+        fixedDC : 20,
+    },{
+        name : "Magic Jar",
+        spells : ["magic jar"],
+        selection : ["magic jar"],
+        firstCol : "3c",
+        allowUpCasting : true,
+        fixedDC : 20,
+    },{
+        name : "Planar Ally",
+        spells : ["planar ally"],
+        selection : ["planar ally"],
+        firstCol : "3c",
+        allowUpCasting : true,
+        fixedDC : 20,
+    },{
+        name : "Planar Binding",
+        spells : ["planar binding"],
+        selection : ["planar binding"],
+        firstCol : "2c",
+        allowUpCasting : true,
+        fixedDC : 20,
+    },{
+        name : "Plane Shift (Abyss)",
+        spells : ["plane shift"],
+        selection : ["plane shift"],
+        firstCol : "3c",
+        allowUpCasting : true,
+        fixedDC : 20,
+    },{
+        name : "Summon Fiend",
+        spells : ["summon fiend"],
+        selection : ["summon fiend"],
+        firstCol : "3c",
+        allowUpCasting : true,
+        fixedDC : 20,
+    }]
+}
