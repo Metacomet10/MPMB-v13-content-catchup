@@ -208,9 +208,9 @@ MagicItemsList["amulet of the devout"] = {
     description : "While I wear this holy symbol, I gain a bonus to spell attack rolls and saving throw DCs of my spells.\n  I can use my Channel Divinity feature without expending one of the feature's uses. This recharges at dawn.",
     descriptionFull : "This amulet bears the symbol of a deity inlaid with precious stones or metals. While you wear the holy symbol you gain a bonus to spell attack rolls and the saving throw DCs of your spells. The bonus is determined by the amulet's rarity.\n  While you wear this amulet, you can use your Channel Divinity feature without expending one of the feature's uses. Once this property is used, it can't be used again until the next dawn.",
     attunement : true,
-    prerequisite : "Requires attunement by an cleric or paladin",
+    prerequisite : "Requires attunement by a cleric or paladin",
     prereqeval : function(v) {
-        return v.isSpellcaster && classes.known.cleric ? true : false && classes.known.paladin ? true : false;
+        return (classes.known.cleric ? true : false || classes.known.paladin ? true : false);
     },
     choices : ["+1 amulet (uncommon)", "+2 amulet (rare)", "+3 amulet (very rare)"],
     usages : 1,
@@ -894,5 +894,35 @@ MagicItemsList["demonomicon of iggwilv"] = {
         firstCol : "3c",
         allowUpCasting : true,
         fixedDC : 20,
+    }]
+}
+
+MagicItemsList["devotee's censer"] = {
+    name : "Devotee's Censer",
+    source : ["TCoE", 126],
+    type : "weapon",
+    rarity : "rare",
+    attunement : true,
+    prerequisite : "Requires attunement by a cleric or paladin",
+    prereqeval : function(v) {
+        return (classes.known.cleric ? true : false || classes.known.paladin ? true : false);
+    },
+    description : "While using this flail, when I hit with an attack roll the target takes 1d8 extra radiant damage. As an action I can speak the command word to emanate a 10 foot radius cloud for 1 minute that heals 1d4 hit points at the beginning of my turn.",
+    descriptionFull : "The rounded head of this flail is perforated with tiny holes, arranged in symbols and patterns. The flail counts as a holy symbol for you. When you hit with an attack using this magic flail, the target takes an extra 1d8 radiant damage.\n  As a bonus action you can speak the command word to cause the flail to emanage a thin cloud of incense out to 10 feet for 1 minute. At the start of each of your turns, you and any other creatures in the incense each regain 1d4 hit points. This property can't be used again until the next dawn.",
+    usages : 1,
+    recovery : "dawn",
+    action : ["bonus action", "Incense Cloud"],
+    weaponOptions : [{
+        name : "Devotee's Censer",
+        source : ["TCoE", 126],
+        regExpSearch : /^(?=.*devotee's)(?=.*censer).*$/i,
+        description : "+1d8 radiant damage",
+        type : "Martial",
+        ability : 1,
+        abilitytodamage : true,
+        damage : [1,8, "bludgeoning"],
+        range : "Melee",
+        weight : 2,
+        baseWeapon : "flail"
     }]
 }
