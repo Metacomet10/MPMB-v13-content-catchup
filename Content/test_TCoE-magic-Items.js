@@ -926,3 +926,66 @@ MagicItemsList["devotee's censer"] = {
         baseWeapon : "flail"
     }]
 }
+
+MagicItemsList["duplicitous manuscript"] = {
+    name : "Duplicitous Manuscript",
+    source : ["TCoE",126],
+    type : "wondrous item",
+    rarity : "rare",
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "I can use an action to change the book's appearance or plot. I can use the book as a spellcasting focus. I can spend 1 minute and 1 charge to replace a prepared spell with one from the book. I can expend 1 charge to impose disadvantage on checks against my illusion spells.",
+    descriptionFull : "To you, this book is a magical spellbook. To anyone else, the book appears to be a volume of verbose romance fiction. As an action, you can change the book's appearance and alter the plot of the romance.\n  When found, the book contains the following spells: hallucinatory terrain, major image, mirror image, mislead, Nystul's magic aura, phantasmal force and silent image. It functions as a spellbook for you.\n  While you are holding the book, you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the book, you can expend 1 charge to replace one of your prepard wizard spells with a different spell in the book. The new spell must be of the illusion school.\n  When a creature you can see makes an Intelligence (Investigation) check to discern the true nature of an illusion spell you cast, or makes a saving throw against an illusion spell you cast, you can use your reaction and expend 1 charge to impose disadvantage on the roll.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    action : [
+        ["reaction", "Add Disadvantage (1 chg)"],
+        ["action", "Change Book"]
+    ],    
+    spellcastingBonus : [{
+        name : "Hallucinatory Terrain",
+        spells : ["hallucinatory terrain"],
+        selection : ["hallucinatory terrain"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Major Image",
+        spells : ["major image"],
+        selection : ["major image"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Mirror Image",
+        spells : ["mirror image"],
+        selection : ["mirror image"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Mislead",
+        spells : ["mislead"],
+        selection : ["mislead"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Nystul's Magic Aura",
+        spells : ["nystul's magic aura"],
+        selection : ["nystul's magic aura"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Phantasmal Force",
+        spells : ["phantasmal force"],
+        selection : ["phantasmal force"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Sient Image",
+        spells : ["silent image"],
+        selection : ["silent image"],
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    }]
+}
