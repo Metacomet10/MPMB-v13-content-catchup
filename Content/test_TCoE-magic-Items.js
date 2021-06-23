@@ -989,3 +989,28 @@ MagicItemsList["duplicitous manuscript"] = {
         spellcastingAbility : 4
     }]
 }
+
+MagicItemsList["eldritch claw tattoo"] = {
+    name : "Eldritch Claw Tattoo",
+    source : ["TCoE",126],
+    type : "wondrous item",
+    rarity : "uncommon",
+    description : "While this tattoo is on my skin, my unarmed strikes count as magical attacks and gain a +1 bounus to attack and damge rolls. Once per day I can empower the tattoo and hit creatures 15 feet away with a weapon or unarmed strike and deal an additional 1d6 force damage on a hit.",
+    descriptionFull : "Produced by a special needle, this magic tatoo depicts clawlike forms and other jagged shapes.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Magical Strikes. While the tattoo is on your skin, your unarmed strikes are considered magical for the purpose of overcoming immunity and resistance to nonmagical attacks, and you gain a +1 bonus to attack and damage rolls with unarmed strikes.\n  Eldritch Maul. As a bonus action, you can empower the tattoo for 1 minute. For the duration, each of your melee attacks with a weapon or an unarmed strike can reach a target up to 15 feet away from you, as inky tendrils launch toward the target. In addition, your melee attacks dal an extra 1d6 force damage on a hit. Once used, this bonus action can't be used again until the next dawn.",
+    attunement : true,
+    usages : 1,
+    recovery : "dawn",
+    action : ["bonus action", "Eldritch Maul"],
+    calcChanges : {
+        atkAdd : [
+            function (fields, v) {
+                if (v.baseWeaponName == "unarmed strike") {
+                    fields.Description += (fields.Description ? '; ' : '') + '+1 to damage and hit from Eldritch Claw Tattoo';
+                    fields.to_Hit_Bonus = '+1';
+                    fields.Damage_Bonus = '+1';
+                };
+            },
+            "If I include the words 'Fire Snake' in the name of an unarmed strike, it gets +10 ft reach, does fire damage, and gains the option to deal +1d10 fire damage by spending 1 additional ki point."
+        ]
+    }
+}
