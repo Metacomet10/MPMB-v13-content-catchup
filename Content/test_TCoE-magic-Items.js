@@ -1014,3 +1014,33 @@ MagicItemsList["eldritch claw tattoo"] = {
         ]
     }
 }
+
+MagicItemsList["elemental essence shard"] = {
+    name : "Elemental Essence Shard",
+    source : ["TCoE", 127],
+    type : "wondrous item",
+    rarity : "rare",
+    attunement : true,
+    prerequisite : "Requires attunement by a sorcerer",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.sorcerer ? true : false;},
+    description : "While I hold or wear this crystal, I can attach it to an Tiny object or remove it.",
+    descriptionFull : "This crackling crystal contains the essence of an elemental plane. As an action, you can attach the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus while you hold or wear it.\n  Roll a d4 and consult the Elemental Essence Shards table to determine the shard's essence and property. When you use a Metamagic option on a spell while you are holding or wearing the shard, you can use that property.\n  Elemental Essence Shards\nd4\tProperty\n 1\tAir. You can immediately fly up to 60 feet without\n\tprovoking opportunity attacks\n 2\tEarth. You gain resistance to a damage type of\n\tyour choice until the start of your next turn.\n 3\tFire. One target of the spell that you can see\n\tcatches fire. The burning target takes 2d10 fire\n\tdamage at the start of its next turn, and then the\n\tflames go out.\n 4\tWater. You create a wave of water that bursts out\n\tfrom you in a 10-foot-radius. Each creature of\n\tyour choice that you can see in that area takes\n\t2d6 cold tdamage and must succeed on a\n\tStrength saving throw against your spell save DC\n\tor be tpushed 10 feet away from you and fall\n\tprone.",
+    choices : ["air", "earth", "fire", "water"],
+    "air" : {
+        name : "Air Essence Shard",
+        description : "Whie I hold or wear this crystal, when I use a Metamagic option I can immediately fly up to 60 feet without provoking opportunity attacks."
+    },
+    "earth" : {
+        name : "Earth Essence Shard",
+        description : "Whie I hold or wear this crystal, when I use a Metamagic option I gain resistance to a damage type of my choice until the start of my next turn."
+    },
+    "fire" : {
+        name : "Fire Essence Shard",
+        description : "Whie I hold or wear this crystal, when I use a Metamagic option one target of the spell that I can see catches fire. The target takes 2d10 fire damage at the start of its next turn."
+    },
+    "water" : {
+        name : "Water Essence Shard",
+        description : "Whie I hold or wear this crystal, when I use a Metamagic option I create a wave of water effects a 10-foot-radius. Each crature I choose in that area takes 2d6 cold damage and is pushed back 10 feet if it fails a Strength saving throw."
+    }
+}
