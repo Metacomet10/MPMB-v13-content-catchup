@@ -201,6 +201,7 @@ MagicItemsList["all-purpose tool"] = {
         }
     }
 }
+
 MagicItemsList["amulet of the devout"] = {
     name : "Amulet of the Devout",
     source : ["TCoE", 119],
@@ -258,6 +259,7 @@ MagicItemsList["amulet of the devout"] = {
         }
     }
 }
+
 MagicItemsList["arcane grimoire"] = {
     name : "Arcane Grimoire",
     source : ["TCoE", 120],
@@ -315,18 +317,23 @@ MagicItemsList["arcane grimoire"] = {
         }
     }
 }
+
 MagicItemsList["astral shard"] = {
     name : "Astral Shard",
     source : ["TCoE", 120],
     type : "wondrous item",
     rarity : "rare",
     description : "While I hold or wear this crystal, I can teleport to an unoccupied space within 30 feet that I can see immediately following the use of a metamagic option while casting a sorcerer spell.",
-    descriptionFull : "This crystal is a solidified shard of the Astral Plane, swirling with silver mist. As an action, you can attack the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus for your sorcerer spells while you hold or wear it.\n  When you use a Metamagic option on a spell while you are holding or wearing the shard, immediately after casting the spell you can teleport to an unoccupied space you can see within 30 feet of you.",
+    descriptionFull : "This crystal is a solidified shard of the Astral Plane, swirling with silver mist. As an action, you can attatch the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus for your sorcerer spells while you hold or wear it.\n  When you use a Metamagic option on a spell while you are holding or wearing the shard, immediately after casting the spell you can teleport to an unoccupied space you can see within 30 feet of you.",
     attunement : true,
     prerequisite : "Requires attunement by a sorcerer",
     prereqeval : function(v) {
         return v.isSpellcaster && classes.known.sorcerer ? true : false;
-    }
+    },
+    action : [
+        ["action", "Tentacle Attack (w/metamagic)"],
+        ["action", "Attach/Detach Shard"]
+    ]
 }
 
 MagicItemsList["astromancy archive"] = {
@@ -757,14 +764,16 @@ MagicItemsList["crystalline chronicle"] = {
         selection : ["detect thoughts"],
         firstCol : "checkbox",
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Intellect Fortress",
         spells : ["intellect fortress"],
         selection : ["intellect fortress"],
         firstCol : "checkbox",
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Mage Hand",
         spells : ["mage hand"],
@@ -937,7 +946,7 @@ MagicItemsList["duplicitous manuscript"] = {
         return v.isSpellcaster && classes.known.wizard ? true : false;
     },
     description : "I can use an action to change the book's appearance or plot. I can use the book as a spellcasting focus. I can spend 1 minute and 1 charge to replace a prepared spell with one from the book. I can expend 1 charge to impose disadvantage on checks against my illusion spells.",
-    descriptionFull : "To you, this book is a magical spellbook. To anyone else, the book appears to be a volume of verbose romance fiction. As an action, you can change the book's appearance and alter the plot of the romance.\n  When found, the book contains the following spells: hallucinatory terrain, major image, mirror image, mislead, Nystul's magic aura, phantasmal force and silent image. It functions as a spellbook for you.\n  While you are holding the book, you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the book, you can expend 1 charge to replace one of your prepard wizard spells with a different spell in the book. The new spell must be of the illusion school.\n  When a creature you can see makes an Intelligence (Investigation) check to discern the true nature of an illusion spell you cast, or makes a saving throw against an illusion spell you cast, you can use your reaction and expend 1 charge to impose disadvantage on the roll.",
+    descriptionFull : "To you, this book is a magical spellbook. To anyone else, the book appears to be a volume of verbose romance fiction. As an action, you can change the book's appearance and alter the plot of the romance.\n  When found, the book contains the following spells: hallucinatory terrain, major image, mirror image, mislead, Nystul's magic aura, phantasmal force and silent image. It functions as a spellbook for you.\n  While you are holding the book, you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the illusion school.\n  When a creature you can see makes an Intelligence (Investigation) check to discern the true nature of an illusion spell you cast, or makes a saving throw against an illusion spell you cast, you can use your reaction and expend 1 charge to impose disadvantage on the roll.",
     attunement : true,
     usages : 3,
     recovery : "dawn",
@@ -950,43 +959,50 @@ MagicItemsList["duplicitous manuscript"] = {
         spells : ["hallucinatory terrain"],
         selection : ["hallucinatory terrain"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Major Image",
         spells : ["major image"],
         selection : ["major image"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Mirror Image",
         spells : ["mirror image"],
         selection : ["mirror image"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Mislead",
         spells : ["mislead"],
         selection : ["mislead"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Nystul's Magic Aura",
         spells : ["nystul's magic aura"],
         selection : ["nystul's magic aura"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Phantasmal Force",
         spells : ["phantasmal force"],
         selection : ["phantasmal force"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     },{
         name : "Sient Image",
         spells : ["silent image"],
         selection : ["silent image"],
         allowUpCasting : true,
-        spellcastingAbility : 4
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
     }]
 }
 
@@ -1026,6 +1042,9 @@ MagicItemsList["elemental essence shard"] = {
         return v.isSpellcaster && classes.known.sorcerer ? true : false;},
     description : "While I hold or wear this crystal, I can attach it to an Tiny object or remove it.",
     descriptionFull : "This crackling crystal contains the essence of an elemental plane. As an action, you can attach the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus while you hold or wear it.\n  Roll a d4 and consult the Elemental Essence Shards table to determine the shard's essence and property. When you use a Metamagic option on a spell while you are holding or wearing the shard, you can use that property.\n  Elemental Essence Shards\nd4\tProperty\n 1\tAir. You can immediately fly up to 60 feet without\n\tprovoking opportunity attacks\n 2\tEarth. You gain resistance to a damage type of\n\tyour choice until the start of your next turn.\n 3\tFire. One target of the spell that you can see\n\tcatches fire. The burning target takes 2d10 fire\n\tdamage at the start of its next turn, and then the\n\tflames go out.\n 4\tWater. You create a wave of water that bursts out\n\tfrom you in a 10-foot-radius. Each creature of\n\tyour choice that you can see in that area takes\n\t2d6 cold tdamage and must succeed on a\n\tStrength saving throw against your spell save DC\n\tor be tpushed 10 feet away from you and fall\n\tprone.",
+    action : [
+        ["action", "Attach/Detach Shard"]
+    ],
     choices : ["air", "earth", "fire", "water"],
     "air" : {
         name : "Air Essence Shard",
@@ -1044,3 +1063,112 @@ MagicItemsList["elemental essence shard"] = {
         description : "Whie I hold or wear this crystal, when I use a Metamagic option I create a wave of water effects a 10-foot-radius. Each crature I choose in that area takes 2d6 cold damage and is pushed back 10 feet if it fails a Strength saving throw."
     }
 }
+
+MagicItemsList["far realm shard"] = {
+    name : "Far Realm Shard",
+    source : ["TCoE", 127],
+    type : "wondrous item",
+    rarity : "rare",
+    description : "With this crystal, when I use a metamagic option on a sorcerer spell I can cause a tentacle to attack a creature I can see within 30 ft. They must make a Charisma save against my spell DC or take 3d6 psychic damge and become frightened of me.",
+    descriptionFull : "This writhing crystal is steepd in the warped essence of the Far Realm. As an action, you can attatch the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus for your sorcerer spells while you hold or wear it.\n  When you use a Metamagic option on a spell while you are holding or wearing the shard, you can cause a slimy tentacle to rip through the fabric of reality and strike one creature you can see within 30 feet of you. The creature must succeed on a Charisma saving throw against your spell save DC or take 3d6 psychic damage and become frightened of you until the start of your next turn.",
+    attunement : true,
+    prerequisite : "Requires attunement by a sorcerer",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.sorcerer ? true : false;
+    },
+    action : [
+        ["action", "Tentacle Attack (w/metamagic)"],
+        ["action", "Attach/Detach Shard"]
+    ]
+}
+
+MagicItemsList["feywild shard"] = {
+    name : "Feywild Shard",
+    source : ["TCoE", 127],
+    type : "wondrous item",
+    rarity : "uncommon",
+    description : "With this crystal, when I use a metamagic option on a sorcerer spell I can roll on the Wild Magic Surge table. If I roll a spell, it's unaffected by the Metamagic and if it's concentration, it lasts the full duration without using concentration.",
+    descriptionFull : "This warm crystal glints with the sunset colors of the Feywild sky and evokes whispers of emotional memory. As an action, you can attatch the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus for your sorcerer spells while you hold or wear it.\n  When you use a Metamagic option on a spell while you are holding or wearing the shard, you can roll on the Wild Magic Surge table in the Player's Handbook. If the result is a spell, it is too wild to be affected by your Metamagic, and if it normally requires concentration, it doesn't require concentration in this case, the spell lasts for its full duration.\n  If you don't have the Wild Magic Sorcerous Origin, once the propery is uesd to roll on the Wild Magic Surge table, it can't be used again until the next dawn.",
+    attunement : true,
+    prerequisite : "Requires attunement by a sorcerer",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.sorcerer ? true : false;
+    },
+/*    eval : function() {
+        if(classes.known.sorcerer ? true : false){
+            if(classes.known.sorcerer.subclass.indexOf("wild magic") == -1) {
+                return("action : \[\[\"action\", \"Attach/Detach Shard\"\],[\"action\", \"Wild Magic Surge\"\]\]");
+            }
+            else return("action : [\"action\", \"Attach/Detach Shard\"\]");
+        }
+    }
+*/
+}
+
+MagicItemsList["fulminating treatise"] = {
+    name : "Fulminating Treatise",
+    source : ["TCoE",128],
+    type : "wondrous item",
+    rarity : "rare",
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "While I hold this book, I can use it as a spellcasting focus. If I spend 1 minute studying the book I can replace one of my prepared spells with one from the book. I can cause an extra 2d6 force damage and knock prone a creature I can see that I hit with an evocation spell.",
+    descriptionFull : "This think, scorched spellbook reeks of smoke and ozone, and sparks of energy crackle along the edges of its pages. When found, the book contains the following spells: contingency, fireball, gust of wind, Leomund's tiny hut, magic missile, thunderwave, and wall of force. It functions as a spellbook for you.\n  While you are holding the book, you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n  If you spend 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the evocation school.\n  When one creature you can see takes damage from an evocation spell you cast, you can use your reaction to expend 1 charge to deal an extra 2d6 force damage to the creature and knock the creature prone if it is Large or smaller.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    action : ["reaction", "Add 2d6 Force Dmg (1 chg)"],    
+    spellcastingBonus : [{
+        name : "Contingency",
+        spells : ["contingency"],
+        selection : ["contingency"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Fireball",
+        spells : ["fireball"],
+        selection : ["fireball"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Gust of Wind",
+        spells : ["gust of wind"],
+        selection : ["gust of wind"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Leomund's Tiny Hut",
+        spells : ["leomund's tiny hut"],
+        selection : ["leomund's tiny hut"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Magic Missile",
+        spells : ["magic missile"],
+        selection : ["magic missile"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Thunderwave",
+        spells : ["thunderwave"],
+        selection : ["thunderwave"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Wall of Force",
+        spells : ["wall of force"],
+        selection : ["wall of force"],
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    }]
+}
+
