@@ -1094,15 +1094,12 @@ MagicItemsList["feywild shard"] = {
     prereqeval : function(v) {
         return v.isSpellcaster && classes.known.sorcerer ? true : false;
     },
-/*    eval : function() {
+    action : ["action", "Attach/Detach Shard"],
+    eval : function() {
         if(classes.known.sorcerer ? true : false){
-            if(classes.known.sorcerer.subclass.indexOf("wild magic") == -1) {
-                return("action : \[\[\"action\", \"Attach/Detach Shard\"\],[\"action\", \"Wild Magic Surge\"\]\]");
-            }
-            else return("action : [\"action\", \"Attach/Detach Shard\"\]");
+            if(classes.known.sorcerer.subclass.indexOf("wild magic") == -1) AddAction("action", "Wild Magic Surge", "Feywild Shard");
         }
     }
-*/
 }
 
 MagicItemsList["fulminating treatise"] = {
@@ -1172,3 +1169,15 @@ MagicItemsList["fulminating treatise"] = {
     }]
 }
 
+MagicItemsList["ghost step tattoo"] = {
+    name : "Ghost Step Tattoo",
+    source : ["TCoE",128],
+    type : "wondrous item",
+    rarity : "very rare",
+    description : "While this tattoo is on my skin, as a bonus action, I can expend 1 charge to become incorporeal until the end of my next turn.",
+    descriptionFull : "Produced by a special needle, this tatoo shifts and wavers on the skin, parts of it appearing blurred.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Ghostly Form. The tattoo has 3 charges, and it regains all expended charges daily at dawn. As a bonus action while the tattoo is on your skin, you can expend 1 of the tattoo's charges to become incorporeal unti the end of your next turn. For the duration, you gain the following benefits:\n  You have resistence to bludgeoning, piercing, and slashing damage from nonmagical attacks.\n  You can move through creatures and solid objects as if they were difficult terrain. If you end your turn in a solid object, you take 1d10 force damage. If the effect ends while your are inside a solid object, you instead are shunted to the nearest unoccupied space, and you take 1d10 force damage for every 5 feet traveled.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    action : ["bonus action", "Ghostly Form"]
+}
