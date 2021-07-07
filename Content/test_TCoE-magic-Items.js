@@ -1266,3 +1266,16 @@ MagicItemsList["heart weaver's primer"] = {
         spellcastingAbility : 4
     }]
 }
+
+MagicItemsList["illuminator's tattoo"] = {
+    name : "Illuminator's Tattoo",
+    source : ["TCoE",129],
+    type : "wondrous item",
+    rarity : "common",
+    description : "While this tatoo is on my skin, I can write with my fingertip as if it is an ink pen that never runs out of ink. As an action, I can touch writing up to one page, speak a creature's name and make it invisible for up to 24 hours or until I or the named creature touch it.",
+    descriptionFull : "Produced by a special needle, this magic tatoo features beautiful calligraphy, images of writing implements and the like.\n  Tattoo Attunement. To attune to this item, you hold the needle to your skin where you want the tattoo to appear, pressing the needle there throughout the attunement process. When the attunement is complete, the needle turns into the ink that becomes the tattoo, which appears on the skin.\n  If your attunement to the tattoo ends, the tattoo vanishes, and the needle reappears in your space.\n  Magical Scribing. While the tattoo is on your skin, you can write with your fingertip as if it were an ink pen that never runs out of ink.\n  As an action, you can touch a piece of writing up to one page in length and speak a creature's name. The writing becomes invisible to everyone other than you and the named creature for the next 24 hours. Either of you can dismiss the invisibility by touching the script (no action required). Once used, this action can't be used again until the next dawn.",
+    attunement : true,
+    usages : 1,
+    recovery : "dawn",
+    action : ["action", "Magical Scribing"]
+}
