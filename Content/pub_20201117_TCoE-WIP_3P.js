@@ -5050,6 +5050,8 @@ AddFeatureChoice(ClassSubList["fighter-battle master"].features["subclassfeature
 }
 
 // Monk Optional Class Features
+/* Remove Dedicated Weapon as it conflicts with UA:CFV
+
 CreateClassFeatureVariant("monk", "martial arts", "Choose Monk Weapons", {
 	name : "Dedicated Weapon",
 	source : ["T", 48],
@@ -5119,6 +5121,7 @@ if (origMartialArts["\x1B[original] martial arts"]) {
 		delete origMartialArts["\x1B[original] martial arts"][n];
 	});
 }
+*/
 // Ki enhancements
 AddFeatureChoice(ClassList.monk.features.ki, true, "Ki-Fueled Attack", {
 	name : "Ki-Fueled Attack",
@@ -5179,7 +5182,8 @@ AddFeatureChoice(ClassList.paladin.features["fighting style"], true, "Martial Ve
 	"Optional Class Features");
 
 // Ranger Optional Class Features
-/*
+/* Remove Deft Explorer as it conflicts with UA:CFV
+
 //Deft Explorer
 var origNatExpl = ClassList.ranger.features["natural explorer"];
 var origNatExplNm = "\x1B[original] " + origNatExpl.name;
