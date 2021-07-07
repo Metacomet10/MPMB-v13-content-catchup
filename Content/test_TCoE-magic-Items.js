@@ -765,7 +765,6 @@ MagicItemsList["crystalline chronicle"] = {
         firstCol : "checkbox",
         allowUpCasting : true,
         spellcastingAbility : 4,
-        firstCol : "checkbox"
     },{
         name : "Intellect Fortress",
         spells : ["intellect fortress"],
@@ -773,7 +772,6 @@ MagicItemsList["crystalline chronicle"] = {
         firstCol : "checkbox",
         allowUpCasting : true,
         spellcastingAbility : 4,
-        firstCol : "checkbox"
     },{
         name : "Mage Hand",
         spells : ["mage hand"],
@@ -1200,4 +1198,71 @@ MagicItemsList["guardian emblem"] = {
         ["action", "Attach/Detach Emblem"],
         ["action", "Cancel Critical Hit"]
     ]
+}
+
+MagicItemsList["heart weaver's primer"] = {
+    name : "Heart Weaver's Primer",
+    source : ["TCoE",128],
+    type : "wondrous item",
+    rarity : "rare",
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "I can use this primer as a spellbook. I can spend 1 charge to replace a prepared spell with one from the book after studying it for 1 minute. I can use 1 charge to add disadvantage to the first saving throw of the target of my enchantment spell.",
+    descriptionFull : "This pristine book smells faintly of a random scent you find pleasing. When found, the book contains the following spells: antipathy/sympathy, charm person, dominate person, enthrall, hypnotic pattern, modify memory, and suggestion. It functions as a spellbook for you.\n  While you are holding the book you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\m  If you sepnd 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the enchantment school.\n  When you cast an enchantment spell, you can expend 1 charge to impose disadvantage on the first saving throw one target makes against the spell.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    spellcastingBonus : [{
+        name : "Antipathy/Sympathy",
+        spells : ["antipathy/sympathy"],
+        selection : ["antipathy/sympathy"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+    },{
+        name : "Charm Person",
+        spells : ["charm person"],
+        selection : ["charm person"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+        firstCol : "checkbox"
+    },{
+        name : "Dominate Person",
+        spells : ["dominate person"],
+        selection : ["dominate person"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Enthrall",
+        spells : ["enthrall"],
+        selection : ["enthrall"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Hypnotic Pattern",
+        spells : ["hypnotic pattern"],
+        selection : ["hypnotic pattern"],
+        firstCol : "atwill",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Modify Memory",
+        spells : ["modify memory"],
+        selection : ["modify memory"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Suggestion",
+        spells : ["suggestion"],
+        selection : ["suggestion"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    }]
 }
