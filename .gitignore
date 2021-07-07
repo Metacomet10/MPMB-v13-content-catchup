@@ -1,3 +1,5 @@
 
 .DS_Store
 *.code-workspace
+TCOE_Feats*.js
+test*.js
