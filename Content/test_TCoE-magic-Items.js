@@ -292,7 +292,7 @@ MagicItemsList["moon sickle"] = {
     attunement : true,
     prerequisite : "Requires attunement by a druid or ranger",
     prereqeval : function(v) {
-        return v.isSpellcaster && (classes.known.druid ? true : false || classes.known.ranger ? true : false);
+        return classes.known.druid ? true : false || classes.known.ranger ? true : false;
     },
     description : "While holding this sickle, I can add 1d4 to the number of hit points recovered by my healing spells. I gain a bonus to attack and damage rolls made with it as well as spell attack rolls and saving throw DCs. This blade is made of silver.",
     descriptionFull : "This silver-bladed sickle glimmers softly with moonlight. While holding this magic weapon, you gain a bonus to attack and damage rolls made with it, an dyou gain a bonus to spell attack rolls and the saving throw DCs of your druid and ranger spells. The bonus is determined by the weapon's rarity. In addition, you can use the sickle as a spellcasting focus for your druid and ranger spells.\n  When you cast a spell that restores hit points, you can rol a d4 and add the number rolled to the amount of hit points restored, provided you are holding the sickle.",
@@ -369,4 +369,33 @@ MagicItemsList["moon sickle"] = {
             range : "Melee",
         }]
     }
+}
+
+MagicItemsList["nature's mantle"] = {
+    name : "Nature's Mantle",
+    source : ["TCoE", 133],
+    type : "wonderous item",
+    rarity : "uncommon",
+    description : "While wearing this cloak, I can Hide as a bonus action in an area that is lightly obscured even if being directly observed. I can also use it as a spellcasting focus for my druid and ranger spells.",
+    descriptionFull : "This cloak shifts color and texture to blend with the terrain surrounding you. While wearing the cloak, you can use it as a spellcasting focus for your druid and ranger spells.\n  While you are in an area that is lightly obscured, you can Hide as a bonus action even if you are being directly observed.",
+    attunement : true,
+    prerequisite : "Requires attunement by a druid or ranger.",
+    prereqeval : function(v) {
+        return classes.known.druid ? true : false || classes.known.ranger ? true : false || classes.known.rangerua ? true : false;
+    },
+    action : ["bonus action", "Hide in Light Obscurment"]
+}
+
+MagicItemsList["outer essence shard"] = {
+    name : "Outer Essence Shard",
+    source : ["TCoE", 133],
+    type : "wondrous item",
+    rarity : "rare",
+    description : "While I hold or wear this crystal, I can teleport to an unoccupied space within 30 feet that I can see immediately following the use of a metamagic option while casting a sorcerer spell.",
+    descriptionFull : "  This flickering crystal holds the essence of an Outer Plane. As an action, you can attach the shard to a Tiny object (such as a weapon or a piece of jewelry) or detach it. It falls off if your attunement to it ends. You can use the shard as a spellcasting focus while you hold or wear it.\n  Roll a d4 and consult the Outer Essence Shards table to determine the shard's essence and property. When you use a Metamagic option on a spell while you are holding or wearing the shard, you can use that property.\nd4\tProperty\n 1\tLawful. You can end one of the following\n\tconditions affecting yourself or one creature\n\tyou can see within 30 feet of you: charmed,\n\tblinded, deafened, frightened, poisoned, or\n\tstunned\n 2\tChaotic. Choose one creature who takes damage\n\tfrom the spell. That target has disadvantage on\n\tattack rolls and ability checks made before the\n\tstart of your next turn.\n 3\tGood. You or one creature of your choice that you\n\tcan see within 30 feet of you gains 3d6\n\ttemporary hit points.\n 4\tEvil. Choose one creature who takes damage from\n\tthe spell. That target takes an extra 3d6 necrotic\n\tdamage.",
+    attunement : true,
+    prerequisite : "Requires attunement by a sorcerer",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.sorcerer ? true : false;
+    },
 }
