@@ -8341,7 +8341,7 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    return 1;
+                    if(type !== "prepare") return 1;
                 },
                 "I add +1 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
             ]
@@ -8365,7 +8365,7 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
                 spellCalc : [
                 function (type, spellcasters, ability) {
-                    return 2;
+                    if(type !== "prepare") return 2;
                 },
                 "I add +2 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
             ]
@@ -8389,7 +8389,7 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    return 3;
+                    if(type !== "prepare") return 3;
                 },
                 "I add +3 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
             ]
