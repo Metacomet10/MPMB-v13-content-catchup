@@ -24,10 +24,7 @@ MagicItemsList["libram of souls and flesh"] = {
     attunement : true,
     usages : 3,
     recovery : "dawn",
-    action : [
-        ["action", "Spell Replacement"],
-        ["action", "Semblance of Undeath"]
-    ],
+    action : ["action", "Semblance of Undeath"],
     spellcastingBonus : [{
         name : "Animate Dead",
         spells : ["animate dead"],
@@ -398,4 +395,140 @@ MagicItemsList["outer essence shard"] = {
     prereqeval : function(v) {
         return v.isSpellcaster && classes.known.sorcerer ? true : false;
     },
+}
+
+MagicItemsList["planecaller's codex"] = {
+    name : "Planecaller's Codex",
+    source : ["TCoE",134],
+    type : "wondrous item",
+    rarity : "rare",
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "I can use this codex as a spellbook. I can spend 1 charge to replace a prepared spell with one from the book after studying it for 1 minute. I can use 1 charge to give advantage for 1 minute to a creature when I summon or create it.",
+    descriptionFull : "  The pages of this book are bound in fiend hide, and its cover is embossed with a diagram of the Great Wheel of the multiverse. When found, the book contains the following spells: banishment, find familiar, gate, magic circle, planar binding, and summon elemental. It functions as a spellbook for you.\n  While you are holding the book you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n \u2022 If you sepnd 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the conjuration school.\n \u2022 When you cast an conjuration spell that summmons or creates one creature, you can expend 1 charge to grant that creature advantage on attack rolls for 1 minute.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    spellcastingBonus : [{
+        name : "Banishment",
+        spells : ["banishment"],
+        selection : ["banishment"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+    },{
+        name : "Find Familiar",
+        spells : ["find familiar"],
+        selection : ["find familiar"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Gate",
+        spells : ["gate"],
+        selection : ["gate"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Magic Circle",
+        spells : ["magic circle"],
+        selection : ["magic circle"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Planar Binding",
+        spells : ["planar binding"],
+        selection : ["planar binding"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Summon Elemental",
+        spells : ["summon elemental"],
+        selection : ["summon elemental"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    }]
+}
+
+MagicItemsList["prosthetic limb"] = {
+    name : "Prosthetic Limb",
+    source : ["TCoE",134],
+    type : "wondrous item",
+    rarity : "common",
+    description : "I use this prosthetic to replace a lost body part. It cannot be removed against my will. I can attach or reattach it as an action. It detaches if I die.",
+    descriptionFull : "This item replaces a lost limb--a hand, an arm, a foot, a leg, or a similar body part. While the prosthetic is attached, it functions identically to the part it replaces. You can detach or reattach it as an action and it can't be removed against your will. It detaches if you die.",
+    action : ["action", "Detach/Reattach Prosthetic Limb"]
+}
+
+MagicItemsList["protective verses"] = {
+    name : "Protective Verses",
+    source : ["TCoE",134],
+    type : "wondrous item",
+    rarity : "rare",
+    prerequisite : "Requires attunement by a wizard",
+    prereqeval : function(v) {
+        return v.isSpellcaster && classes.known.wizard ? true : false;
+    },
+    description : "I can use this book as a spellbook. I can spend 1 charge to replace a prepared spell with one from the book after studying it for 1 minute. I can use 1 charge to give 2d10 temporary hit points to a creature I can see within 30 ft when I cast an abjuration spell.",
+    descriptionFull : "  This leather-bound spellbook is reinforced with iron and silver fittings and an iron lock (DC 20 to open). As an action, you can touch the book's cover and cause it to lock as if you cast arcane lock on it. When found, the book contains the following spells: arcane lock, dispel magic, globe of invulnerability, glyph of warning, Mordenkainen's private sanctum, protection from evil, and symbol. It functions as a spellbook for you.\n  While you are holding the book you can use it as a spellcasting focus for your wizard spells.\n  The book has 3 charges, and it regains 1d3 expended charges daily at dawn. You can use the charges in the following ways while holding it:\n \u2022 If you sepnd 1 minute studying the book, you can expend 1 charge to replace one of your prepared wizard spells with a different spell in the book. The new spell must be of the abjuration school.\n \u2022 When you cast an abjuration spell, you can expend 1 charge to grant a creature you can see within 30 feet of you 2d10 temporary hit points.",
+    attunement : true,
+    usages : 3,
+    recovery : "dawn",
+    action : ["action", "Lock Protective Verses"],
+    spellcastingBonus : [{
+        name : "Arcane Lock",
+        spells : ["arcane lock"],
+        selection : ["arcane lock"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4,
+    },{
+        name : "Dispel Magic",
+        spells : ["dispel magic"],
+        selection : ["dispel magic"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Globe of Invulnerability",
+        spells : ["globe of invulnerability"],
+        selection : ["globe of invulnerability"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Glyph of Warding",
+        spells : ["glyph of warding"],
+        selection : ["glyph of warding"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Mordenkainen's Private Sanctum",
+        spells : ["mordenkainen's private sanctum"],
+        selection : ["mordenkainen's private sanctum"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Protection from Evil and Good",
+        spells : ["protection from evil and good"],
+        selection : ["protection from evil and good"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    },{
+        name : "Symbol",
+        spells : ["symbol"],
+        selection : ["symbol"],
+        firstCol : "checkbox",
+        allowUpCasting : true,
+        spellcastingAbility : 4
+    }]
 }
