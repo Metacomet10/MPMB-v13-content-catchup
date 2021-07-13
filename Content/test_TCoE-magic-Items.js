@@ -282,3 +282,91 @@ MagicItemsList["mighty servant of leuk-o"] = {
     attunement : true,
     action : ["reaction", "Destructive Fist Attack"],
 }
+
+MagicItemsList["moon sickle"] = {
+    name : "Moon Sickle",
+    nameTest : /^(?=.*moon)(?=sickle).*$/i,
+    source : ["TCoE", 133],
+    defaultExcluded : true,
+    type : "weapon",
+    attunement : true,
+    prerequisite : "Requires attunement by a druid or ranger",
+    prereqeval : function(v) {
+        return v.isSpellcaster && (classes.known.druid ? true : false || classes.known.ranger ? true : false);
+    },
+    description : "While holding this sickle, I can add 1d4 to the number of hit points recovered by my healing spells. I gain a bonus to attack and damage rolls made with it as well as spell attack rolls and saving throw DCs. This blade is made of silver.",
+    descriptionFull : "This silver-bladed sickle glimmers softly with moonlight. While holding this magic weapon, you gain a bonus to attack and damage rolls made with it, an dyou gain a bonus to spell attack rolls and the saving throw DCs of your druid and ranger spells. The bonus is determined by the weapon's rarity. In addition, you can use the sickle as a spellcasting focus for your druid and ranger spells.\n  When you cast a spell that restores hit points, you can rol a d4 and add the number rolled to the amount of hit points restored, provided you are holding the sickle.",
+    choices : ["+1 sickle (uncommon)", "+2 sickle (rare)", "+3 sickle (very rare)"],
+    "+1 sickle (uncommon)" : {
+        name : "Moon Sickle +1",
+        rarity : "uncommon",
+        description : "While holding this sickle, I can add 1d4 to the number of hit points recovered by my healing spells. I gain a +1 bonus to attack and damage rolls made with it as well as spell attack rolls and saving throw DCs. This blade is made of silver.",
+        calcChanges : {
+            spellCalc : [
+                function (type, spellcasters, ability) {
+                    return 1;
+                },
+                "I add +1 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
+            ]
+        },
+        weaponOptions : [{
+            name : "Moon Sickle +1",
+            source : ["TCoE", 133],
+            RegExpSearch : /^(?=.*moon)(?=.*sickle).*$/i,
+            description : "Light",
+            modifiers : [1,1],
+            type : "simple",
+            ability : 1,
+            damage : [1, 4, "slashing"],
+            range : "Melee",
+        }]
+    },
+    "+2 sickle (rare)" : {
+        name : "Moon Sickle +2",
+        rarity : "rare",
+        description : "While holding this sickle, I can add 1d4 to the number of hit points recovered by my healing spells. I gain a +2 bonus to attack and damage rolls made with it as well as spell attack rolls and saving throw DCs. This blade is made of silver.",
+        calcChanges : {
+                spellCalc : [
+                function (type, spellcasters, ability) {
+                    return 2;
+                },
+                "I add +2 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
+            ]
+        },
+        weaponOptions : [{
+            name : "Moon Sickle +2",
+            source : ["TCoE", 133],
+            RegExpSearch : /^(?=.*moon)(?=.*sickle).*$/i,
+            description : "Light",
+            modifiers : [2,2],
+            type : "simple",
+            ability : 1,
+            damage : [1, 4, "slashing"],
+            range : "Melee",
+        }]
+    },
+    "+3 sickle (very rare)" : {
+        name : "Moon Sickle +3",
+        rarity : "very rare",
+        description : "While holding this sickle, I can add 1d4 to the number of hit points recovered by my healing spells. I gain a +3 bonus to attack and damage rolls made with it as well as spell attack rolls and saving throw DCs. This blade is made of silver.",
+        calcChanges : {
+            spellCalc : [
+                function (type, spellcasters, ability) {
+                    return 3;
+                },
+                "I add +3 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
+            ]
+        },
+        weaponOptions : [{
+            name : "Moon Sickle +3",
+            source : ["TCoE", 133],
+            RegExpSearch : /^(?=.*moon)(?=.*sickle).*$/i,
+            description : "Light",
+            modifiers : [3,3],
+            type : "simple",
+            ability : 1,
+            damage : [1, 4, "slashing"],
+            range : "Melee",
+        }]
+    }
+}
