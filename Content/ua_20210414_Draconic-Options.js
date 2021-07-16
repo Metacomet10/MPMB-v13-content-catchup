@@ -31,7 +31,7 @@ SpellsList["flame stride"] = {
 	classes : ["artificer", "ranger", "sorcerer", "wizard"],
 	source : [["UA:DO", 6]],
 	level : 3,
-	school : "Tran",
+	school : "Trans",
 	time : "1 bns",
 	range : "Self",
 	components : "V,S",
