@@ -96,20 +96,6 @@ AddRacialVariant("draconic kobold", "brave", {
 	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 I have advantage on saving throws to avoid or end the frightened condition on myself. \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
 });
 
-AddRacialVariant("draconic kobold", "cantrip", {
-	regExpSearch : /cantrip/i,
-	name : "Draconic Kobold-Cantrip",
-	source : ["UA:DO", 4],
-	plural : "Draconic Kobolds",
-	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Cantrip:\n   I know one cantrip from the sorcerer spell list. Intelligence, Wisdom, or Charisma is my spellcasting ability for that cantrip (choosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
-	spellcastingBonus : {
-		name : "Draconic Legacy",
-		"class" : "sorcerer",
-		level : [0, 0],
-		firstCol : 'atwill'
-	}
-});
-
 AddRacialVariant("draconic kobold", "tail", {
 	regExpSearch : /tail/i,
 	name : "Draconic Kobold-Tail",
@@ -124,4 +110,49 @@ AddRacialVariant("draconic kobold", "tail", {
 		damage : [1, 6, "bludgeoning"]
 	},
 	weaponsAdd : ["Draconic Tail"],
+});
+
+AddRacialVariant("draconic kobold", "cantrip (Intelligence)", {
+	regExpSearch : /cantrip/i,
+	name : "Draconic Kobold-Cantrip",
+	source : ["UA:DO", 4],
+	plural : "Draconic Kobolds",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Cantrip. I know one cantrip from the sorcerer spell list. Intelligence is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	spellcastingBonus : {
+		name : "Draconic Legacy",
+		"class" : "sorcerer",
+		level : [0, 0],
+		firstCol : 'atwill'
+	},
+	spellcastingAbility : 4,
+});
+
+AddRacialVariant("draconic kobold", "cantrip (Wisdom)", {
+	regExpSearch : /cantrip/i,
+	name : "Draconic Kobold-Cantrip",
+	source : ["UA:DO", 4],
+	plural : "Draconic Kobolds",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Cantrip. I know one cantrip from the sorcerer spell list. Wisdom is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	spellcastingBonus : {
+		name : "Draconic Legacy",
+		"class" : "sorcerer",
+		level : [0, 0],
+		firstCol : 'atwill'
+	},
+	spellcastingAbility : 5,
+});
+
+AddRacialVariant("draconic kobold", "cantrip (Charisma)", {
+	regExpSearch : /cantrip/i,
+	name : "Draconic Kobold-Cantrip",
+	source : ["UA:DO", 4],
+	plural : "Draconic Kobolds",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Cantrip. I know one cantrip from the sorcerer spell list. Charisma is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	spellcastingBonus : {
+		name : "Draconic Legacy",
+		"class" : "sorcerer",
+		level : [0, 0],
+		firstCol : 'atwill'
+	},
+	spellcastingAbility : 6,
 });
