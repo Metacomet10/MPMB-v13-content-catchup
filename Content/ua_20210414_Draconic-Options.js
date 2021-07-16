@@ -26,7 +26,22 @@ SpellsList["icingdeath's frost"] = {
 	descriptionMetric : "5-m cone centered on you 3d8+1d8/SL Cold dmg \u0026 spd 0; save half and no speed reduction.",
 	descriptionFull : "A burst of icy cold energy emanates from you in a 30-foot cone. Each creature in that area must make a Constitution saving throw. On a failed save, a creature takes 3d8 cold damage and is covered in ice for 1 minute or until a creature uses its action to break the ice off itself or another creature. A creature covered in ice has its speed reduced to 0. On a successful save, a creature takes half as much damage with no additional effects." + AtHigherLevels + "When you cast this spell using a spell slot of 3rd level or higher, increase the cold damage by 1d8 for each slot level above 2nd."
 };
-
+SpellsList["flame stride"] = {
+	name : "Flame Stride",
+	classes : ["artificer", "ranger", "sorcerer", "wizard"],
+	source : [["UA:DO", 6]],
+	level : 3,
+	school : "Tran",
+	time : "1 bns",
+	range : "Self",
+	components : "V,S",
+	duration : "Conc, 1 min",
+    description : "+20 ft +5 ft/SL speed, no opp att, 1d6+1d6/SL Fire damage to creature/object within 5 ft of my path",
+    descriptionShorter : "+20 ft +5 ft/SL speed, no opp att, 1d6+1d6/SL Fire damage to creature/object within 5 ft of my path",
+	descriptionFull : "The billowing flames of a dragon cover my feet, granting me explosive speed. For the duration, my speed increases by 20 feet and moving doesn’t provoke opportunity attacks."+
+	"\n   When I move within 5 feet of a creature or object that isn’t being worn or carried, it takes 1d6 fire damage from my trail of heat. A creature or object can take this damage only once during a turn."+
+	AtHigherLevels + "When I cast this spell using a spell slot of 4th level or higher, my speed increases by 5 feet for each spell slot level above 3rd. Additionally, the spell deals an additional 1d6 fire damage for each slot level above 3rd.",
+};
 // Add Draconic Kobolds
 RaceList["draconic kobold"] = {
 	regExpSearch : /kobold/i,
