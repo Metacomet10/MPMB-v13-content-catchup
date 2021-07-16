@@ -7969,7 +7969,7 @@ MagicItemsList["guardian emblem"] = {
     recovery : "dawn",
     action : [
         ["action", "Attach/Detach Emblem"],
-        ["action", "Cancel Critical Hit"]
+        ["reaction", "Cancel Critical Hit"]
     ]
 }
 

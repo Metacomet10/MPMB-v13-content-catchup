@@ -59,9 +59,51 @@ MagicItemsList["teeth of dahlver-nar"] = {
 	}],
 	attunement : true,
 	spellcastingBonus : [{
-        name : "Disguise Self",
-        spells : ["disguise self"],
-        selection : ["disguise self"],
-        fixedDC : 13
-    }]
+        name : "Implanted Tooth d20 = 1",
+        spells : ["revivify"],
+        selection : ["revivify"],
+        firstCol : "1"
+    },{
+		name : "Implanted Tooth d20 = 2",
+        spells : ["sanctuary"],
+        selection : ["sanctuary"],
+        firstCol : "2"
+	},{
+		name : "Implanted Tooth d20 = 8",
+        spells : ["detect thoughts"],
+        selection : ["detect thoughts"],
+        firstCol : "8"
+	},{
+		name : "Implanted Tooth d20 = 10",
+        spells : ["evard's black tentacles"],
+        selection : ["evard's black tentacles"],
+        fixedDC : 18,
+		firstCol : "10"
+	},{
+		name : "Implanted Tooth d20 = 12",
+        spells : ["eyebite"],
+        selection : ["eyebite"],
+		firstCol : "12"
+	},{
+		name : "Implanted Tooth d20 = 13",
+        spells : ["detect magic"],
+        selection : ["detect magic"],
+		firstCol : "13"
+	},{
+		name : "Implanted Tooth d20 = 14",
+        spells : ["create undead"],
+        selection : ["create undead"],
+		firstCol : "14"
+	},{
+		name : "Implanted Tooth d20 = 15",
+        spells : ["counterspell"],
+        selection : ["counterspell"],
+		firstCol : "15"
+	},{
+		name : "Implanted Tooth d20 = 16",
+        spells : ["dominate monster"],
+        selection : ["dominate monster"],
+        fixedDC : 18,
+		firstCol : "16"
+	}]
 }
