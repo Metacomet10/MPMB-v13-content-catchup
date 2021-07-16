@@ -8341,7 +8341,7 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare" && ((spellcasters.indexOf("ranger") != 1) || (spellcasters.indexOf("druid") != -1))) return 1;
+                    if(type !== "prepare" && (/druid|ranger/).test(spellcasters)) return 1;
                 },
                 "I add +1 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
             ],
@@ -8373,7 +8373,7 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
                 spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare" && ((spellcasters.indexOf("ranger") != 1) || (spellcasters.indexOf("druid") != -1))) return 2;
+                    if(type !== "prepare" && (/druid|ranger/).test(spellcasters)) return 2;
                 },
                 "I add +2 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
             ],
@@ -8405,7 +8405,7 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare" && ((spellcasters.indexOf("ranger") != 1) || (spellcasters.indexOf("druid") != -1))) return 3;
+                    if(type !== "prepare" && (/druid|ranger/).test(spellcasters)) return 3;
                 },
                 "I add +3 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
             ],
@@ -8624,7 +8624,7 @@ MagicItemsList["reveler's concertina"] = {
     calcChanges : {
         spellCalc : [
             function (type, spellcasters, ability) {
-                if(type !== "prepare") return 2;
+                if(type !== "prepare" && (/bard/).test(spellcasters)) return 2;
             },
             "I add +2 to all spell attack rolls and the saving throw DCs of my bard spells."
         ]
@@ -8653,7 +8653,7 @@ MagicItemsList["rhythm maker's drum"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare") return 1;
+                    if(type !== "prepare" && (/bard/).test(spellcasters)) return 1;
                 },
                 "I add +1 to all spell attack rolls and the saving throw DCs of my bard spells."
             ]
@@ -8666,7 +8666,7 @@ MagicItemsList["rhythm maker's drum"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare") return 2;
+                    if(type !== "prepare" && (/bard/).test(spellcasters)) return 2;
                 },
                 "I add +2 to all spell attack rolls and the saving throw DCs of my bard spells."
             ]
@@ -8679,7 +8679,7 @@ MagicItemsList["rhythm maker's drum"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare") return 3;
+                    if(type !== "prepare" && (/bard/).test(spellcasters)) return 3;
                 },
                 "I add +3 to all spell attack rolls and the saving throw DCs of my bard spells."
             ]
