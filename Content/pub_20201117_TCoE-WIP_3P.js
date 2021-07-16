@@ -8341,17 +8341,25 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare") return 1;
+                    if(type !== "prepare" && ((spellcasters.indexOf("ranger") != 1) || (spellcasters.indexOf("druid") != -1))) return 1;
                 },
                 "I add +1 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
-            ]
+            ],
+			atkCalc : [
+				function (fields, v, output) {
+					if (v.WeaponTextName == 'Moon Sickle') {
+						output.extraDmg += 1;
+						output.extraHit += 1;
+					};
+				},
+				"I add +1 to all weapon attack rolls and damage rolls.",	
+			]
         },
         weaponOptions : [{
             name : "Moon Sickle +1",
             source : ["TCoE", 133],
             RegExpSearch : /^(?=.*moon)(?=.*sickle).*$/i,
             description : "Light",
-            modifiers : [1,1],
             type : "simple",
             ability : 1,
             damage : [1, 4, "slashing"],
@@ -8365,17 +8373,25 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
                 spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare") return 2;
+                    if(type !== "prepare" && ((spellcasters.indexOf("ranger") != 1) || (spellcasters.indexOf("druid") != -1))) return 2;
                 },
                 "I add +2 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
-            ]
+            ],
+			atkCalc : [
+				function (fields, v, output) {
+					if (v.WeaponTextName == 'Moon Sickle') {
+						output.extraDmg += 2;
+						output.extraHit += 2;
+					};
+				},
+				"I add +2 to all weapon attack rolls and damage rolls.",	
+			]
         },
         weaponOptions : [{
             name : "Moon Sickle +2",
             source : ["TCoE", 133],
             RegExpSearch : /^(?=.*moon)(?=.*sickle).*$/i,
             description : "Light",
-            modifiers : [2,2],
             type : "simple",
             ability : 1,
             damage : [1, 4, "slashing"],
@@ -8389,17 +8405,25 @@ MagicItemsList["moon sickle"] = {
         calcChanges : {
             spellCalc : [
                 function (type, spellcasters, ability) {
-                    if(type !== "prepare") return 3;
+                    if(type !== "prepare" && ((spellcasters.indexOf("ranger") != 1) || (spellcasters.indexOf("druid") != -1))) return 3;
                 },
                 "I add +3 to all spell attack rolls and saving throw DCs of my druid and ranger spells",
-            ]
+            ],
+			atkCalc : [
+				function (fields, v, output) {
+					if (v.WeaponTextName == 'Moon Sickle') {
+						output.extraDmg += 3;
+						output.extraHit += 3;
+					};
+				},
+				"I add +3 to all weapon attack rolls and damage rolls.",	
+			]
         },
         weaponOptions : [{
             name : "Moon Sickle +3",
             source : ["TCoE", 133],
             RegExpSearch : /^(?=.*moon)(?=.*sickle).*$/i,
             description : "Light",
-            modifiers : [3,3],
             type : "simple",
             ability : 1,
             damage : [1, 4, "slashing"],
