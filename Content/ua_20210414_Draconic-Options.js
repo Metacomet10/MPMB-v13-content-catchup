@@ -12,14 +12,14 @@ SourceList["UA:DO"] = {
 //New Draconic Option Spells
 SpellsList["icingdeath's frost"] = {
 	name : "Icingdeath's Frost",
-	classes : ["warlock", "wizard"],
+	classes : ["sorcerer", "wizard"],
 	source : ["UA:DO", 6],
 	level : 2,
 	school : "Evoc",
 	time : "1 a",
 	range : "Self",
-	components : "S,M\u2020",
-	compMaterial : "A vial of water",
+	components : "S,M",
+	compMaterial : "A vial of meltwater",
 	duration : "Instantaneous",
 	save : "Con",
 	description : "15-ft cone centered on you 3d8+1d8/SL Cold dmg \u0026 spd 0; save half and no speed reduction.",
@@ -38,9 +38,7 @@ SpellsList["flame stride"] = {
 	duration : "Conc, 1 min",
     description : "+20 ft +5 ft/SL speed, no opp att, 1d6+1d6/SL Fire damage to creature/object within 5 ft of my path",
     descriptionShorter : "+20 ft +5 ft/SL speed, no opp att, 1d6+1d6/SL Fire damage to creature/object within 5 ft of my path",
-	descriptionFull : "The billowing flames of a dragon cover my feet, granting me explosive speed. For the duration, my speed increases by 20 feet and moving doesn’t provoke opportunity attacks."+
-	"\n   When I move within 5 feet of a creature or object that isn’t being worn or carried, it takes 1d6 fire damage from my trail of heat. A creature or object can take this damage only once during a turn."+
-	AtHigherLevels + "When I cast this spell using a spell slot of 4th level or higher, my speed increases by 5 feet for each spell slot level above 3rd. Additionally, the spell deals an additional 1d6 fire damage for each slot level above 3rd.",
+	descriptionFull : "The billowing flames of a dragon cover your feet, granting you explosive speed. For the duration, your speed increases by 20 feet and moving doesn’t provoke opportunity attacks." + "\n   " + "When you move within 5 feet of a creature or object that isn’t being worn or carried, it takes 1d6 fire damage from your trail of heat. A creature or object can take this damage only once during a turn." + AtHigherLevels + "When you cast this spell using a spell slot of 4th level or higher, increase your speed by 5 feet for each spell slot level above 3rd. Additionally, the spell deals an additional 1d6 fire damage for each slot level above 3rd.",
 };
 // Add Draconic Kobolds
 RaceList["draconic kobold"] = {
@@ -70,7 +68,7 @@ RaceList["draconic kobold"] = {
 			recovery: "long rest"
 		},
 	},
-	trait : "Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy. Choose an option for this feature with the 'Variant Options' button below.  \n \u2022 Draconic Roar. As a bonus action, I let out a draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any enemies who could hear the roar.",
 };
 AddRacialVariant("draconic kobold", "brave", {
 	regExpSearch : /brave/i,
@@ -78,14 +76,14 @@ AddRacialVariant("draconic kobold", "brave", {
 	source : ["UA:DO", 4],
 	plural : "Draconic Kobolds",
 	savetxt : { adv_vs : ["frightened"] },
-	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Brave). I have advantage on saving throws to avoid or end the frightened condition on myself. \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Brave). I have advantage on saving throws to avoid or end the frightened condition on myself. \n \u2022 Draconic Roar. As a bonus action, I let out a draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any enemies who could hear the roar.",
 });
 AddRacialVariant("draconic kobold", "tail", {
 	regExpSearch : /tail/i,
 	name : "Draconic Kobold-Tail",
 	source : ["UA:DO", 4],
 	plural : "Draconic Kobolds",
-	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Tail). I can make unarmed strikes with my tail. The Draconic Tail deals 1d6 + my Strength modifier bludgeoning damage. \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Tail). I can make unarmed strikes with my tail. The tail deals 1d6 + my Strength modifier bludgeoning damage. \n \u2022 Draconic Roar. As a bonus action, I let out a draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any enemies who could hear the roar.",
 	weaponOptions : {
 		baseWeapon : "unarmed strike",
 		regExpSearch : /^(?=.*draconic)(?=.*tail).*$/i,
@@ -100,7 +98,7 @@ AddRacialVariant("draconic kobold", "cantrip (Intelligence)", {
 	name : "Draconic Legacy",
 	source : ["UA:DO", 4],
 	plural : "Draconic Kobolds",
-	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Cantrip). I know one cantrip from the sorcerer spell list. Intelligence is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Cantrip). I know one cantrip from the sorcerer spell list. Intelligence is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, I let out a draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any enemies who could hear the roar.",
 	spellcastingBonus : {
 		name : "Draconic Legacy",
 		"class" : "sorcerer",
@@ -114,7 +112,7 @@ AddRacialVariant("draconic kobold", "cantrip (Wisdom)", {
 	name : "Draconic Legacy",
 	source : ["UA:DO", 4],
 	plural : "Draconic Kobolds",
-	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Cantrip). I know one cantrip from the sorcerer spell list. Wisdom is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Cantrip). I know one cantrip from the sorcerer spell list. Wisdom is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, I let out a draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any enemies who could hear the roar.",
 	spellcastingBonus : {
 		name : "Draconic Legacy",
 		"class" : "sorcerer",
@@ -128,7 +126,7 @@ AddRacialVariant("draconic kobold", "cantrip (Charisma)", {
 	name : "Draconic Legacy",
 	source : ["UA:DO", 4],
 	plural : "Draconic Kobolds",
-	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Cantrip). I know one cantrip from the sorcerer spell list. Charisma is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any of those enemies who could hear the roar.",
+	trait : "Draconic Kobold (+2 to one ability score and +1 to a different score of my choice, -or- +1 to three different scores of my choice) \n \u2022 Draconic Legacy (Cantrip). I know one cantrip from the sorcerer spell list. Charisma is my spellcasting ability for that cantrip (chosen when I selected this race). \n \u2022 Draconic Roar. As a bonus action, I let out a draconic roar at enemies within 10 feet of me. Until the end of my next turn, my allies and I have advantage on attack rolls against any enemies who could hear the roar.",
 	spellcastingBonus : {
 		name : "Draconic Legacy",
 		"class" : "sorcerer",
